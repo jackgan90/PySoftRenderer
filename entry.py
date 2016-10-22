@@ -42,16 +42,17 @@ while not done:
     # background image.
 	screen.fill(WHITE)
 	# dc.drawPoint((50, 50))
-	vertex0 = Vector2D(300.0, 300.0)
+	vertex0 = Vector2D(300.0, 500.0)
 	vertex1 = Vector2D(100.0, 100.0)
-	vertex2 = Vector2D(400.0, 100.0)
+	vertex2 = Vector2D(600.0, 100.0)
 	# dc.drawLine(vertex0, vertex1)
 	# rasterizer.Bresenham_Float(start, end, dc)
 	triangle = Triangle()
 	triangle.vertex0 = vertex0
 	triangle.vertex1 = vertex1
 	triangle.vertex2 = vertex2
-	dc.drawTriangle(triangle, True)
+	# dc.drawTriangle(triangle, True)
+	dc.drawTriangle1(triangle, True)
 	# dc.drawLine(start, end)
     # --- Drawing code should go here
 	# rasterizer.Bresenham_drawHorizontal(start, end, dc)

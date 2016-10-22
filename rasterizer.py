@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import geometry
 import math
+import sys
 #assume bottom left is the 2D origin, right is positive x direction,and up is positive y direction
 ERROR_TERM_INT_FACTOR = 1
 
@@ -227,6 +228,37 @@ def Bresenham_Float(start, end, dc, tracePath=False):
 			errorTerm += abs(1.0 / slope)
 
 	return path
+
+def getVerticesAABB(vertices):
+	xMin = yMin = sys.maxint
+	xMax = yMax = 0
+	for vertex in vertices:
+		if vertex.x < xMin:
+			xMin = vertex.x
+		if vertex.x > xMax:
+			xMax = vertex.x
+
+		if vertex.y < yMin:
+			yMin = vertex.y
+		if vertex.y > yMax:
+			yMax = vertex.y
+	return (int(math.ceil(xMin)), int(math.ceil(yMin)), int(math.ceil(xMax)), int(math.ceil(yMax)))
+
+def evaluateEdge(v0, v1, point):
+	return (point.x - v0.x) * (v1.y - v0.y) - (point.y - v0.y) * (v1.x - v0.x) <= 0
+
+def EdgeFunction_Triangle(vertices, dc, fill=True):
+	xMin, yMin, xMax, yMax = getVerticesAABB(vertices)
+	for x in xrange(xMin, xMax + 1):
+		for y in xrange(yMin, yMax + 1):
+			point = geometry.Vector2D(x, y)
+			if not evaluateEdge(vertices[0], vertices[1], point):
+				continue
+			if not evaluateEdge(vertices[1], vertices[2], point):
+				continue
+			if not evaluateEdge(vertices[2], vertices[0], point):
+				continue
+			dc.drawPoint((x, y))
 
 
 	
