@@ -233,15 +233,15 @@ def getVerticesAABB(vertices):
 	xMin = yMin = sys.maxint
 	xMax = yMax = 0
 	for vertex in vertices:
-		if vertex.x < xMin:
-			xMin = vertex.x
-		if vertex.x > xMax:
-			xMax = vertex.x
+		if vertex.position.x < xMin:
+			xMin = vertex.position.x
+		if vertex.position.x > xMax:
+			xMax = vertex.position.x
 
-		if vertex.y < yMin:
-			yMin = vertex.y
-		if vertex.y > yMax:
-			yMax = vertex.y
+		if vertex.position.y < yMin:
+			yMin = vertex.position.y
+		if vertex.position.y > yMax:
+			yMax = vertex.position.y
 	return (int(math.ceil(xMin)), int(math.ceil(yMin)), int(math.ceil(xMax)), int(math.ceil(yMax)))
 
 def evaluateEdge(v0, v1, point):
@@ -256,43 +256,64 @@ def isTopleftEdge(v0, v1):
 		return True
 	return False
 
-def EdgeFunction_Triangle(vertices, dc, fill=True):
-	xMin, yMin, xMax, yMax = getVerticesAABB(vertices)
-	if fill:
-		topleft01 = isTopleftEdge(vertices[0], vertices[1])
-		topleft12 = isTopleftEdge(vertices[1], vertices[2])
-		topleft20 = isTopleftEdge(vertices[2], vertices[0])
-	for x in xrange(xMin, xMax + 1):
-		for y in xrange(yMin, yMax + 1):
+def getColor(w0, w1, w2, area, vertices):
+	ratio0 = abs(w0 / area)
+	ratio1 = abs(w1 / area)
+	ratio2 = abs(w2 / area)
+	r = ratio0 * vertices[0].color[0] + ratio1 * vertices[1].color[0] + ratio2 * vertices[2].color[0]
+	g = ratio0 * vertices[0].color[1] + ratio1 * vertices[1].color[1] + ratio2 * vertices[2].color[1]
+	b = ratio0 * vertices[0].color[2] + ratio1 * vertices[1].color[2] + ratio2 * vertices[2].color[2]
+	return (r, g, b)
+
+def EdgeFunction_Triangle_Divide(vertices, dc, bounds):
+	topleft01 = isTopleftEdge(vertices[0].position, vertices[1].position)
+	topleft12 = isTopleftEdge(vertices[1].position, vertices[2].position)
+	topleft20 = isTopleftEdge(vertices[2].position, vertices[0].position)
+	area = evaluateEdge(vertices[0].position, vertices[1].position, vertices[2].position)
+	for x in xrange(bounds[0], bounds[1]):
+		for y in xrange(bounds[2], bounds[3]):
 			point = geometry.Vector2D(x, y)
-			w0 = evaluateEdge(vertices[0], vertices[1], point)
+			w0 = evaluateEdge(vertices[1].position, vertices[2].position, point)
 			if w0 > 0:
 				continue
-			w1 = evaluateEdge(vertices[1], vertices[2], point)
+			w1 = evaluateEdge(vertices[2].position, vertices[0].position, point)
 			if w1 > 0:
 				continue
-			w2 = evaluateEdge(vertices[2], vertices[0], point)
+			w2 = evaluateEdge(vertices[0].position, vertices[1].position, point)
 			if w2 > 0:
 				continue
-			onEdge01 = w0 >= -2
-			onEdge12 = w1 >= -2
-			onEdge20 = w2 >= -2
-			if not fill:
-				if not onEdge01 and not onEdge12 and not onEdge20:
-					continue
-			else:
-				if onEdge01 and not topleft01:
-					continue
-				if onEdge12 and not topleft12:
-					continue
-				if onEdge20 and not topleft20:
-					continue
+			onEdge12 = w0 >= -2
+			onEdge20 = w1 >= -2
+			onEdge01 = w2 >= -2
+			if onEdge01 and not topleft01:
+				continue
+			if onEdge12 and not topleft12:
+				continue
+			if onEdge20 and not topleft20:
+				continue
+			color = getColor(w0, w1, w2, area, vertices)
+			dc.drawPoint((x, y), color)
 
-			dc.drawPoint((x, y))
-
-
-	
-
-
-	
+def EdgeFunction_Triangle(vertices, dc, fill=True):
+	# import thread
+	xMin, yMin, xMax, yMax = getVerticesAABB(vertices)
+	# import multiprocessing
+	# threadCount = multiprocessing.cpu_count()
+	# if threadCount == 1:
+	bounds = (xMin, xMax+1, yMin, yMax+1)
+	EdgeFunction_Triangle_Divide(vertices, dc, bounds)
+	# elif 2 <= threadCount <= 3:
+		# bounds0 = (xMin, xMax / 2, yMin, yMax + 1)
+		# bounds1 = (xMax / 2 + 1, xMax + 1, yMin, yMax + 1)
+		# thread.start_new_thread(lambda : EdgeFunction_Triangle_Divide(vertices, dc, bounds0), ())
+		# thread.start_new_thread(lambda : EdgeFunction_Triangle_Divide(vertices, dc, bounds1), ())
+	# elif threadCount >= 4:
+		# bounds0 = (xMin, xMax / 2, yMin, yMax / 2)
+		# bounds1 = (xMax / 2 + 1, xMax + 1, yMin, yMax / 2)
+		# bounds2 = (xMin, xMax / 2, yMax / 2 + 1, yMax + 1)
+		# bounds3 = (xMax / 2 + 1, xMax + 1, yMax / 2 + 1, yMax + 1)
+		# thread.start_new_thread(lambda : EdgeFunction_Triangle_Divide(vertices, dc, bounds0), ())
+		# thread.start_new_thread(lambda : EdgeFunction_Triangle_Divide(vertices, dc, bounds1), ())
+		# thread.start_new_thread(lambda : EdgeFunction_Triangle_Divide(vertices, dc, bounds2), ())
+		# thread.start_new_thread(lambda : EdgeFunction_Triangle_Divide(vertices, dc, bounds3), ())
 

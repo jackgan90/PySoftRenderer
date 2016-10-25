@@ -37,6 +37,11 @@ class Vector2D(object):
 		v.normalize()
 		return v
 
+class Vertex(object):
+	def __init__(self, position=Vector2D(), color = (0, 0, 0)):
+		self.position = position
+		self.color = color
+
 class Triangle(object):
 	def __init__(self):
 		self.vertex0 = None
@@ -44,17 +49,17 @@ class Triangle(object):
 		self.vertex2 = None
 
 	def sortVertices(self):
-		if not isinstance(self.vertex0, Vector2D):
+		if not isinstance(self.vertex0, Vertex):
 			return
 
-		if not isinstance(self.vertex1, Vector2D):
+		if not isinstance(self.vertex1, Vertex):
 			return
 
-		if not isinstance(self.vertex2, Vector2D):
+		if not isinstance(self.vertex2, Vertex):
 			return
 
 		vertices = [self.vertex0, self.vertex1, self.vertex2]
-		vertices.sort(key=lambda v : v.y, reverse=True)
+		vertices.sort(key=lambda v : v.position.y, reverse=True)
 		self.vertex0 = vertices[0]
 		self.vertex1 = vertices[1]
 		self.vertex2 = vertices[2]

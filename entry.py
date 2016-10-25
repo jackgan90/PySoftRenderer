@@ -13,7 +13,7 @@ RED = (255, 0, 0)
 pygame.init()
  
 # Set the width and height of the screen [width, height]
-size = (500, 500)
+size = (800, 800)
 screen = pygame.display.set_mode(size)
  
 pygame.display.set_caption("My Game")
@@ -42,9 +42,13 @@ while not done:
     # background image.
 	screen.fill(WHITE)
 	# dc.drawPoint((50, 50))
-	vertex0 = Vector2D(300.0, 500.0)
-	vertex1 = Vector2D(100.0, 100.0)
-	vertex2 = Vector2D(600.0, 100.0)
+	position0 = Vector2D(200.0, 300.0)
+	position1 = Vector2D(100.0, 100.0)
+	position2 = Vector2D(300.0, 100.0)
+	vertex0 = Vertex(position0, (255, 0, 0))
+	vertex1 = Vertex(position1, (0, 255, 0))
+	vertex2 = Vertex(position2, (0, 0, 255))
+
 	# dc.drawLine(vertex0, vertex1)
 	# rasterizer.Bresenham_Float(start, end, dc)
 	triangle = Triangle()
