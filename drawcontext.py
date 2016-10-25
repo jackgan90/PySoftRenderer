@@ -30,7 +30,6 @@ class DrawContext(object):
 		rasterizer.Bresenham_Triangle(triangle.vertices, self, fill)
 
 	def drawTriangle1(self, triangle, fill=True):
-		triangle.sortVertices()
 		rasterizer.EdgeFunction_Triangle(triangle.vertices, self, fill)
 
 
