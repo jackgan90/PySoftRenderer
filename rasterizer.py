@@ -245,19 +245,49 @@ def getVerticesAABB(vertices):
 	return (int(math.ceil(xMin)), int(math.ceil(yMin)), int(math.ceil(xMax)), int(math.ceil(yMax)))
 
 def evaluateEdge(v0, v1, point):
-	return (point.x - v0.x) * (v1.y - v0.y) - (point.y - v0.y) * (v1.x - v0.x) <= 0
+	return (point.x - v0.x) * (v1.y - v0.y) - (point.y - v0.y) * (v1.x - v0.x)
+
+def isTopleftEdge(v0, v1):
+	if v0.y == v1.y and v1.x <= v0.x:
+		return True
+
+	direction = v1 - v0
+	if direction.x <= 0 and direction.y <= 0:
+		return True
+	return False
 
 def EdgeFunction_Triangle(vertices, dc, fill=True):
 	xMin, yMin, xMax, yMax = getVerticesAABB(vertices)
+	if fill:
+		topleft01 = isTopleftEdge(vertices[0], vertices[1])
+		topleft12 = isTopleftEdge(vertices[1], vertices[2])
+		topleft20 = isTopleftEdge(vertices[2], vertices[0])
 	for x in xrange(xMin, xMax + 1):
 		for y in xrange(yMin, yMax + 1):
 			point = geometry.Vector2D(x, y)
-			if not evaluateEdge(vertices[0], vertices[1], point):
+			w0 = evaluateEdge(vertices[0], vertices[1], point)
+			if w0 > 0:
 				continue
-			if not evaluateEdge(vertices[1], vertices[2], point):
+			w1 = evaluateEdge(vertices[1], vertices[2], point)
+			if w1 > 0:
 				continue
-			if not evaluateEdge(vertices[2], vertices[0], point):
+			w2 = evaluateEdge(vertices[2], vertices[0], point)
+			if w2 > 0:
 				continue
+			onEdge01 = w0 >= -2
+			onEdge12 = w1 >= -2
+			onEdge20 = w2 >= -2
+			if not fill:
+				if not onEdge01 and not onEdge12 and not onEdge20:
+					continue
+			else:
+				if onEdge01 and not topleft01:
+					continue
+				if onEdge12 and not topleft12:
+					continue
+				if onEdge20 and not topleft20:
+					continue
+
 			dc.drawPoint((x, y))
 
 
