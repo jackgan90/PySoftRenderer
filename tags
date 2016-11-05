@@ -1,0 +1,46 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Color	.\color.py	/^class Color(object):$/;"	c
+Color	.\framebuffer.py	/^from color import Color$/;"	i
+DEFAULT_HEIGHT	.\framebuffer.py	/^	DEFAULT_HEIGHT = 1024$/;"	v	class:FrameBuffer
+DEFAULT_HEIGHT	.\window.py	/^	DEFAULT_HEIGHT = 1024$/;"	v	class:Window
+DEFAULT_WIDTH	.\framebuffer.py	/^	DEFAULT_WIDTH = 1024$/;"	v	class:FrameBuffer
+DEFAULT_WIDTH	.\window.py	/^	DEFAULT_WIDTH = 1024$/;"	v	class:Window
+FrameBuffer	.\entry.py	/^from framebuffer import FrameBuffer$/;"	i
+FrameBuffer	.\framebuffer.py	/^class FrameBuffer(object):$/;"	c
+Image	.\window.py	/^from PIL import Image, ImageTk$/;"	i
+ImageTk	.\window.py	/^from PIL import Image, ImageTk$/;"	i
+Tkinter	.\window.py	/^import Tkinter$/;"	i
+Window	.\entry.py	/^from window import Window$/;"	i
+Window	.\window.py	/^class Window(object):$/;"	c
+__init__	.\color.py	/^	def __init__(self, r=0.0, g=0.0, b=0.0, a=0.0):$/;"	m	class:Color
+__init__	.\framebuffer.py	/^	def __init__(self):$/;"	m	class:FrameBuffer
+__init__	.\window.py	/^	def __init__(self):$/;"	m	class:Window
+a	.\color.py	/^	def a(self):$/;"	m	class:Color
+a	.\color.py	/^	def a(self, value):$/;"	m	class:Color
+b	.\color.py	/^	def b(self):$/;"	m	class:Color
+b	.\color.py	/^	def b(self, value):$/;"	m	class:Color
+fb	.\entry.py	/^fb = FrameBuffer()$/;"	v
+g	.\color.py	/^	def g(self):$/;"	m	class:Color
+g	.\color.py	/^	def g(self, value):$/;"	m	class:Color
+height	.\framebuffer.py	/^	def height(self):$/;"	m	class:FrameBuffer
+height	.\framebuffer.py	/^	def height(self, value):$/;"	m	class:FrameBuffer
+height	.\window.py	/^	def height(self):$/;"	m	class:Window
+height	.\window.py	/^	def height(self, value):$/;"	m	class:Window
+inta	.\color.py	/^	def inta(self):$/;"	m	class:Color
+intb	.\color.py	/^	def intb(self):$/;"	m	class:Color
+intg	.\color.py	/^	def intg(self):$/;"	m	class:Color
+intr	.\color.py	/^	def intr(self):$/;"	m	class:Color
+r	.\color.py	/^	def r(self):$/;"	m	class:Color
+r	.\color.py	/^	def r(self, value):$/;"	m	class:Color
+reset	.\framebuffer.py	/^	def reset(self, color = Color.BLACK):$/;"	m	class:FrameBuffer
+show	.\window.py	/^	def show(self, frameBuffer):$/;"	m	class:Window
+width	.\framebuffer.py	/^	def width(self):$/;"	m	class:FrameBuffer
+width	.\framebuffer.py	/^	def width(self, value):$/;"	m	class:FrameBuffer
+width	.\window.py	/^	def width(self):$/;"	m	class:Window
+width	.\window.py	/^	def width(self, value):$/;"	m	class:Window
+window	.\entry.py	/^window = Window()$/;"	v
