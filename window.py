@@ -12,6 +12,7 @@ class Window(object):
 		self._height = self.DEFAULT_HEIGHT
 		self._width = self.DEFAULT_WIDTH 
 		self.frameBuffer = None
+		self.refreshRate = 30
 
 	@property
 	def height(self):
@@ -38,14 +39,26 @@ class Window(object):
 		if not self.image:
 			self.image = Image.new('RGB', (self.width, self.height))
 	
+	def update(self):
+		self.image.putdata(self.frameBuffer.buffer)
+		img = ImageTk.PhotoImage(self.image)
+		self.canvas.create_image(self.width / 2, self.height / 2, image=img)
+		#The next line is necessary because without it the GC collector will collect the img object
+		self.canvas.image = img
+		self.tkWin.after(1000 / self.refreshRate, self.update)
+
+	def hide(self, event):
+		if self.tkWin:
+			self.tkWin.destroy()
+			self.tkWin = None
+		self.canvas = None
+		self.image = None
 
 	def show(self, frameBuffer):
 		self.frameBuffer = frameBuffer
 		self.createResources()
-		self.image.putdata(self.frameBuffer.buffer)
-		img = ImageTk.PhotoImage(self.image)
-		self.canvas.create_image(self.width / 2, self.height / 2, image=img)
-		
+		self.update()
+		self.tkWin.bind('<Escape>', self.hide)
 		self.tkWin.mainloop()
 
 

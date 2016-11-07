@@ -5,42 +5,74 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
 Color	.\color.py	/^class Color(object):$/;"	c
+Color	.\entry.py	/^from color import Color$/;"	i
 Color	.\framebuffer.py	/^from color import Color$/;"	i
 DEFAULT_HEIGHT	.\framebuffer.py	/^	DEFAULT_HEIGHT = 1024$/;"	v	class:FrameBuffer
 DEFAULT_HEIGHT	.\window.py	/^	DEFAULT_HEIGHT = 1024$/;"	v	class:Window
 DEFAULT_WIDTH	.\framebuffer.py	/^	DEFAULT_WIDTH = 1024$/;"	v	class:FrameBuffer
 DEFAULT_WIDTH	.\window.py	/^	DEFAULT_WIDTH = 1024$/;"	v	class:Window
+EPSILON	.\srmath.py	/^EPSILON = 0.00001$/;"	v
 FrameBuffer	.\entry.py	/^from framebuffer import FrameBuffer$/;"	i
 FrameBuffer	.\framebuffer.py	/^class FrameBuffer(object):$/;"	c
 Image	.\window.py	/^from PIL import Image, ImageTk$/;"	i
 ImageTk	.\window.py	/^from PIL import Image, ImageTk$/;"	i
+Rasterizer	.\rasterizer.py	/^class Rasterizer(object):$/;"	c
 Tkinter	.\window.py	/^import Tkinter$/;"	i
 Window	.\entry.py	/^from window import Window$/;"	i
 Window	.\window.py	/^class Window(object):$/;"	c
+__add__	.\srmath.py	/^	def __add__(self, v):$/;"	m	class:vec2	file:
+__add__	.\srmath.py	/^	def __add__(self, v):$/;"	m	class:vec3	file:
+__add__	.\srmath.py	/^	def __add__(self, v):$/;"	m	class:vec4	file:
 __init__	.\color.py	/^	def __init__(self, r=0.0, g=0.0, b=0.0, a=0.0):$/;"	m	class:Color
 __init__	.\framebuffer.py	/^	def __init__(self):$/;"	m	class:FrameBuffer
+__init__	.\srmath.py	/^	def __init__(self, col0 = None, col1 = None, col2 = None):$/;"	m	class:mat3
+__init__	.\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0):$/;"	m	class:vec2
+__init__	.\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0):$/;"	m	class:vec3
+__init__	.\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0, w = 0.0):$/;"	m	class:vec4
 __init__	.\window.py	/^	def __init__(self):$/;"	m	class:Window
-a	.\color.py	/^	def a(self):$/;"	m	class:Color
-a	.\color.py	/^	def a(self, value):$/;"	m	class:Color
-b	.\color.py	/^	def b(self):$/;"	m	class:Color
-b	.\color.py	/^	def b(self, value):$/;"	m	class:Color
+__mul__	.\srmath.py	/^	def __mul__(self, scalar):$/;"	m	class:vec2	file:
+__mul__	.\srmath.py	/^	def __mul__(self, scalar):$/;"	m	class:vec3	file:
+__mul__	.\srmath.py	/^	def __mul__(self, scalar):$/;"	m	class:vec4	file:
+__repr__	.\srmath.py	/^	def __repr__(self):$/;"	m	class:vec2	file:
+__repr__	.\srmath.py	/^	def __repr__(self):$/;"	m	class:vec3	file:
+__repr__	.\srmath.py	/^	def __repr__(self):$/;"	m	class:vec4	file:
+__sub__	.\srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec2	file:
+__sub__	.\srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec3	file:
+__sub__	.\srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec4	file:
+createResources	.\window.py	/^	def createResources(self):$/;"	m	class:Window
+cross	.\srmath.py	/^	def cross(self, v):$/;"	m	class:vec3
+dot	.\srmath.py	/^	def dot(self, v):$/;"	m	class:vec2
+dot	.\srmath.py	/^	def dot(self, v):$/;"	m	class:vec3
+dot	.\srmath.py	/^	def dot(self, v):$/;"	m	class:vec4
 fb	.\entry.py	/^fb = FrameBuffer()$/;"	v
-g	.\color.py	/^	def g(self):$/;"	m	class:Color
-g	.\color.py	/^	def g(self, value):$/;"	m	class:Color
 height	.\framebuffer.py	/^	def height(self):$/;"	m	class:FrameBuffer
 height	.\framebuffer.py	/^	def height(self, value):$/;"	m	class:FrameBuffer
 height	.\window.py	/^	def height(self):$/;"	m	class:Window
 height	.\window.py	/^	def height(self, value):$/;"	m	class:Window
-inta	.\color.py	/^	def inta(self):$/;"	m	class:Color
-intb	.\color.py	/^	def intb(self):$/;"	m	class:Color
-intg	.\color.py	/^	def intg(self):$/;"	m	class:Color
-intr	.\color.py	/^	def intr(self):$/;"	m	class:Color
-r	.\color.py	/^	def r(self):$/;"	m	class:Color
-r	.\color.py	/^	def r(self, value):$/;"	m	class:Color
+hide	.\window.py	/^	def hide(self, event):$/;"	m	class:Window
+identity	.\srmath.py	/^	identity = mat3(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1))$/;"	v	class:mat3
+length	.\srmath.py	/^	def length(self):$/;"	m	class:vec2
+length	.\srmath.py	/^	def length(self):$/;"	m	class:vec3
+length	.\srmath.py	/^	def length(self):$/;"	m	class:vec4
+mat3	.\srmath.py	/^class mat3(object):$/;"	c
+math	.\srmath.py	/^import math$/;"	i
+normalize	.\srmath.py	/^	def normalize(self):$/;"	m	class:vec2
+normalize	.\srmath.py	/^	def normalize(self):$/;"	m	class:vec3
+normalize	.\srmath.py	/^	def normalize(self):$/;"	m	class:vec4
 reset	.\framebuffer.py	/^	def reset(self, color = Color.BLACK):$/;"	m	class:FrameBuffer
 show	.\window.py	/^	def show(self, frameBuffer):$/;"	m	class:Window
+sqrLength	.\srmath.py	/^	def sqrLength(self):$/;"	m	class:vec2
+sqrLength	.\srmath.py	/^	def sqrLength(self):$/;"	m	class:vec3
+sqrLength	.\srmath.py	/^	def sqrLength(self):$/;"	m	class:vec4
+update	.\window.py	/^	def update(self):$/;"	m	class:Window
+vec2	.\srmath.py	/^class vec2(object):$/;"	c
+vec3	.\srmath.py	/^class vec3(object):$/;"	c
+vec4	.\srmath.py	/^class vec4(object):$/;"	c
 width	.\framebuffer.py	/^	def width(self):$/;"	m	class:FrameBuffer
 width	.\framebuffer.py	/^	def width(self, value):$/;"	m	class:FrameBuffer
 width	.\window.py	/^	def width(self):$/;"	m	class:Window
 width	.\window.py	/^	def width(self, value):$/;"	m	class:Window
 window	.\entry.py	/^window = Window()$/;"	v
+zero	.\srmath.py	/^	zero = vec2(0, 0)$/;"	v	class:vec2
+zero	.\srmath.py	/^	zero = vec3(0, 0, 0)$/;"	v	class:vec3
+zero	.\srmath.py	/^	zero = vec4(0, 0, 0, 0)$/;"	v	class:vec4
