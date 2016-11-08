@@ -221,68 +221,89 @@ vec4.zero = vec4(0, 0, 0, 0)
 #column-major 3x3 matrix
 class mat3(object):
 	def __init__(self, matList=None):
-		self.elements = [0] * 9
+		self.order = 3
+		self.doInit(matList)
+	
+	def doInit(self, matList):
+		self.elementSize = self.order * self.order
 		if matList is None:
-			self.elements[0] = self.elements[3] = self.elements[6] = 1
+			self.elements = []
+			for i in xrange(0, self.order):
+				for j in xrange(0, self.order):
+					self.elements.append(int(i == j))
 		else:
-			for i in xrange(0, 9):
-				self.elements[i] = matList[i]
+			self.elements = matList[:self.elementSize]	#for optimization, we don't copy list elements,just use it
 
 	def __add__(self, m):
 		l = []
-		for i in xrange(0, 9):
+		for i in xrange(0, self.elementSize):
 			l.append(self.elements[i] + m.elements[i])
-		return mat3(l)
+		return self.__class__(l)
 			
 	def __sub__(self, m):
 		l = []
-		for i in xrange(0, 9):
+		for i in xrange(0, self.elementSize):
 			l.append(self.elements[i] - m.elements[i])
-		return mat3(l)
+		return self.__class__(l)
 
 	def __mul__(self, multiplier):
-		if isinstance(multiplier, mat3):
-			result = mat3()
-			for row in xrange(0, 3):
-				for column in xrange(0, 3):
-					result.elements[3 * column + row] = 0
-					for k in xrange(0, 3):
-						result.elements[3 * column + row] += self.elements[3 * k + row] * multiplier.elements[3 * column + k]
+		if isinstance(multiplier, self.__class__):
+			result = self.__class__()
+			for row in xrange(0, self.order):
+				for column in xrange(0, self.order):
+					result.elements[self.order * column + row] = 0
+					for k in xrange(0, self.order):
+						result.elements[self.order * column + row] += self.elements[self.order * k + row] * multiplier.elements[self.order * column + k]
 			return result
-		elif isinstance(multiplier, vec3):
-			result = vec3(0, 0, 0)
-			for i in xrange(0, 3):
-				for j in xrange(0, 3):
-					result[i] += self.elements[3 * j + i] * multiplier[j]
+		elif isinstance(multiplier, self.multipliableVecType):
+			result = multiplier.__class__()
+			for i in xrange(0, self.order):
+				for j in xrange(0, self.order):
+					result[i] += self.elements[self.order * j + i] * multiplier[j]
 			return result
 				
-		return mat3(map(lambda x : x * multiplier, self.elements))
+		return self.__class__(map(lambda x : x * multiplier, self.elements))
+
+	@property
+	def multipliableVecType(self):
+		return vec3
 
 	def __getitem__(self, xy):
 		if isinstance(xy, int):
-			return vec3(self.elements[3 * xy], self.elements[3 * xy + 1], self.elements[3 * xy + 2])
+			v = self.multipliableVecType()
+			for i in xrange(0, self.order):
+				v[i] = self.elements[self.order * xy + i]
+			return v
 		elif isinstance(xy, tuple):
 			column, row = xy
-			return self.elements[3 * column + row]
+			return self.elements[self.order * column + row]
 		else:
-			raise Exception('mat3 __getitem__ only support int or tuple index')
+			raise Exception('%s __getitem__ only support int or tuple index' % self.__class__.__name__)
 
 	def __setitem__(self, xy, val):
 		if isinstance(xy, int):
 			if isinstance(val, collections.Iterable):
-				for i in xrange(3):
-					self.elements[3 * xy + i] = val[i]
+				for i in xrange(self.order):
+					self.elements[self.order * xy + i] = val[i]
 		elif isinstance(xy, tuple):
 			column, row = xy
-			self.elements[3 * column + row] = val
+			self.elements[self.order * column + row] = val
 		else:
-			raise Exception('mat3 __setitem__ only support int or tuple index')
+			raise Exception('%s __setitem__ only support int or tuple index' % self.__class__.__name__)
 
 			
 	def transpose(self):
 		self.swapElements(1, 3)
 		self.swapElements(2, 6)
 		self.swapElements(5, 7)
+
+	@property
+	def determinant(self):
+		result = 0
+		result += self.elements[0] * (self.elements[4] * self.elements[8] - self.elements[5] * self.elements[7])
+		result += self.elements[3] * (self.elements[2] * self.elements[7] - self.elements[1] * self.elements[8])
+		result += self.elements[6] * (self.elements[1] * self.elements[5] - self.elements[2] * self.elements[4])
+		return result
 
 	def getInverseMat(self):
 		det = self.determinant
@@ -302,14 +323,6 @@ class mat3(object):
 			result.elements[8] = det * (self.elements[0] * self.elements[4] - self.elements[3] * self.elements[1])
 			return result
 
-	@property
-	def determinant(self):
-		result = 0
-		result += self.elements[0] * (self.elements[4] * self.elements[8] - self.elements[5] * self.elements[7])
-		result += self.elements[3] * (self.elements[2] * self.elements[7] - self.elements[1] * self.elements[8])
-		result += self.elements[6] * (self.elements[1] * self.elements[5] - self.elements[2] * self.elements[4])
-		return result
-	
 	def swapElements(self, idx0, idx1):
 		temp = self.elements[idx0]
 		self.elements[idx0] = self.elements[idx1]
@@ -317,14 +330,49 @@ class mat3(object):
 
 	def __repr__(self):
 		res = ''
-		for row in xrange(0, 3):
-			for column in xrange(0, 3):
-				res += repr(self.elements[3 * column + row])
-				if column < 2:
+		for row in xrange(0, self.order):
+			for column in xrange(0, self.order):
+				res += repr(self.elements[self.order * column + row])
+				if column < self.order - 1:
 					res += ' '
-			if row < 2:
+			if row < self.order - 1:
 				res += '\n'
 		return res
 	
 
 mat3.identity = mat3((1,0,0,0,1,0,0,0,1))
+
+class mat4(mat3):
+	def __init__(self, matList=None):
+		self.order = 4
+		self.doInit(matList)
+
+	@property
+	def multipliableVecType(self):
+		return vec4
+	
+	def transpose(self):
+		self.swapElements(1, 4)
+		self.swapElements(2, 8)
+		self.swapElements(6, 9)
+		self.swapElements(3, 12)
+		self.swapElements(7, 13)
+		self.swapElements(11, 14)
+
+	@property
+	def determinant(self):
+		result = 0
+		columnLists = []
+		idx = 0
+		for i in xrange(1, self.elementSize, self.order):
+			columnLists.append((idx, self.elements[i:i + 3]))
+			idx += 1
+		for i in xrange(0, self.order):
+			sign = -1 if i % 2 else 1
+			l = []
+			map(lambda c : l.extend(c[1]) if c[0] != i else [], columnLists)
+			result += self.elements[self.order * i] * sign * mat3(l).determinant
+
+		return result
+
+mat4.identity = mat4((1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1))
