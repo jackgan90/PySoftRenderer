@@ -225,24 +225,24 @@ class mat3(object):
 		self.doInit(matList)
 	
 	def doInit(self, matList):
-		self.elementSize = self.order * self.order
+		self.elementCount = self.order * self.order
 		if matList is None:
 			self.elements = []
 			for i in xrange(0, self.order):
 				for j in xrange(0, self.order):
 					self.elements.append(int(i == j))
 		else:
-			self.elements = matList[:self.elementSize]	#for optimization, we don't copy list elements,just use it
+			self.elements = matList[:self.elementCount]	#for optimization, we don't copy list elements,just use it
 
 	def __add__(self, m):
 		l = []
-		for i in xrange(0, self.elementSize):
+		for i in xrange(0, self.elementCount):
 			l.append(self.elements[i] + m.elements[i])
 		return self.__class__(l)
 			
 	def __sub__(self, m):
 		l = []
-		for i in xrange(0, self.elementSize):
+		for i in xrange(0, self.elementCount):
 			l.append(self.elements[i] - m.elements[i])
 		return self.__class__(l)
 
@@ -296,6 +296,24 @@ class mat3(object):
 		self.swapElements(1, 3)
 		self.swapElements(2, 6)
 		self.swapElements(5, 7)
+
+	@property
+	def adjugateMat(self):
+		m = self.__class__()
+		for i in xrange(0, self.elementCount):
+			column = i / self.order
+			row = i % self.order
+			operands = []
+			for j in xrange(0, self.elementCount):
+				if j / self.order == column or j % self.order == row:
+					continue
+				operands.append(self.elements[j])
+			sign = -1 if (row + column) % 2 else 1
+			m.elements[self.order * row + column] = sign * (operands[0] * operands[3] \
+					- operands[1] * operands[2])
+
+		return m
+
 
 	@property
 	def determinant(self):
@@ -364,7 +382,7 @@ class mat4(mat3):
 		result = 0
 		columnLists = []
 		idx = 0
-		for i in xrange(1, self.elementSize, self.order):
+		for i in xrange(1, self.elementCount, self.order):
 			columnLists.append((idx, self.elements[i:i + 3]))
 			idx += 1
 		for i in xrange(0, self.order):
@@ -374,5 +392,29 @@ class mat4(mat3):
 			result += self.elements[self.order * i] * sign * mat3(l).determinant
 
 		return result
+
+	@property
+	def adjugateMat(self):
+		m = self.__class__()
+		for i in xrange(0, self.elementCount):
+			column = i / self.order
+			row = i % self.order
+			operands = []
+			sign = -1 if (row + column) % 2 else 1
+			for j in xrange(0, self.elementCount):
+				if j / self.order == column or j % self.order == row:
+					continue
+				operands.append(self.elements[j])
+			m.elements[self.order * row + column] = sign * mat3(operands).determinant
+		return m
+
+
+	#seems there's no quick way to calculate a general 4x3 matrix's inverse
+	def getInverseMat(self):
+		det = self.determinant
+		if det == 0:
+			return None
+		else:
+			return self.adjugateMat * (1.0 / det)
 
 mat4.identity = mat4((1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1))
