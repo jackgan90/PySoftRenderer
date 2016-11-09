@@ -418,3 +418,69 @@ class mat4(mat3):
 			return self.adjugateMat * (1.0 / det)
 
 mat4.identity = mat4((1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1))
+
+def make_translation_mat(translation):
+	m = mat4()
+	m.elements[12] = translation.x
+	m.elements[13] = translation.y
+	m.elements[14] = translation.z
+	return m
+
+def make_scale_mat(scale):
+	m = mat4()
+	m.elements[0] = scale.x
+	m.elements[5] = scale.y
+	m.elements[10] = scale.z
+	return m
+
+def make_rotation_x_mat(xAngle):
+	m = mat4()
+	angleInRadians = math.radians(xAngle)
+	c = math.cos(angleInRadians)
+	s = math.sin(angleInRadians)
+	m.elements[5] = c
+	m.elements[9] = -s
+	m.elements[6] = s
+	m.elements[10] = c
+	return m
+
+def make_rotation_y_mat(yAngle):
+	m = mat4()
+	angleInRadians = math.radians(yAngle)
+	c = math.cos(angleInRadians)
+	s = math.sin(angleInRadians)
+	m.elements[0] = c
+	m.elements[8] = s
+	m.elements[2] = -s
+	m.elements[10] = c
+	return m
+
+def make_rotation_z_mat(zAngle):
+	m = mat4()
+	angleInRadians = math.radians(zAngle)
+	c = math.cos(angleInRadians)
+	s = math.sin(angleInRadians)
+	m.elements[0] = c
+	m.elements[4] = -s
+	m.elements[1] = s
+	m.elements[5] = c
+	return m
+
+def make_rotation_mat(direction, angle):
+	direction.normalize()
+	angleInRadians = math.radians(angle)
+	s = math.sin(angleInRadians)
+	c = math.cos(angleInRadians)
+	m = mat4()
+	m.elements[0] = c + (1-c) * direction.x * direction.x
+	m.elements[1] = (1 - c) * direction.x * direction.y + s * direction.z
+	m.elements[2] = (1 - c) * direction.x * direction.z - s * direction.y
+	m.elements[4] = (1 - c) * direction.x * direction.y - s * direction.z
+	m.elements[5] = c + (1 - c) * direction.y * direction.y
+	m.elements[6] = (1 - c) * direction.y * direction.z + s * direction.x
+	m.elements[8] = (1 - c) * direction.x * direction.z + s * direction.y
+	m.elements[9] = (1 - c) * direction.y * direction.z - s * direction.x
+	m.elements[10] = c + (1 - c) * direction.z * direction.z
+
+	return m
+
