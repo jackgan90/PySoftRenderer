@@ -67,7 +67,13 @@ class vec2(object):
 			raise Exception('cannot normalize zero-length vector')
 		self.x /= l
 		self.y /= l
+	
+	def toList(self):
+		return [self.x, self.y]
 
+	def fromList(self, l):
+		self.x, self.y = l[0], l[1]
+		
 		
 	
 vec2.zero = vec2(0, 0)
@@ -140,6 +146,12 @@ class vec3(object):
 		self.x /= l
 		self.y /= l
 		self.z /= l
+
+	def toList(self):
+		return [self.x, self.y, self.z]
+
+	def fromList(self, l):
+		self.x, self.y, self.z = l[0], l[1], l[2]
 
 vec3.zero = vec3(0, 0, 0)
 
@@ -215,6 +227,12 @@ class vec4(object):
 		self.y /= l
 		self.z /= l
 		self.w /= l
+	
+	def toList(self):
+		return [self.x, self.y, self.z, self.w]
+
+	def fromList(self, l):
+		self.x, self.y, self.z, self.w = l[0], l[1], l[2], l[3]
 
 vec4.zero = vec4(0, 0, 0, 0)
 
@@ -419,6 +437,16 @@ class mat4(mat3):
 
 mat4.identity = mat4((1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1))
 
+def create_vector(componentCount):
+	if componentCount == 2:
+		return vec2()
+	elif componentCount == 3:
+		return vec3()
+	elif componentCount == 4:
+		return vec4()
+	else:
+		raise Exception('create_vector only support vec2,vec3,vec4!componentCount is %d' % componentCount)
+
 def make_translation_mat(translation):
 	m = mat4()
 	m.elements[12] = translation.x
@@ -484,3 +512,58 @@ def make_rotation_mat(direction, angle):
 
 	return m
 
+#this function provides a faster way to calculate the inverse
+#matrix of a 4-order matrix by not calculating the adjugate matrix
+#only applies for transformation matrix
+def fast_inverse_mat4(m):
+	m3elements = []
+	for i in xrange(0, 3):
+		m3elements.extend(m[i].toList()[:3])
+	m3 = mat3(m3elements)
+	m3Inverse = m3.getInverseMat()
+	if m3Inverse is None:
+		return None
+	lastColumn = m[3]
+	v3 = vec3(-lastColumn.x, -lastColumn.y, -lastColumn.z)
+	v3 = m3Inverse * v3
+	result = mat4([
+		m3Inverse.elements[0], m3Inverse.elements[1], m3Inverse.elements[2], 0,
+		m3Inverse.elements[3], m3Inverse.elements[4], m3Inverse.elements[5], 0,
+		m3Inverse.elements[6], m3Inverse.elements[7], m3Inverse.elements[8], 0,
+		v3.x, v3.y, v3.z, 1,
+		])
+	return result
+
+#make view matrix by camera pos, reference up direction and the forward direction of
+#the camera, up and forward are assumed unit length
+def make_view_mat(pos, up, forward):
+	right = forward.cross(up)
+	orthoUp = right.cross(forward)
+	#-forward,right and orthoUp form a cartitian coordinate system
+	result = mat4([
+		right.x, up.x, -forward.x, 0,
+		right.y, up.y, -forward.y, 0,
+		right.z, up.z, -forward.z, 0,
+		-pos.x, -pos.y, -pos.z, 1,
+	])
+	return result
+
+def make_perspect_mat(near, far, left, right, top, bottom):
+	width = right - left
+	height = top - bottom
+	depth = far - near
+	return mat4([
+		2 * near / width, 0, 0, 0,
+		0, 2 * near / height, 0, 0,
+		(right + left) / width, (top + bottom) / height, -(far + near) / depth, -1,
+		0, 0, - 2 * near * far / depth, 0,
+	])
+
+#aspectRatio : w/h
+#fov:horizontal fov in degrees
+def make_perspect_mat_fov(aspectRatio, near, far, fov):
+	right = near * math.tan(math.radians(fov / 2.0))
+	left = -right
+	top = right / aspectRatio
+	bottom = -top
+	return make_perspect_mat(near, far, left, right, top, bottom)
