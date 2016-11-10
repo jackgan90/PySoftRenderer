@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class Rasterizer(object):
-	pass
+	def drawVertexArray(self, va):
+		pass
+
+

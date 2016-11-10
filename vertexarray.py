@@ -3,6 +3,7 @@
 class VertexArray(object):
 	def __init__(self):
 		self.buffers = {}
+		self.enabledAttributes = {}
 		self.uniqueId = 0
 
 	def attachVertexBuffer(self, vb):
@@ -28,6 +29,16 @@ class VertexArray(object):
 			return False
 		del self.buffers[ibid]
 		return True
+
+	def enableVertexAttribute(self, attributeIndex, vbid):
+		if vbid not in self.buffers:
+			return False
+		self.enabledAttributes[attributeIndex] = vbid
+		return True
+
+	def disableVertexAttribute(self, attributeIndex):
+		if attributeIndex in self.enabledAttributes:
+			del self.enabledAttributes[attributeIndex]
 
 
 
