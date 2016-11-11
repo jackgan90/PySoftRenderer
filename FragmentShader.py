@@ -6,6 +6,14 @@ class FragmentShader(object):
 		self.color = None
 
 	def run(self):
-		return Color.RED
+		raise NotImplementedError
+
+class SimpleFragmentShader(FragmentShader):
+	def __init__(self):
+		super(SimpleFragmentShader, self).__init__()
+		
+	def run(self):
+		self.color = Color.RED
+	
 
 

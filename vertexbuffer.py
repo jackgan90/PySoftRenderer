@@ -13,3 +13,7 @@ class VertexBuffer(object):
 			v.fromList(data[i:i+stride])
 			self.buffer.append(v)
 
+	@property
+	def bufferSize(self):
+		return len(self.buffer)
+
