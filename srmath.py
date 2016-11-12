@@ -541,9 +541,9 @@ def make_view_mat(pos, up, forward):
 	orthoUp = right.cross(forward)
 	#-forward,right and orthoUp form a cartitian coordinate system
 	result = mat4([
-		right.x, up.x, -forward.x, 0,
-		right.y, up.y, -forward.y, 0,
-		right.z, up.z, -forward.z, 0,
+		right.x, orthoUp.x, -forward.x, 0,
+		right.y, orthoUp.y, -forward.y, 0,
+		right.z, orthoUp.z, -forward.z, 0,
 		-pos.x, -pos.y, -pos.z, 1,
 	])
 	return result

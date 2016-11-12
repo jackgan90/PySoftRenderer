@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from srmath import *
+from srmath import create_vector
 
 class IndexBuffer(object):
 	def __init__(self):

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from srmath import *
 from shadervarying import ShaderVarying
 from shaderuniform import ShaderUniform
 

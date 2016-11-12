@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from color import *
+from color import Color
 
 class FragmentShader(object):
 	def __init__(self):

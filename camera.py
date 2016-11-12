@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from srmath import *
+from srmath import vec3
 
 class Camera(object):
 	def __init__(self):
