@@ -5,7 +5,7 @@
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	0.0.0	//
 BLACK	main.py	/^BLACK = (0, 0, 0)$/;"	v
-Cube	cube.py	/^class Cube(object):$/;"	c
+Cube	.\\cube.py	/^class Cube(object):$/;"	c
 EPSILON	.\\srmath.py	/^EPSILON = 0.00001$/;"	v
 FRAME_RATE	main.py	/^FRAME_RATE = 30$/;"	v
 WHITE	main.py	/^WHITE = (255, 255, 255)$/;"	v
@@ -19,12 +19,12 @@ __getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec2
 __getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec3
 __getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec4
 __getitem__	.\\srmath.py	/^	def __getitem__(self, xy):$/;"	m	class:mat3
+__init__	.\\cube.py	/^	def __init__(self, size = 1):$/;"	m	class:Cube
 __init__	.\\srmath.py	/^	def __init__(self, matList=None):$/;"	m	class:mat3
 __init__	.\\srmath.py	/^	def __init__(self, matList=None):$/;"	m	class:mat4
 __init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0):$/;"	m	class:vec2
 __init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0):$/;"	m	class:vec3
 __init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0, w = 0.0):$/;"	m	class:vec4
-__init__	cube.py	/^	def __init__(self, size = 1):$/;"	m	class:Cube
 __iter__	.\\srmath.py	/^	def __iter__(self):$/;"	m	class:vec2
 __mul__	.\\srmath.py	/^	def __mul__(self, multiplier):$/;"	m	class:mat3
 __mul__	.\\srmath.py	/^	def __mul__(self, scalar):$/;"	m	class:vec2
@@ -99,6 +99,7 @@ toList	.\\srmath.py	/^	def toList(self):$/;"	m	class:vec3
 toList	.\\srmath.py	/^	def toList(self):$/;"	m	class:vec4
 transpose	.\\srmath.py	/^	def transpose(self):$/;"	m	class:mat3
 transpose	.\\srmath.py	/^	def transpose(self):$/;"	m	class:mat4
+updateStatisticInfo	main.py	/^def updateStatisticInfo():$/;"	f
 vec2	.\\srmath.py	/^class vec2(object):$/;"	c
 vec3	.\\srmath.py	/^class vec3(object):$/;"	c
 vec4	.\\srmath.py	/^class vec4(object):$/;"	c

@@ -40,6 +40,12 @@ def fetchDataFromFrameBuffer():
 	canvas.image = img
 
 def windowUpdate():
+	updateStatisticInfo()
+	fetchDataFromFrameBuffer()
+	if window:
+		window.after(1000 / FRAME_RATE, windowUpdate)
+
+def updateStatisticInfo():
 	global frameCount
 	global lastFrameTime
 	global statisticInfo
@@ -47,10 +53,8 @@ def windowUpdate():
 	frameCount += 1
 	deltaFrameTime = now - lastFrameTime
 	statisticInfo.set("FPS %.1f/s frameTime:%.2fs" % (1.0 / deltaFrameTime, deltaFrameTime))
-	fetchDataFromFrameBuffer()
 	lastFrameTime = now
-	if window:
-		window.after(1000 / FRAME_RATE, windowUpdate)
+
 
 def main():
 	global canvas
