@@ -31,15 +31,15 @@ def destroyWindow(event):
 
 def onKeyDown(event):
 	if event.char.lower() == 'a':
-		moveCamera(event, 'left')
+		move_camera(event, 'left')
 	if event.char.lower() == 'd':
-		moveCamera(event, 'right')
+		move_camera(event, 'right')
 	if event.char.lower() == 'w':
-		moveCamera(event, 'up')
+		move_camera(event, 'up')
 	if event.char.lower() == 's':
-		moveCamera(event, 'down')
+		move_camera(event, 'down')
 
-def moveCamera(event, direction):
+def move_camera(event, direction):
 	if direction == 'left':
 		offset = srmath.vec3(-0.5, 0.0, 0.0)
 	elif direction == 'right':
@@ -48,12 +48,12 @@ def moveCamera(event, direction):
 		offset = srmath.vec3(0.0, 0.5, 0.0)
 	elif direction == 'down':
 		offset = srmath.vec3(0.0, -0.5, 0.0)
-	pipeline.moveCamera(offset)
-	pipeline.clearScreen()
+	pipeline.move_camera(offset)
+	pipeline.clear_screen()
 
 def changeFOV(event):
 	pipeline.cameraFOV -= event.delta / 100
-	pipeline.clearScreen()
+	pipeline.clear_screen()
 
 def fetchDataFromFrameBuffer():
 	global image
@@ -100,10 +100,10 @@ def main():
 	lastFrameTime = time.time()
 	window.after(1000 / FRAME_RATE, windowUpdate)
 	window.bind('<Escape>', destroyWindow)
-	window.bind('<Right>', lambda event: moveCamera(event, 'right'))
-	window.bind('<Left>', lambda event: moveCamera(event, 'left'))
-	window.bind('<Up>', lambda event: moveCamera(event, 'up'))
-	window.bind('<Down>', lambda event: moveCamera(event, 'down'))
+	window.bind('<Right>', lambda event: move_camera(event, 'right'))
+	window.bind('<Left>', lambda event: move_camera(event, 'left'))
+	window.bind('<Up>', lambda event: move_camera(event, 'up'))
+	window.bind('<Down>', lambda event: move_camera(event, 'down'))
 	window.bind('<Key>', onKeyDown)
 	window.bind('<MouseWheel>', changeFOV)
 	window.mainloop()

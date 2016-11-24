@@ -13,6 +13,17 @@ class Cube(object):
 			0.5 * size, 0.5 * size, -0.5 * size,	#back top right
 			-0.5 * size, 0.5 * size, -0.5 * size,	#back top left
 		)
+		self.colors = (
+			0.0, 0.0, 0.0,
+			1.0, 0.0, 0.0,
+			0.0, 1.0, 0.0,
+			0.0, 0.0, 1.0,
+			1.0, 1.0, 0.0,
+			1.0, 0.0, 1.0,
+			0.0, 1.0, 1.0,
+			1.0, 1.0, 1.0,
+			0.2, 0.5, 0.8,
+		)
 		sqrt3Over3 = math.sqrt(3.0) / 3.0
 		self.normals = (
 			-sqrt3Over3, -sqrt3Over3, sqrt3Over3,

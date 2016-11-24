@@ -7,7 +7,7 @@
 BLACK	main.py	/^BLACK = (0, 0, 0)$/;"	v
 BLACK	pipeline.py	/^BLACK = (0, 0, 0)$/;"	v
 BLUE	pipeline.py	/^BLUE = (0, 0, 255)$/;"	v
-Cube	.\\cube.py	/^class Cube(object):$/;"	c	language:Python
+Cube	cube.py	/^class Cube(object):$/;"	c
 DrawMode	pipeline.py	/^class DrawMode(object):$/;"	c
 EPSILON	srmath.py	/^EPSILON = 0.00001$/;"	v
 FRAME_RATE	main.py	/^FRAME_RATE = 30$/;"	v
@@ -16,6 +16,8 @@ RED	pipeline.py	/^RED = (255, 0, 0)$/;"	v
 SpaceType	pipeline.py	/^class SpaceType(object):$/;"	c
 VERTEX_COLOR	pipeline.py	/^	VERTEX_COLOR = 2$/;"	v	class:DrawMode
 VIEW_SPACE	pipeline.py	/^	VIEW_SPACE = 2$/;"	v	class:SpaceType
+VertexAttribute	pipeline.py	/^class VertexAttribute(object):$/;"	c
+VertexInput	pipeline.py	/^class VertexInput(object):$/;"	c
 WHITE	main.py	/^WHITE = (255, 255, 255)$/;"	v
 WHITE	pipeline.py	/^WHITE = (255, 255, 255)$/;"	v
 WINDOW_HEIGHT	pipeline.py	/^WINDOW_HEIGHT = 512$/;"	v
@@ -31,7 +33,9 @@ __getitem__	srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec2
 __getitem__	srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec3
 __getitem__	srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec4
 __getitem__	srmath.py	/^	def __getitem__(self, xy):$/;"	m	class:mat3
-__init__	.\\cube.py	/^	def __init__(self, size = 1):$/;"	m	language:Python	class:Cube	signature:(self, size = 1)
+__init__	cube.py	/^	def __init__(self, size = 1):$/;"	m	class:Cube
+__init__	pipeline.py	/^	def __init__(self):$/;"	m	class:VertexAttribute
+__init__	pipeline.py	/^	def __init__(self):$/;"	m	class:VertexInput
 __init__	srmath.py	/^	def __init__(self, matList=None):$/;"	m	class:mat3
 __init__	srmath.py	/^	def __init__(self, matList=None):$/;"	m	class:mat4
 __init__	srmath.py	/^	def __init__(self, x = 0.0, y = 0.0):$/;"	m	class:vec2
@@ -56,6 +60,7 @@ __sub__	srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec3
 __sub__	srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec4
 adjugateMat	srmath.py	/^	def adjugateMat(self):$/;"	m	class:mat3
 adjugateMat	srmath.py	/^	def adjugateMat(self):$/;"	m	class:mat4
+calc_vertex_attribute	pipeline.py	/^def calc_vertex_attribute(mvp, vertexInput):$/;"	f
 cameraAspectRatio	pipeline.py	/^cameraAspectRatio = 1.0$/;"	v
 cameraFOV	pipeline.py	/^cameraFOV = 60$/;"	v
 cameraFarPlane	pipeline.py	/^cameraFarPlane = 500.0$/;"	v
@@ -64,7 +69,7 @@ cameraPosition	pipeline.py	/^cameraPosition = srmath.vec3(4, 4, 4)$/;"	v
 canvas	main.py	/^canvas = None$/;"	v
 changeFOV	main.py	/^def changeFOV(event):$/;"	f
 clearColor	pipeline.py	/^clearColor = BLACK$/;"	v
-clearScreen	pipeline.py	/^def clearScreen():$/;"	f
+clear_screen	pipeline.py	/^def clear_screen():$/;"	f
 create_vector	srmath.py	/^def create_vector(componentCount):$/;"	f
 cross	srmath.py	/^	def cross(self, v):$/;"	m	class:vec3
 depthBuffer	pipeline.py	/^depthBuffer = [1.0] * (WINDOW_HEIGHT * WINDOW_WIDTH)$/;"	v
@@ -108,8 +113,8 @@ make_translation_mat	srmath.py	/^def make_translation_mat(translation):$/;"	f
 make_view_mat	srmath.py	/^def make_view_mat(eye, lookat, up):$/;"	f
 mat3	srmath.py	/^class mat3(object):$/;"	c
 mat4	srmath.py	/^class mat4(mat3):$/;"	c
-moveCamera	main.py	/^def moveCamera(event, direction):$/;"	f
-moveCamera	pipeline.py	/^def moveCamera(offset, space = SpaceType.VIEW_SPACE):$/;"	f
+move_camera	main.py	/^def move_camera(event, direction):$/;"	f
+move_camera	pipeline.py	/^def move_camera(offset, space = SpaceType.VIEW_SPACE):$/;"	f
 multipliableVecType	srmath.py	/^	def multipliableVecType(self):$/;"	m	class:mat3
 multipliableVecType	srmath.py	/^	def multipliableVecType(self):$/;"	m	class:mat4
 ndc_to_screen_coord	srmath.py	/^def ndc_to_screen_coord(ndcPoint, width, height):$/;"	f
