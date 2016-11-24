@@ -537,19 +537,20 @@ def fast_inverse_mat4(m):
 		])
 	return result
 
-#make view matrix by camera pos, reference up direction and the forward direction of
-#the camera, up and forward are assumed unit length
-def make_view_mat(pos, up, forward):
-	right = forward.cross(up)
-	orthoUp = right.cross(forward)
-	#-forward,right and orthoUp form a cartitian coordinate system
-	result = mat4([
-		right.x, orthoUp.x, -forward.x, 0,
-		right.y, orthoUp.y, -forward.y, 0,
-		right.z, orthoUp.z, -forward.z, 0,
-		-pos.x, -pos.y, -pos.z, 1,
+#make view matrix by eye position,target position and reference up direction
+def make_view_mat(eye, lookat, up):
+	zAxis = eye - lookat
+	zAxis.normalize()
+	xAxis = up.cross(zAxis)
+	xAxis.normalize()
+	yAxis = zAxis.cross(xAxis)
+	return mat4([
+		xAxis.x, yAxis.x, zAxis.x, 0,
+		xAxis.y, yAxis.y, zAxis.y, 0,
+		xAxis.z, yAxis.z, zAxis.z, 0,
+		-xAxis.dot(eye), -yAxis.dot(eye), -zAxis.dot(eye), 1.0,
 	])
-	return result
+
 
 def make_perspect_mat(near, far, left, right, top, bottom):
 	width = right - left

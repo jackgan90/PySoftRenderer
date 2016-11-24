@@ -77,7 +77,7 @@ make_rotation_y_mat	srmath.py	/^def make_rotation_y_mat(yAngle):$/;"	f
 make_rotation_z_mat	srmath.py	/^def make_rotation_z_mat(zAngle):$/;"	f
 make_scale_mat	srmath.py	/^def make_scale_mat(scale):$/;"	f
 make_translation_mat	srmath.py	/^def make_translation_mat(translation):$/;"	f
-make_view_mat	srmath.py	/^def make_view_mat(pos, up, forward):$/;"	f
+make_view_mat	srmath.py	/^def make_view_mat(eye, lookat, up):$/;"	f
 mat3	srmath.py	/^class mat3(object):$/;"	c
 mat4	srmath.py	/^class mat4(mat3):$/;"	c
 multipliableVecType	srmath.py	/^	def multipliableVecType(self):$/;"	m	class:mat3
