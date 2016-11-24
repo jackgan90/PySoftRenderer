@@ -2,14 +2,12 @@
 import Tkinter
 from PIL import Image, ImageTk
 import time
+import pipeline
 
-WINDOW_HEIGHT = 512
-WINDOW_WIDTH = 512
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 FRAME_RATE = 30
 
-frameBuffer = [BLACK] * (WINDOW_HEIGHT * WINDOW_WIDTH)
 window = None
 canvas = None
 image = None
@@ -33,10 +31,11 @@ def destroyWindow(event):
 def fetchDataFromFrameBuffer():
 	global image
 	if not image:
-		image = Image.new('RGB', (WINDOW_WIDTH, WINDOW_HEIGHT))
-	image.putdata(frameBuffer)
+		image = Image.new('RGB', (pipeline.WINDOW_WIDTH, pipeline.WINDOW_HEIGHT))
+	pipeline.update()
+	image.putdata(pipeline.frameBuffer)
 	img = ImageTk.PhotoImage(image)
-	canvas.create_image(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, image=img)
+	canvas.create_image(pipeline.WINDOW_WIDTH / 2, pipeline.WINDOW_HEIGHT / 2, image=img)
 	canvas.image = img
 
 def windowUpdate():
@@ -67,7 +66,8 @@ def main():
 	statisticInfo = Tkinter.StringVar()
 	statisticLabel = Tkinter.Label(window, textvariable=statisticInfo, fg="red")
 	statisticLabel.pack()
-	canvas = Tkinter.Canvas(window, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
+	canvas = Tkinter.Canvas(window, width=pipeline.WINDOW_WIDTH, height=pipeline.WINDOW_HEIGHT)
+
 	canvas.pack()
 	fetchDataFromFrameBuffer()
 	lastFrameTime = time.time()

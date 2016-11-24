@@ -38,6 +38,3 @@ class Cube(object):
 			4, 0, 1,
 			4, 1, 5,
 		)
-		self.stride = 3
-
-		
