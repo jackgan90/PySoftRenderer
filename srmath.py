@@ -496,20 +496,23 @@ def make_rotation_z_mat(zAngle):
 
 def make_rotation_mat(direction, angle):
 	direction.normalize()
-	angleInRadians = math.radians(angle)
-	s = math.sin(angleInRadians)
-	c = math.cos(angleInRadians)
+	theta = math.radians(angle)
+	qsin = math.sin(theta * 0.5)
+	qcos = math.cos(theta * 0.5)
+	w = qcos
 	m = mat4()
-	m.elements[0] = c + (1-c) * direction.x * direction.x
-	m.elements[1] = (1 - c) * direction.x * direction.y + s * direction.z
-	m.elements[2] = (1 - c) * direction.x * direction.z - s * direction.y
-	m.elements[4] = (1 - c) * direction.x * direction.y - s * direction.z
-	m.elements[5] = c + (1 - c) * direction.y * direction.y
-	m.elements[6] = (1 - c) * direction.y * direction.z + s * direction.x
-	m.elements[8] = (1 - c) * direction.x * direction.z + s * direction.y
-	m.elements[9] = (1 - c) * direction.y * direction.z - s * direction.x
-	m.elements[10] = c + (1 - c) * direction.z * direction.z
-
+	x = direction.x * qsin
+	y = direction.y * qsin
+	z = direction.z * qsin
+	m.elements[0] = 1 - 2 * y * y - 2 * z * z
+	m.elements[1] = 2 * x * y + 2 * w * z
+	m.elements[2] = 2 * x * z - 2 * w * y
+	m.elements[4] = 2 * x * y - 2 * w * z
+	m.elements[5] = 1 - 2 * x * x - 2 * z * z
+	m.elements[6] = 2 * y * z + 2 * w * x
+	m.elements[8] = 2 * x * z + 2 * w * y
+	m.elements[9] = 2 * y * z - 2 * w * x
+	m.elements[10] = 1 - 2 * x * x - 2 * y * y
 	return m
 
 #this function provides a faster way to calculate the inverse
