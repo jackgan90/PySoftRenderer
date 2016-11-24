@@ -572,10 +572,10 @@ def make_perspect_mat_fov(aspectRatio, near, far, fov):
 	bottom = -top
 	return make_perspect_mat(near, far, left, right, top, bottom)
 
-def ndc_to_screen_coord(ndcPoint, width, height, near, far):
+def ndc_to_screen_coord(ndcPoint, width, height):
 	screenPoint = vec3()
-	screenPoint.x = int((ndcPoint.x * 0.5 + 0.5) * width)
-	screenPoint.y = int((ndcPoint.y * 0.5 + 0.5) * height)
+	screenPoint.x = (ndcPoint.x * 0.5 + 0.5) * width
+	screenPoint.y = (0.5 - ndcPoint.y * 0.5) * height
 	screenPoint.z = ndcPoint.z * 0.5 + 0.5
 	return screenPoint
 
