@@ -551,6 +551,21 @@ def make_view_mat(eye, lookat, up):
 		-xAxis.dot(eye), -yAxis.dot(eye), -zAxis.dot(eye), 1.0,
 	])
 
+def make_inv_view_mat(eye, lookat, up):
+	zAxis = eye - lookat
+	zAxis.normalize()
+	xAxis = up.cross(zAxis)
+	xAxis.normalize()
+	yAxis = zAxis.cross(xAxis)
+	return mat4([
+		xAxis.x, xAxis.y, xAxis.z, 0,
+		yAxis.x, yAxis.y, yAxis.z, 0,
+		zAxis.x, zAxis.y, zAxis.z, 0,
+		eye.x, eye.y, eye.z, 1.0,
+	])
+
+
+
 
 def make_perspect_mat(near, far, left, right, top, bottom):
 	width = right - left

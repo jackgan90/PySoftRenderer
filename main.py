@@ -3,6 +3,7 @@ import Tkinter
 from PIL import Image, ImageTk
 import time
 import pipeline
+import srmath
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -27,6 +28,32 @@ def destroyWindow(event):
 		window.destroy()
 		window = None
 	image = None
+
+def onKeyDown(event):
+	if event.char.lower() == 'a':
+		moveCamera(event, 'left')
+	if event.char.lower() == 'd':
+		moveCamera(event, 'right')
+	if event.char.lower() == 'w':
+		moveCamera(event, 'up')
+	if event.char.lower() == 's':
+		moveCamera(event, 'down')
+
+def moveCamera(event, direction):
+	if direction == 'left':
+		offset = srmath.vec3(-0.5, 0.0, 0.0)
+	elif direction == 'right':
+		offset = srmath.vec3(0.5, 0.0, 0.0)
+	elif direction == 'up':
+		offset = srmath.vec3(0.0, 0.5, 0.0)
+	elif direction == 'down':
+		offset = srmath.vec3(0.0, -0.5, 0.0)
+	pipeline.moveCamera(offset)
+	pipeline.clearScreen()
+
+def changeFOV(event):
+	pipeline.cameraFOV -= event.delta / 100
+	pipeline.clearScreen()
 
 def fetchDataFromFrameBuffer():
 	global image
@@ -73,6 +100,12 @@ def main():
 	lastFrameTime = time.time()
 	window.after(1000 / FRAME_RATE, windowUpdate)
 	window.bind('<Escape>', destroyWindow)
+	window.bind('<Right>', lambda event: moveCamera(event, 'right'))
+	window.bind('<Left>', lambda event: moveCamera(event, 'left'))
+	window.bind('<Up>', lambda event: moveCamera(event, 'up'))
+	window.bind('<Down>', lambda event: moveCamera(event, 'down'))
+	window.bind('<Key>', onKeyDown)
+	window.bind('<MouseWheel>', changeFOV)
 	window.mainloop()
 
 

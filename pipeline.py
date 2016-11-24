@@ -9,6 +9,7 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
+clearColor = BLACK
 frameBuffer = [BLACK] * (WINDOW_HEIGHT * WINDOW_WIDTH)
 depthBuffer = [1.0] * (WINDOW_HEIGHT * WINDOW_WIDTH)
 cameraPosition = srmath.vec3(4, 4, 4)
@@ -22,11 +23,30 @@ class DrawMode(object):
 	WIRE_FRAME = 1
 	VERTEX_COLOR = 2
 
+class SpaceType(object):
+	WORLD_SPACE = 1
+	VIEW_SPACE = 2
+
 
 #called by main window once per frame
 def update():
-	worldMatrix = srmath.make_rotation_mat(srmath.vec3(0, 1, 0), 90)
-	draw_cube(2.0, worldMatrix, color=RED)
+	draw_cube(2.0, color=RED)
+
+def moveCamera(offset, space = SpaceType.VIEW_SPACE):
+	global cameraPosition
+	global lookAt
+	if space == SpaceType.VIEW_SPACE:
+		invViewMat = srmath.make_inv_view_mat(cameraPosition, lookAt, srmath.vec3(0, 1, 0))
+		if not isinstance(offset, srmath.vec4):
+			offset = srmath.vec4(offset.x, offset.y, offset.z, 0.0)
+		offsetInWorld = invViewMat * offset
+		offsetInWorld = srmath.vec3(offsetInWorld.x, offsetInWorld.y, offsetInWorld.z)
+		cameraPosition += offsetInWorld
+		lookAt += offsetInWorld
+
+def clearScreen():
+	global frameBuffer
+	frameBuffer = [clearColor] * (WINDOW_HEIGHT * WINDOW_WIDTH)
 
 
 def draw_point(x, y, color):
