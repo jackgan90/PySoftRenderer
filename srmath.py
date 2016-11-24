@@ -576,6 +576,6 @@ def ndc_to_screen_coord(ndcPoint, width, height, near, far):
 	screenPoint = vec3()
 	screenPoint.x = int((ndcPoint.x * 0.5 + 0.5) * width)
 	screenPoint.y = int((ndcPoint.y * 0.5 + 0.5) * height)
-	screenPoint.z = int(near + ndcPoint.z * (far - near))
+	screenPoint.z = ndcPoint.z * 0.5 + 0.5
 	return screenPoint
 
