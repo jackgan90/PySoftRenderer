@@ -73,7 +73,7 @@ cameraAspectRatio	pipeline.py	/^cameraAspectRatio = 1.0$/;"	v
 cameraFOV	pipeline.py	/^cameraFOV = 60$/;"	v
 cameraFarPlane	pipeline.py	/^cameraFarPlane = 500.0$/;"	v
 cameraNearPlane	pipeline.py	/^cameraNearPlane = 1.0$/;"	v
-cameraPosition	pipeline.py	/^cameraPosition = srmath.vec3(0, 4, 4)$/;"	v
+cameraPosition	pipeline.py	/^cameraPosition = srmath.vec3(4, 4, 4)$/;"	v
 canvas	.\\main.py	/^canvas = None$/;"	v	language:Python
 changeFOV	.\\main.py	/^def changeFOV(event):$/;"	f	language:Python	signature:(event)
 clearColor	pipeline.py	/^clearColor = BLACK$/;"	v
@@ -93,7 +93,8 @@ dot	.\\srmath.py	/^	def dot(self, v):$/;"	m	language:Python	class:vec4	signature
 draw_cube	pipeline.py	/^def draw_cube(size = 1, worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_/;"	f
 draw_flat_triangle	pipeline.py	/^def draw_flat_triangle(v0, v1, v2):$/;"	f
 draw_line	pipeline.py	/^def draw_line(x0, y0, x1, y1, color):$/;"	f
-draw_plane	pipeline.py	/^def draw_plane(worldMatrix = srmath.mat4.identity):$/;"	f
+draw_mesh	pipeline.py	/^def draw_mesh(mesh, worldMatrix = srmath.mat4.identity, wireframeColor = WHITE, mode = DrawMode./;"	f
+draw_plane	pipeline.py	/^def draw_plane(worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_FRAME):$/;"	f
 draw_point	pipeline.py	/^def draw_point(x, y, color):$/;"	f
 draw_scanline	pipeline.py	/^def draw_scanline(left, right):$/;"	f
 draw_triangle	pipeline.py	/^def draw_triangle(v0, v1, v2, mode, color):$/;"	f

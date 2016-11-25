@@ -38,7 +38,7 @@ class VertexAttribute(object):
 clearColor = BLACK
 frameBuffer = [BLACK] * (WINDOW_HEIGHT * WINDOW_WIDTH)
 depthBuffer = [1.0] * (WINDOW_HEIGHT * WINDOW_WIDTH)
-cameraPosition = srmath.vec3(0, 4, 4)
+cameraPosition = srmath.vec3(4, 4, 4)
 lookAt = srmath.vec3(0, 0, 0)
 cameraAspectRatio = 1.0
 cameraFOV = 60
@@ -50,7 +50,7 @@ frontFace = WindingOrder.CCW
 #called by main window once per frame
 def update():
 	# rotMat = srmath.make_rotation_mat(srmath.vec3(1, 0, 0), 90.0)
-	# draw_plane(rotMat)
+	# draw_plane(rotMat, mode=DrawMode.VERTEX_COLOR)
 	draw_cube(2.0, color=RED, mode=DrawMode.VERTEX_COLOR)
 
 def move_camera(offset, space = SpaceType.VIEW_SPACE):
@@ -174,9 +174,9 @@ def inBound(x, y):
 	return 0 <= x < WINDOW_WIDTH and 0 <= y < WINDOW_HEIGHT
 
 def draw_scanline(left, right):
-	xStart = int(left.screenCoord.x)
-	xEnd = int(right.screenCoord.x)
-	if xStart == xEnd:
+	xStart = left.screenCoord.x
+	xEnd = right.screenCoord.x
+	if int(xStart) == int(xEnd):
 		c = left.color / left.interpolateParam
 		color = (int(255 * c.x) % 256, int(255 * c.y) % 256, int(255 * c.z) % 256)
 		draw_point(int(left.screenCoord.x), int(left.screenCoord.y), color)
@@ -184,7 +184,7 @@ def draw_scanline(left, right):
 		
 	y = int(left.screenCoord.y)
 	currentVertex = left
-	for x in xrange(xStart, xEnd + 1, 1):
+	for x in xrange(int(xStart), int(xEnd) + 1, 1):
 		if inBound(x, y):
 			depthInBuffer = get_depth(x, y)
 			if currentVertex.screenCoord.z <= depthInBuffer:
@@ -193,7 +193,7 @@ def draw_scanline(left, right):
 				g = int(255 * currentVertex.color.y / currentVertex.interpolateParam) % 256
 				b = int(255 * currentVertex.color.z / currentVertex.interpolateParam) % 256
 				draw_point(x, y, (r, g, b))
-		currentVertex = interpolateVertex(left, right, float(x + 1 - xStart) / (xEnd - xStart))
+		currentVertex = interpolateVertex(left, right, (x + 1 - xStart) / (xEnd - xStart))
 
 def draw_flat_triangle(v0, v1, v2):
 	if int(v0.screenCoord.y) == int(v1.screenCoord.y) and int(v1.screenCoord.y) == int(v2.screenCoord.y):
@@ -268,70 +268,42 @@ def cull_back_face(v0, v1, v2):
 	else:
 		return False
 
-def draw_cube(size = 1, worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_FRAME):
-	c = cube.Cube(size)
-	worldMat = worldMatrix
+def draw_mesh(mesh, worldMatrix = srmath.mat4.identity, wireframeColor = WHITE, mode = DrawMode.WIRE_FRAME):
 	viewMat = srmath.make_view_mat(cameraPosition, lookAt, srmath.vec3(0, 1, 0))
 	projMat = srmath.make_perspect_mat_fov(cameraAspectRatio, cameraNearPlane, \
 			cameraFarPlane, cameraFOV)
-	mvp = projMat * viewMat * worldMat
-	for i in xrange(0, len(c.indices), 3):
-		idx0 = c.indices[i]
-		idx1 = c.indices[i + 1]
-		idx2 = c.indices[i + 2]
+	mvp = projMat * viewMat * worldMatrix
+	for i in xrange(0, len(mesh.indices), 3):
+		idx0 = mesh.indices[i]
+		idx1 = mesh.indices[i + 1]
+		idx2 = mesh.indices[i + 2]
 		vsInput0 = VertexInput()
-		vsInput0.pos = srmath.vec4(c.vertices[idx0 * 3], c.vertices[idx0 * 3 + 1], \
-				c.vertices[idx0 * 3 + 2], 1.0)
+		vsInput0.pos = srmath.vec4(mesh.vertices[idx0 * 3], mesh.vertices[idx0 * 3 + 1], \
+				mesh.vertices[idx0 * 3 + 2], 1.0)
 		if mode != DrawMode.WIRE_FRAME:
-			vsInput0.color = srmath.vec3(c.colors[idx0 * 3], c.colors[idx0 * 3 + 1], c.colors[idx0 * 3 + 2])
+			vsInput0.color = srmath.vec3(mesh.colors[idx0 * 3], mesh.colors[idx0 * 3 + 1], mesh.colors[idx0 * 3 + 2])
 		vsInput1 = VertexInput()
-		vsInput1.pos = srmath.vec4(c.vertices[idx1 * 3], c.vertices[idx1 * 3 + 1], \
-				c.vertices[idx1 * 3 + 2], 1.0)
+		vsInput1.pos = srmath.vec4(mesh.vertices[idx1 * 3], mesh.vertices[idx1 * 3 + 1], \
+				mesh.vertices[idx1 * 3 + 2], 1.0)
 		if mode != DrawMode.WIRE_FRAME:
-			vsInput1.color = srmath.vec3(c.colors[idx1 * 3], c.colors[idx1 * 3 + 1], c.colors[idx1 * 3 + 2])
+			vsInput1.color = srmath.vec3(mesh.colors[idx1 * 3], mesh.colors[idx1 * 3 + 1], mesh.colors[idx1 * 3 + 2])
 		vsInput2 = VertexInput()
-		vsInput2.pos = srmath.vec4(c.vertices[idx2 * 3], c.vertices[idx2 * 3 + 1], \
-				c.vertices[idx2 * 3 + 2], 1.0)
+		vsInput2.pos = srmath.vec4(mesh.vertices[idx2 * 3], mesh.vertices[idx2 * 3 + 1], \
+				mesh.vertices[idx2 * 3 + 2], 1.0)
 		if mode != DrawMode.WIRE_FRAME:
-			vsInput2.color = srmath.vec3(c.colors[idx2 * 3], c.colors[idx2 * 3 + 1], c.colors[idx2 * 3 + 2])
+			vsInput2.color = srmath.vec3(mesh.colors[idx2 * 3], mesh.colors[idx2 * 3 + 1], mesh.colors[idx2 * 3 + 2])
 		vertex0 = calc_vertex_attribute(mvp, vsInput0, mode)
 		vertex1 = calc_vertex_attribute(mvp, vsInput1, mode)
 		vertex2 = calc_vertex_attribute(mvp, vsInput2, mode)
 		if cull_back_face(vertex0, vertex1, vertex2):
 			continue
-		draw_triangle(vertex0, vertex1, vertex2, mode, color)
+		draw_triangle(vertex0, vertex1, vertex2, mode, wireframeColor)
 
-def draw_plane(worldMatrix = srmath.mat4.identity):
+
+def draw_cube(size = 1, worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_FRAME):
+	c = cube.Cube(size)
+	draw_mesh(c, worldMatrix, color, mode)
+
+def draw_plane(worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_FRAME):
 	p = plane.Plane()
-	worldMat = worldMatrix
-	viewMat = srmath.make_view_mat(cameraPosition, lookAt, srmath.vec3(0, 1, 0))
-	projMat = srmath.make_perspect_mat_fov(cameraAspectRatio, cameraNearPlane, \
-			cameraFarPlane, cameraFOV)
-	mvp = projMat * viewMat * worldMat
-	for i in xrange(0, len(p.indices), 3):
-		idx0 = p.indices[i]
-		idx1 = p.indices[i + 1]
-		idx2 = p.indices[i + 2]
-		vsInput0 = VertexInput()
-		vsInput0.pos = srmath.vec4(p.vertices[idx0 * 3], p.vertices[idx0 * 3 + 1], \
-				p.vertices[idx0 * 3 + 2], 1.0)
-		vsInput0.color = srmath.vec3(p.colors[idx0 * 3], p.colors[idx0 * 3 + 1], p.colors[idx0 * 3 + 2])
-		vsInput1 = VertexInput()
-		vsInput1.pos = srmath.vec4(p.vertices[idx1 * 3], p.vertices[idx1 * 3 + 1], \
-				p.vertices[idx1 * 3 + 2], 1.0)
-		vsInput1.color = srmath.vec3(p.colors[idx1 * 3], p.colors[idx1 * 3 + 1], p.colors[idx1 * 3 + 2])
-		vsInput2 = VertexInput()
-		vsInput2.pos = srmath.vec4(p.vertices[idx2 * 3], p.vertices[idx2 * 3 + 1], \
-				p.vertices[idx2 * 3 + 2], 1.0)
-		vsInput2.color = srmath.vec3(p.colors[idx2 * 3], p.colors[idx2 * 3 + 1], p.colors[idx2 * 3 + 2])
-		vertex0 = calc_vertex_attribute(mvp, vsInput0, DrawMode.VERTEX_COLOR)
-		vertex1 = calc_vertex_attribute(mvp, vsInput1, DrawMode.VERTEX_COLOR)
-		vertex2 = calc_vertex_attribute(mvp, vsInput2, DrawMode.VERTEX_COLOR)
-		if cull_back_face(vertex0, vertex1, vertex2):
-			continue
-		draw_triangle(vertex0, vertex1, vertex2, DrawMode.VERTEX_COLOR, (1, 0, 0))
-
-
-
-
-
+	draw_mesh(p, worldMatrix, color, mode)
