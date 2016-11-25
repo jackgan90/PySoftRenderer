@@ -180,16 +180,16 @@ def inBound(x, y):
 	return 0 <= x < WINDOW_WIDTH and 0 <= y < WINDOW_HEIGHT
 
 def draw_scanline(left, right, y):
-	xStart = left.screenCoord.x
-	xEnd = right.screenCoord.x
-	if int(xStart) == int(xEnd):
-		c = left.color / left.interpolateParam
-		color = (int(255 * c.x) % 256, int(255 * c.y) % 256, int(255 * c.z) % 256)
-		draw_point(int(left.screenCoord.x), int(left.screenCoord.y), color)
-		return
+	xStart = int(left.screenCoord.x)
+	xEnd = int(right.screenCoord.x + 1)
+	# if xStart == xEnd:
+		# c = left.color / left.interpolateParam
+		# color = (int(255 * c.x) % 256, int(255 * c.y) % 256, int(255 * c.z) % 256)
+		# draw_point(xStart, y, color)
+		# return
 		
 	currentVertex = left
-	for x in xrange(int(xStart), int(xEnd) + 1, 1):
+	for x in xrange(xStart, xEnd, 1):
 		if inBound(x, y):
 			depthInBuffer = get_depth(x, y)
 			if currentVertex.screenCoord.z <= depthInBuffer:
@@ -198,7 +198,7 @@ def draw_scanline(left, right, y):
 				g = int(255 * currentVertex.color.y / currentVertex.interpolateParam) % 256
 				b = int(255 * currentVertex.color.z / currentVertex.interpolateParam) % 256
 				draw_point(x, y, (r, g, b))
-		currentVertex = interpolateVertex(left, right, (x + 1 - xStart) / (xEnd - xStart))
+		currentVertex = interpolateVertex(left, right, float(x + 1 - xStart) / (xEnd - xStart))
 
 def draw_flat_triangle(v0, v1, v2):
 	if int(v0.screenCoord.y) == int(v1.screenCoord.y) and int(v1.screenCoord.y) == int(v2.screenCoord.y):
