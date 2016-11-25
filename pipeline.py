@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import cube
+import plane
 import srmath
 WINDOW_HEIGHT = 512
 WINDOW_WIDTH = 512
@@ -9,15 +10,10 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
-clearColor = BLACK
-frameBuffer = [BLACK] * (WINDOW_HEIGHT * WINDOW_WIDTH)
-depthBuffer = [1.0] * (WINDOW_HEIGHT * WINDOW_WIDTH)
-cameraPosition = srmath.vec3(4, 4, 4)
-lookAt = srmath.vec3(0, 0, 0)
-cameraAspectRatio = 1.0
-cameraFOV = 60
-cameraNearPlane = 1.0
-cameraFarPlane = 500.0
+
+class WindingOrder(object):
+	CW = 1
+	CCW = 2
 
 class DrawMode(object):
 	WIRE_FRAME = 1
@@ -39,9 +35,23 @@ class VertexAttribute(object):
 		self.color = BLACK
 
 
+clearColor = BLACK
+frameBuffer = [BLACK] * (WINDOW_HEIGHT * WINDOW_WIDTH)
+depthBuffer = [1.0] * (WINDOW_HEIGHT * WINDOW_WIDTH)
+cameraPosition = srmath.vec3(0, 0, 4)
+lookAt = srmath.vec3(0, 0, 0)
+cameraAspectRatio = 1.0
+cameraFOV = 60
+cameraNearPlane = 1.0
+cameraFarPlane = 500.0
+frontFace = WindingOrder.CCW
+
+
 #called by main window once per frame
 def update():
-	draw_cube(2.0, color=RED, mode=DrawMode.VERTEX_COLOR)
+	rotMat = srmath.make_rotation_mat(srmath.vec3(1, 0, 0), 90.0)
+	draw_plane(rotMat)
+	# draw_cube(2.0, color=RED, mode=DrawMode.VERTEX_COLOR)
 
 def move_camera(offset, space = SpaceType.VIEW_SPACE):
 	global cameraPosition
@@ -67,7 +77,9 @@ def clear_depth_buffer():
 	global depthBuffer
 	depthBuffer = [1.0] * (WINDOW_HEIGHT * WINDOW_WIDTH)
 
-
+def set_front_face(face):
+	global frontFace
+	frontFace = face
 
 def draw_point(x, y, color):
 	coord = y * WINDOW_WIDTH + x
@@ -135,8 +147,8 @@ def draw_triangle(v0, v1, v2, mode, color):
 		draw_triangle_wireframe(v0, v1, v2, color)
 	elif mode == DrawMode.VERTEX_COLOR:
 		flatTriangles = get_flat_triangles(v0, v1, v2)
-		for v0, v1, v2 in flatTriangles:
-			draw_flat_triangle(v0, v1, v2)
+		for vertex0, vertex1, vertex2 in flatTriangles:
+			draw_flat_triangle(vertex0, vertex1, vertex2)
 
 def calc_vertex_attribute(mvp, vertexInput, mode):
 	vertex = VertexAttribute()
@@ -184,12 +196,13 @@ def draw_scanline(left, right):
 		currentVertex = interpolateVertex(left, right, (x + 1 - xStart) / (xEnd - xStart))
 
 def draw_flat_triangle(v0, v1, v2):
-	if int(v0.screenCoord.x) == int(v1.screenCoord.x) and int(v0.screenCoord.y) == int(v1.screenCoord.y) \
-			and int(v1.screenCoord.x) == int(v2.screenCoord.x) and int(v1.screenCoord.y) == int(v2.screenCoord.y):
+	if int(v0.screenCoord.y) == int(v1.screenCoord.y) and int(v1.screenCoord.y) == int(v2.screenCoord.y):
+		left = v0 if v0.screenCoord.x < v1.screenCoord.x else v1
+		left = left if left.screenCoord.x < v2.screenCoord.x else v2
+		right = v0 if v0.screenCoord.x > v1.screenCoord.x else v1
+		right = right if right.screenCoord.x > v2.screenCoord.x else v2
+		draw_scanline(left, right)
 		#single point
-		c = v0.color / v0.interpolateParam
-		color = (int(255 * c.x) % 256, int(255 * c.y) % 256, int(255 * c.z) % 256)
-		draw_point(int(v0.screenCoord.x), int(v0.screenCoord.y), color)
 	elif int(v0.screenCoord.y) == int(v1.screenCoord.y):
 		if v0.screenCoord.x < v1.screenCoord.x:
 			left = v0
@@ -200,6 +213,9 @@ def draw_flat_triangle(v0, v1, v2):
 		bottom = v2
 		yStart = left.screenCoord.y
 		yEnd = bottom.screenCoord.y
+		if int(yStart) == int(yEnd):
+			draw_scanline(left, right)
+			return
 		for y in xrange(int(yStart), int(yEnd) + 1, 1):
 			interpolateLeft = interpolateVertex(left, bottom, (y - yStart) / (yEnd - yStart))
 			interpolateRight = interpolateVertex(right, bottom, (y - yStart) / (yEnd - yStart))
@@ -214,6 +230,9 @@ def draw_flat_triangle(v0, v1, v2):
 		top = v0
 		yStart = v0.screenCoord.y
 		yEnd = left.screenCoord.y
+		if int(yStart) == int(yEnd):
+			draw_scanline(left, right)
+			return
 		for y in xrange(int(yStart), int(yEnd) + 1, 1):
 			interpolateLeft = interpolateVertex(top, left, (y - yStart) / (yEnd - yStart))
 			interpolateRight = interpolateVertex(top, right, (y - yStart) / (yEnd - yStart))
@@ -227,13 +246,27 @@ def draw_flat_triangle(v0, v1, v2):
 def get_flat_triangles(v0, v1, v2):
 	triList = [v0, v1, v2]
 	triList.sort(key = lambda x : x.screenCoord.y)
-	if v0.screenCoord.y == v1.screenCoord.y or \
-		v1.screenCoord.y == v2.screenCoord.y:
+	if int(triList[0].screenCoord.y) == int(triList[1].screenCoord.y) or \
+		int(triList[1].screenCoord.y) == int(triList[2].screenCoord.y):
 		return ((triList[0], triList[1], triList[2]), )
 	else:
 		t = (triList[1].screenCoord.y - triList[0].screenCoord.y) / (triList[2].screenCoord.y - triList[0].screenCoord.y)
 		v3 = interpolateVertex(triList[0], triList[2], t)
 		return ((triList[0], triList[1], v3, ), (v3, triList[1], triList[2], ), )
+
+def cull_back_face(v0, v1, v2):
+	dir0 = v1.screenCoord - v0.screenCoord
+	dir1 = v2.screenCoord - v1.screenCoord
+	dir0.z = 0
+	dir1.z = 0
+	product = dir0.cross(dir1)
+	isClockwise = product.z > 0
+	if isClockwise and frontFace == WindingOrder.CCW:
+		return True
+	elif not isClockwise and frontFace == WindingOrder.CW:
+		return True
+	else:
+		return False
 
 def draw_cube(size = 1, worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_FRAME):
 	c = cube.Cube(size)
@@ -264,5 +297,41 @@ def draw_cube(size = 1, worldMatrix = srmath.mat4.identity, color = WHITE, mode 
 		vertex0 = calc_vertex_attribute(mvp, vsInput0, mode)
 		vertex1 = calc_vertex_attribute(mvp, vsInput1, mode)
 		vertex2 = calc_vertex_attribute(mvp, vsInput2, mode)
+		if cull_back_face(vertex0, vertex1, vertex2):
+			continue
 		draw_triangle(vertex0, vertex1, vertex2, mode, color)
+
+def draw_plane(worldMatrix = srmath.mat4.identity):
+	p = plane.Plane()
+	worldMat = worldMatrix
+	viewMat = srmath.make_view_mat(cameraPosition, lookAt, srmath.vec3(0, 1, 0))
+	projMat = srmath.make_perspect_mat_fov(cameraAspectRatio, cameraNearPlane, \
+			cameraFarPlane, cameraFOV)
+	mvp = projMat * viewMat * worldMat
+	for i in xrange(0, len(p.indices), 3):
+		idx0 = p.indices[i]
+		idx1 = p.indices[i + 1]
+		idx2 = p.indices[i + 2]
+		vsInput0 = VertexInput()
+		vsInput0.pos = srmath.vec4(p.vertices[idx0 * 3], p.vertices[idx0 * 3 + 1], \
+				p.vertices[idx0 * 3 + 2], 1.0)
+		vsInput0.color = srmath.vec3(p.colors[idx0 * 3], p.colors[idx0 * 3 + 1], p.colors[idx0 * 3 + 2])
+		vsInput1 = VertexInput()
+		vsInput1.pos = srmath.vec4(p.vertices[idx1 * 3], p.vertices[idx1 * 3 + 1], \
+				p.vertices[idx1 * 3 + 2], 1.0)
+		vsInput1.color = srmath.vec3(p.colors[idx1 * 3], p.colors[idx1 * 3 + 1], p.colors[idx1 * 3 + 2])
+		vsInput2 = VertexInput()
+		vsInput2.pos = srmath.vec4(p.vertices[idx2 * 3], p.vertices[idx2 * 3 + 1], \
+				p.vertices[idx2 * 3 + 2], 1.0)
+		vsInput2.color = srmath.vec3(p.colors[idx2 * 3], p.colors[idx2 * 3 + 1], p.colors[idx2 * 3 + 2])
+		vertex0 = calc_vertex_attribute(mvp, vsInput0, DrawMode.VERTEX_COLOR)
+		vertex1 = calc_vertex_attribute(mvp, vsInput1, DrawMode.VERTEX_COLOR)
+		vertex2 = calc_vertex_attribute(mvp, vsInput2, DrawMode.VERTEX_COLOR)
+		if cull_back_face(vertex0, vertex1, vertex2):
+			continue
+		draw_triangle(vertex0, vertex1, vertex2, DrawMode.VERTEX_COLOR, (1, 0, 0))
+
+
+
+
 
