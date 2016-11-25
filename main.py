@@ -17,6 +17,11 @@ statisticInfo = None
 frameCount = 0
 lastFrameTime = 0.0
 
+def save_texture(texture):
+	img = Image.new('RGB', (texture.width, texture.height))
+	img.putdata(texture.buffer)
+	img.save('texture.bmp')
+
 def destroyWindow(event):
 	global canvas
 	global window
@@ -113,6 +118,7 @@ def main():
 	window.bind('<Key>', onKeyDown)
 	window.bind('<MouseWheel>', changeFOV)
 	window.bind('<Button-1>', on_mouse_click)
+	window.bind('<F3>', lambda event : save_texture(pipeline.textures[0]))
 	window.mainloop()
 
 

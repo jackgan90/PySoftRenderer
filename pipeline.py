@@ -2,14 +2,15 @@
 import cube
 import plane
 import srmath
-WINDOW_HEIGHT = 512
-WINDOW_WIDTH = 512
+WINDOW_HEIGHT = 400
+WINDOW_WIDTH = 400
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
+GREY = (128, 128, 128)
 
 class WindingOrder(object):
 	CW = 1
@@ -18,6 +19,7 @@ class WindingOrder(object):
 class DrawMode(object):
 	WIRE_FRAME = 1
 	VERTEX_COLOR = 2
+	TEXTURE_MAP = 3
 
 class SpaceType(object):
 	WORLD_SPACE = 1
@@ -27,18 +29,27 @@ class VertexInput(object):
 	def __init__(self):
 		self.pos = None
 		self.color = None
+		self.uv = None
 
 class VertexAttribute(object):
 	def __init__(self):
 		self.screenCoord = None
 		self.interpolateParam = 0.0
 		self.color = BLACK
+		self.uv = srmath.vec2()
+
+class Texture(object):
+	def __init__(self, w, h):
+		self.width = w
+		self.height = h
+		self.buffer = []
 
 
-clearColor = BLACK
-frameBuffer = [BLACK] * (WINDOW_HEIGHT * WINDOW_WIDTH)
+clearColor = GREY
+frameBuffer = [clearColor] * (WINDOW_HEIGHT * WINDOW_WIDTH)
 depthBuffer = [1.0] * (WINDOW_HEIGHT * WINDOW_WIDTH)
-cameraPosition = srmath.vec3(3, 3, 3)
+textures = []
+cameraPosition = srmath.vec3(0, 0, 3)
 lookAt = srmath.vec3(0, 0, 0)
 cameraAspectRatio = 1.0
 cameraFOV = 60
@@ -49,9 +60,9 @@ frontFace = WindingOrder.CCW
 
 #called by main window once per frame
 def update():
-	# rotMat = srmath.make_rotation_mat(srmath.vec3(1, 0, 0), 90.0)
-	# draw_plane(rotMat, mode=DrawMode.VERTEX_COLOR)
-	draw_cube(2.0, color=RED, mode=DrawMode.VERTEX_COLOR)
+	rotMat = srmath.make_rotation_mat(srmath.vec3(1, 0, 0), 90.0)
+	draw_plane(rotMat, mode=DrawMode.TEXTURE_MAP)
+	# draw_cube(2.0, color=RED, mode=DrawMode.TEXTURE_MAP)
 
 def move_camera(offset, space = SpaceType.VIEW_SPACE):
 	global cameraPosition
@@ -79,6 +90,21 @@ def clear_depth_buffer():
 def set_front_face(face):
 	global frontFace
 	frontFace = face
+
+def create_chess_board_texture(w = WINDOW_WIDTH, h = WINDOW_HEIGHT, cells = 5):
+	texture = Texture(w, h)
+	cellWidth = w / cells
+	cellHeight = h / cells
+	for x in xrange(w):
+		for y in xrange(h):
+			texture.buffer.append((20, 160, 135) if x / cellWidth % 2 == 0  and y / cellHeight % 2 == 0 else (160, 204, 20))
+	textures.append(texture)
+	return texture
+
+def sample_texture(texture, uv):
+	x = int(srmath.clamp(srmath.clamp(uv.x, 0.0, 1.0) * texture.width, 0, texture.width - 1))
+	y = int(srmath.clamp(srmath.clamp(uv.y, 0.0, 1.0) * texture.height, 0, texture.height - 1))
+	return texture.buffer[y * texture.width + x]
 
 def get_pixel(x, y):
 	if x < 0 or x >= WINDOW_WIDTH:
@@ -151,10 +177,10 @@ def draw_triangle_wireframe(v0, v1, v2, color):
 def draw_triangle(v0, v1, v2, mode, color):
 	if mode == DrawMode.WIRE_FRAME:
 		draw_triangle_wireframe(v0, v1, v2, color)
-	elif mode == DrawMode.VERTEX_COLOR:
+	elif mode in (DrawMode.VERTEX_COLOR, DrawMode.TEXTURE_MAP):
 		flatTriangles = get_flat_triangles(v0, v1, v2)
 		for vertex0, vertex1, vertex2 in flatTriangles:
-			draw_flat_triangle(vertex0, vertex1, vertex2)
+			draw_flat_triangle(vertex0, vertex1, vertex2, mode)
 
 def calc_vertex_attribute(mvp, vertexInput, mode):
 	vertex = VertexAttribute()
@@ -167,6 +193,8 @@ def calc_vertex_attribute(mvp, vertexInput, mode):
 	if mode != DrawMode.WIRE_FRAME:
 		vertex.color = srmath.vec3(vertexInput.color[0] * vertex.interpolateParam, \
 				vertexInput.color[1] * vertex.interpolateParam, vertexInput.color[2] * vertex.interpolateParam)
+	if mode == DrawMode.TEXTURE_MAP:
+		vertex.uv = vertexInput.uv * vertex.interpolateParam
 	return vertex
 
 def interpolateVertex(v0, v1, t):
@@ -174,12 +202,13 @@ def interpolateVertex(v0, v1, t):
 	vertex.interpolateParam = srmath.lerp(v0.interpolateParam, v1.interpolateParam, t)
 	vertex.color = srmath.lerp(v0.color, v1.color, t)
 	vertex.screenCoord = srmath.lerp(v0.screenCoord, v1.screenCoord, t)
+	vertex.uv = srmath.lerp(v0.uv, v1.uv, t)
 	return vertex
 
 def inBound(x, y):
 	return 0 <= x < WINDOW_WIDTH and 0 <= y < WINDOW_HEIGHT
 
-def draw_scanline(left, right, y):
+def draw_scanline(left, right, y, mode):
 	xStart = int(left.screenCoord.x)
 	xEnd = int(right.screenCoord.x + 1)
 	# if xStart == xEnd:
@@ -194,19 +223,25 @@ def draw_scanline(left, right, y):
 			depthInBuffer = get_depth(x, y)
 			if currentVertex.screenCoord.z <= depthInBuffer:
 				set_depth(x, y, currentVertex.screenCoord.z)
-				r = int(255 * currentVertex.color.x / currentVertex.interpolateParam) % 256
-				g = int(255 * currentVertex.color.y / currentVertex.interpolateParam) % 256
-				b = int(255 * currentVertex.color.z / currentVertex.interpolateParam) % 256
+				if mode == DrawMode.VERTEX_COLOR:
+					r = int(255 * currentVertex.color.x / currentVertex.interpolateParam) % 256
+					g = int(255 * currentVertex.color.y / currentVertex.interpolateParam) % 256
+					b = int(255 * currentVertex.color.z / currentVertex.interpolateParam) % 256
+				elif mode == DrawMode.TEXTURE_MAP:
+					texture = textures[0]
+					uv = currentVertex.uv / currentVertex.interpolateParam
+					r, g, b = sample_texture(texture, uv)
+					# print r, g, b
 				draw_point(x, y, (r, g, b))
 		currentVertex = interpolateVertex(left, right, float(x + 1 - xStart) / (xEnd - xStart))
 
-def draw_flat_triangle(v0, v1, v2):
+def draw_flat_triangle(v0, v1, v2, mode):
 	if int(v0.screenCoord.y) == int(v1.screenCoord.y) and int(v1.screenCoord.y) == int(v2.screenCoord.y):
 		left = v0 if v0.screenCoord.x < v1.screenCoord.x else v1
 		left = left if left.screenCoord.x < v2.screenCoord.x else v2
 		right = v0 if v0.screenCoord.x > v1.screenCoord.x else v1
 		right = right if right.screenCoord.x > v2.screenCoord.x else v2
-		draw_scanline(left, right, int(v0.screenCoord.y))
+		draw_scanline(left, right, int(v0.screenCoord.y), mode)
 		#single point
 	elif int(v0.screenCoord.y) == int(v1.screenCoord.y):
 		if v0.screenCoord.x < v1.screenCoord.x:
@@ -219,12 +254,12 @@ def draw_flat_triangle(v0, v1, v2):
 		yStart = int(left.screenCoord.y)
 		yEnd = int(bottom.screenCoord.y)
 		if yStart == yEnd:
-			draw_scanline(left, right, yStart)
+			draw_scanline(left, right, yStart, mode)
 			return
 		for y in xrange(yStart, yEnd + 1, 1):
 			interpolateLeft = interpolateVertex(left, bottom, float(y - yStart) / (yEnd - yStart))
 			interpolateRight = interpolateVertex(right, bottom, float(y - yStart) / (yEnd - yStart))
-			draw_scanline(interpolateLeft, interpolateRight, y)
+			draw_scanline(interpolateLeft, interpolateRight, y, mode)
 	elif int(v1.screenCoord.y) == int(v2.screenCoord.y):
 		if v1.screenCoord.x < v2.screenCoord.x:
 			left = v1
@@ -236,12 +271,12 @@ def draw_flat_triangle(v0, v1, v2):
 		yStart = int(v0.screenCoord.y)
 		yEnd = int(left.screenCoord.y)
 		if yStart == yEnd:
-			draw_scanline(left, right, yStart)
+			draw_scanline(left, right, yStart, mode)
 			return
 		for y in xrange(yStart, yEnd + 1, 1):
 			interpolateLeft = interpolateVertex(top, left, float(y - yStart) / (yEnd - yStart))
 			interpolateRight = interpolateVertex(top, right, float(y - yStart) / (yEnd - yStart))
-			draw_scanline(interpolateLeft, interpolateRight, y)
+			draw_scanline(interpolateLeft, interpolateRight, y, mode)
 	else:
 		print '-' * 30
 		print v0.screenCoord, v1.screenCoord, v2.screenCoord
@@ -278,6 +313,8 @@ def draw_mesh(mesh, worldMatrix = srmath.mat4.identity, wireframeColor = WHITE, 
 	projMat = srmath.make_perspect_mat_fov(cameraAspectRatio, cameraNearPlane, \
 			cameraFarPlane, cameraFOV)
 	mvp = projMat * viewMat * worldMatrix
+	if mode == DrawMode.TEXTURE_MAP and not textures:
+		create_chess_board_texture()
 	for i in xrange(0, len(mesh.indices), 3):
 		idx0 = mesh.indices[i]
 		idx1 = mesh.indices[i + 1]
@@ -287,16 +324,22 @@ def draw_mesh(mesh, worldMatrix = srmath.mat4.identity, wireframeColor = WHITE, 
 				mesh.vertices[idx0 * 3 + 2], 1.0)
 		if mode != DrawMode.WIRE_FRAME:
 			vsInput0.color = srmath.vec3(mesh.colors[idx0 * 3], mesh.colors[idx0 * 3 + 1], mesh.colors[idx0 * 3 + 2])
+		if mode == DrawMode.TEXTURE_MAP:
+			vsInput0.uv = srmath.vec2(mesh.uvs[idx0 * 3], mesh.uvs[idx0 * 3 + 1])
 		vsInput1 = VertexInput()
 		vsInput1.pos = srmath.vec4(mesh.vertices[idx1 * 3], mesh.vertices[idx1 * 3 + 1], \
 				mesh.vertices[idx1 * 3 + 2], 1.0)
 		if mode != DrawMode.WIRE_FRAME:
 			vsInput1.color = srmath.vec3(mesh.colors[idx1 * 3], mesh.colors[idx1 * 3 + 1], mesh.colors[idx1 * 3 + 2])
+		if mode == DrawMode.TEXTURE_MAP:
+			vsInput1.uv = srmath.vec2(mesh.uvs[idx1 * 3], mesh.uvs[idx1 * 3 + 1])
 		vsInput2 = VertexInput()
 		vsInput2.pos = srmath.vec4(mesh.vertices[idx2 * 3], mesh.vertices[idx2 * 3 + 1], \
 				mesh.vertices[idx2 * 3 + 2], 1.0)
 		if mode != DrawMode.WIRE_FRAME:
 			vsInput2.color = srmath.vec3(mesh.colors[idx2 * 3], mesh.colors[idx2 * 3 + 1], mesh.colors[idx2 * 3 + 2])
+		if mode == DrawMode.TEXTURE_MAP:
+			vsInput2.uv = srmath.vec2(mesh.uvs[idx2 * 3], mesh.uvs[idx2 * 3 + 1])
 		vertex0 = calc_vertex_attribute(mvp, vsInput0, mode)
 		vertex1 = calc_vertex_attribute(mvp, vsInput1, mode)
 		vertex2 = calc_vertex_attribute(mvp, vsInput2, mode)

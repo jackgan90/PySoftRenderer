@@ -35,6 +35,16 @@ class Cube(object):
 			sqrt3Over3, sqrt3Over3, -sqrt3Over3,
 			-sqrt3Over3, sqrt3Over3, -sqrt3Over3,
 		)
+		self.uvs = (
+			0.0, 0.0, 1.0,
+			1.0, 0.0, 1.0,
+			1.0, 1.0, 1.0,
+			0.0, 1.0, 1.0,
+			1.0, 0.0, 1.0,
+			0.0, 0.0, 1.0,
+			0.0, 1.0, 1.0,
+			0.0, 0.0, 1.0,
+		)
 		self.indices = (
 			0, 1, 3,
 			3, 1, 2,

@@ -618,3 +618,6 @@ def ndc_to_screen_coord(ndcPoint, width, height):
 def lerp(val0, val1, t):
 	return val0 + (val1 - val0) * t
 
+def clamp(x, minVal, maxVal):
+	return x if minVal <= x <= maxVal else minVal if x < minVal else maxVal
+
