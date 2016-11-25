@@ -1,27 +1,30 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
-!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
-!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
-!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	//
-BLACK	.\\main.py	/^BLACK = (0, 0, 0)$/;"	v	language:Python
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BLACK	.\main.py	/^BLACK = (0, 0, 0)$/;"	v
 BLACK	pipeline.py	/^BLACK = (0, 0, 0)$/;"	v
 BLUE	pipeline.py	/^BLUE = (0, 0, 255)$/;"	v
 CCW	pipeline.py	/^	CCW = 2$/;"	v	class:WindingOrder
 CW	pipeline.py	/^	CW = 1$/;"	v	class:WindingOrder
-Cube	cube.py	/^class Cube(object):$/;"	c
+Cube	.\cube.py	/^class Cube(object):$/;"	c
 DrawMode	pipeline.py	/^class DrawMode(object):$/;"	c
-EPSILON	.\\srmath.py	/^EPSILON = 0.00001$/;"	v	language:Python
-FRAME_RATE	.\\main.py	/^FRAME_RATE = 30$/;"	v	language:Python
+EPSILON	.\srmath.py	/^EPSILON = 0.00001$/;"	v
+FRAME_RATE	.\main.py	/^FRAME_RATE = 30$/;"	v
 GREEN	pipeline.py	/^GREEN = (0, 255, 0)$/;"	v
+Image	.\main.py	/^from PIL import Image, ImageTk$/;"	i
+ImageTk	.\main.py	/^from PIL import Image, ImageTk$/;"	i
 Plane	plane.py	/^class Plane(object):$/;"	c
 RED	pipeline.py	/^RED = (255, 0, 0)$/;"	v
 SpaceType	pipeline.py	/^class SpaceType(object):$/;"	c
+Tkinter	.\main.py	/^import Tkinter$/;"	i
 VERTEX_COLOR	pipeline.py	/^	VERTEX_COLOR = 2$/;"	v	class:DrawMode
 VIEW_SPACE	pipeline.py	/^	VIEW_SPACE = 2$/;"	v	class:SpaceType
 VertexAttribute	pipeline.py	/^class VertexAttribute(object):$/;"	c
 VertexInput	pipeline.py	/^class VertexInput(object):$/;"	c
-WHITE	.\\main.py	/^WHITE = (255, 255, 255)$/;"	v	language:Python
+WHITE	.\main.py	/^WHITE = (255, 255, 255)$/;"	v
 WHITE	pipeline.py	/^WHITE = (255, 255, 255)$/;"	v
 WINDOW_HEIGHT	pipeline.py	/^WINDOW_HEIGHT = 512$/;"	v
 WINDOW_WIDTH	pipeline.py	/^WINDOW_WIDTH = 512$/;"	v
@@ -29,138 +32,147 @@ WIRE_FRAME	pipeline.py	/^	WIRE_FRAME = 1$/;"	v	class:DrawMode
 WORLD_SPACE	pipeline.py	/^	WORLD_SPACE = 1$/;"	v	class:SpaceType
 WindingOrder	pipeline.py	/^class WindingOrder(object):$/;"	c
 YELLOW	pipeline.py	/^YELLOW = (255, 255, 0)$/;"	v
-__add__	.\\srmath.py	/^	def __add__(self, m):$/;"	m	language:Python	class:mat3	signature:(self, m)
-__add__	.\\srmath.py	/^	def __add__(self, v):$/;"	m	language:Python	class:vec2	signature:(self, v)
-__add__	.\\srmath.py	/^	def __add__(self, v):$/;"	m	language:Python	class:vec3	signature:(self, v)
-__add__	.\\srmath.py	/^	def __add__(self, v):$/;"	m	language:Python	class:vec4	signature:(self, v)
-__div__	.\\srmath.py	/^	def __div__(self, scalar):$/;"	m	language:Python	class:vec2	signature:(self, scalar)
-__div__	.\\srmath.py	/^	def __div__(self, scalar):$/;"	m	language:Python	class:vec3	signature:(self, scalar)
-__div__	.\\srmath.py	/^	def __div__(self, scalar):$/;"	m	language:Python	class:vec4	signature:(self, scalar)
-__getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	language:Python	class:vec2	signature:(self, i)
-__getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	language:Python	class:vec3	signature:(self, i)
-__getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	language:Python	class:vec4	signature:(self, i)
-__getitem__	.\\srmath.py	/^	def __getitem__(self, xy):$/;"	m	language:Python	class:mat3	signature:(self, xy)
-__init__	.\\srmath.py	/^	def __init__(self, matList=None):$/;"	m	language:Python	class:mat3	signature:(self, matList=None)
-__init__	.\\srmath.py	/^	def __init__(self, matList=None):$/;"	m	language:Python	class:mat4	signature:(self, matList=None)
-__init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0):$/;"	m	language:Python	class:vec2	signature:(self, x = 0.0, y = 0.0)
-__init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0):$/;"	m	language:Python	class:vec3	signature:(self, x = 0.0, y = 0.0, z = 0.0)
-__init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0, w = 0.0):$/;"	m	language:Python	class:vec4	signature:(self, x = 0.0, y = 0.0, z = 0.0, w = 0.0)
-__init__	cube.py	/^	def __init__(self, size = 1):$/;"	m	class:Cube
+__add__	.\srmath.py	/^	def __add__(self, m):$/;"	m	class:mat3	file:
+__add__	.\srmath.py	/^	def __add__(self, v):$/;"	m	class:vec2	file:
+__add__	.\srmath.py	/^	def __add__(self, v):$/;"	m	class:vec3	file:
+__add__	.\srmath.py	/^	def __add__(self, v):$/;"	m	class:vec4	file:
+__div__	.\srmath.py	/^	def __div__(self, scalar):$/;"	m	class:vec2	file:
+__div__	.\srmath.py	/^	def __div__(self, scalar):$/;"	m	class:vec3	file:
+__div__	.\srmath.py	/^	def __div__(self, scalar):$/;"	m	class:vec4	file:
+__getitem__	.\srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec2	file:
+__getitem__	.\srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec3	file:
+__getitem__	.\srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec4	file:
+__getitem__	.\srmath.py	/^	def __getitem__(self, xy):$/;"	m	class:mat3	file:
+__init__	.\cube.py	/^	def __init__(self, size = 1):$/;"	m	class:Cube
+__init__	.\srmath.py	/^	def __init__(self, matList=None):$/;"	m	class:mat3
+__init__	.\srmath.py	/^	def __init__(self, matList=None):$/;"	m	class:mat4
+__init__	.\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0):$/;"	m	class:vec2
+__init__	.\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0):$/;"	m	class:vec3
+__init__	.\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0, w = 0.0):$/;"	m	class:vec4
 __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:VertexAttribute
 __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:VertexInput
-__init__	plane.py	/^	def __init__(self, width = 2, height = 2):$/;"	m	class:Plane
-__iter__	.\\srmath.py	/^	def __iter__(self):$/;"	m	language:Python	class:vec2	signature:(self)
-__mul__	.\\srmath.py	/^	def __mul__(self, multiplier):$/;"	m	language:Python	class:mat3	signature:(self, multiplier)
-__mul__	.\\srmath.py	/^	def __mul__(self, scalar):$/;"	m	language:Python	class:vec2	signature:(self, scalar)
-__mul__	.\\srmath.py	/^	def __mul__(self, scalar):$/;"	m	language:Python	class:vec3	signature:(self, scalar)
-__mul__	.\\srmath.py	/^	def __mul__(self, scalar):$/;"	m	language:Python	class:vec4	signature:(self, scalar)
-__repr__	.\\srmath.py	/^	def __repr__(self):$/;"	m	language:Python	class:mat3	signature:(self)
-__repr__	.\\srmath.py	/^	def __repr__(self):$/;"	m	language:Python	class:vec2	signature:(self)
-__repr__	.\\srmath.py	/^	def __repr__(self):$/;"	m	language:Python	class:vec3	signature:(self)
-__repr__	.\\srmath.py	/^	def __repr__(self):$/;"	m	language:Python	class:vec4	signature:(self)
-__setitem__	.\\srmath.py	/^	def __setitem__(self, i, val):$/;"	m	language:Python	class:vec2	signature:(self, i, val)
-__setitem__	.\\srmath.py	/^	def __setitem__(self, i, val):$/;"	m	language:Python	class:vec3	signature:(self, i, val)
-__setitem__	.\\srmath.py	/^	def __setitem__(self, i, val):$/;"	m	language:Python	class:vec4	signature:(self, i, val)
-__setitem__	.\\srmath.py	/^	def __setitem__(self, xy, val):$/;"	m	language:Python	class:mat3	signature:(self, xy, val)
-__sub__	.\\srmath.py	/^	def __sub__(self, m):$/;"	m	language:Python	class:mat3	signature:(self, m)
-__sub__	.\\srmath.py	/^	def __sub__(self, v):$/;"	m	language:Python	class:vec2	signature:(self, v)
-__sub__	.\\srmath.py	/^	def __sub__(self, v):$/;"	m	language:Python	class:vec3	signature:(self, v)
-__sub__	.\\srmath.py	/^	def __sub__(self, v):$/;"	m	language:Python	class:vec4	signature:(self, v)
-adjugateMat	.\\srmath.py	/^	def adjugateMat(self):$/;"	m	language:Python	class:mat3	signature:(self)
-adjugateMat	.\\srmath.py	/^	def adjugateMat(self):$/;"	m	language:Python	class:mat4	signature:(self)
+__init__	plane.py	/^	def __init__(self, width = 5, height = 5):$/;"	m	class:Plane
+__iter__	.\srmath.py	/^	def __iter__(self):$/;"	m	class:vec2	file:
+__mul__	.\srmath.py	/^	def __mul__(self, multiplier):$/;"	m	class:mat3	file:
+__mul__	.\srmath.py	/^	def __mul__(self, scalar):$/;"	m	class:vec2	file:
+__mul__	.\srmath.py	/^	def __mul__(self, scalar):$/;"	m	class:vec3	file:
+__mul__	.\srmath.py	/^	def __mul__(self, scalar):$/;"	m	class:vec4	file:
+__repr__	.\srmath.py	/^	def __repr__(self):$/;"	m	class:mat3	file:
+__repr__	.\srmath.py	/^	def __repr__(self):$/;"	m	class:vec2	file:
+__repr__	.\srmath.py	/^	def __repr__(self):$/;"	m	class:vec3	file:
+__repr__	.\srmath.py	/^	def __repr__(self):$/;"	m	class:vec4	file:
+__setitem__	.\srmath.py	/^	def __setitem__(self, i, val):$/;"	m	class:vec2	file:
+__setitem__	.\srmath.py	/^	def __setitem__(self, i, val):$/;"	m	class:vec3	file:
+__setitem__	.\srmath.py	/^	def __setitem__(self, i, val):$/;"	m	class:vec4	file:
+__setitem__	.\srmath.py	/^	def __setitem__(self, xy, val):$/;"	m	class:mat3	file:
+__sub__	.\srmath.py	/^	def __sub__(self, m):$/;"	m	class:mat3	file:
+__sub__	.\srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec2	file:
+__sub__	.\srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec3	file:
+__sub__	.\srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec4	file:
+adjugateMat	.\srmath.py	/^	def adjugateMat(self):$/;"	m	class:mat3
+adjugateMat	.\srmath.py	/^	def adjugateMat(self):$/;"	m	class:mat4
 calc_vertex_attribute	pipeline.py	/^def calc_vertex_attribute(mvp, vertexInput, mode):$/;"	f
 cameraAspectRatio	pipeline.py	/^cameraAspectRatio = 1.0$/;"	v
 cameraFOV	pipeline.py	/^cameraFOV = 60$/;"	v
 cameraFarPlane	pipeline.py	/^cameraFarPlane = 500.0$/;"	v
 cameraNearPlane	pipeline.py	/^cameraNearPlane = 1.0$/;"	v
 cameraPosition	pipeline.py	/^cameraPosition = srmath.vec3(4, 4, 4)$/;"	v
-canvas	.\\main.py	/^canvas = None$/;"	v	language:Python
-changeFOV	.\\main.py	/^def changeFOV(event):$/;"	f	language:Python	signature:(event)
+canvas	.\main.py	/^canvas = None$/;"	v
+changeFOV	.\main.py	/^def changeFOV(event):$/;"	f
 clearColor	pipeline.py	/^clearColor = BLACK$/;"	v
 clear_depth_buffer	pipeline.py	/^def clear_depth_buffer():$/;"	f
 clear_screen	pipeline.py	/^def clear_screen():$/;"	f
-create_vector	.\\srmath.py	/^def create_vector(componentCount):$/;"	f	language:Python	signature:(componentCount)
-cross	.\\srmath.py	/^	def cross(self, v):$/;"	m	language:Python	class:vec3	signature:(self, v)
+collections	.\srmath.py	/^import collections$/;"	i
+create_vector	.\srmath.py	/^def create_vector(componentCount):$/;"	f
+cross	.\srmath.py	/^	def cross(self, v):$/;"	m	class:vec3
+cube	pipeline.py	/^import cube$/;"	i
 cull_back_face	pipeline.py	/^def cull_back_face(v0, v1, v2):$/;"	f
 depthBuffer	pipeline.py	/^depthBuffer = [1.0] * (WINDOW_HEIGHT * WINDOW_WIDTH)$/;"	v
-destroyWindow	.\\main.py	/^def destroyWindow(event):$/;"	f	language:Python	signature:(event)
-determinant	.\\srmath.py	/^	def determinant(self):$/;"	m	language:Python	class:mat3	signature:(self)
-determinant	.\\srmath.py	/^	def determinant(self):$/;"	m	language:Python	class:mat4	signature:(self)
-doInit	.\\srmath.py	/^	def doInit(self, matList):$/;"	m	language:Python	class:mat3	signature:(self, matList)
-dot	.\\srmath.py	/^	def dot(self, v):$/;"	m	language:Python	class:vec2	signature:(self, v)
-dot	.\\srmath.py	/^	def dot(self, v):$/;"	m	language:Python	class:vec3	signature:(self, v)
-dot	.\\srmath.py	/^	def dot(self, v):$/;"	m	language:Python	class:vec4	signature:(self, v)
-draw_cube	pipeline.py	/^def draw_cube(size = 1, worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_/;"	f
+destroyWindow	.\main.py	/^def destroyWindow(event):$/;"	f
+determinant	.\srmath.py	/^	def determinant(self):$/;"	m	class:mat3
+determinant	.\srmath.py	/^	def determinant(self):$/;"	m	class:mat4
+doInit	.\srmath.py	/^	def doInit(self, matList):$/;"	m	class:mat3
+dot	.\srmath.py	/^	def dot(self, v):$/;"	m	class:vec2
+dot	.\srmath.py	/^	def dot(self, v):$/;"	m	class:vec3
+dot	.\srmath.py	/^	def dot(self, v):$/;"	m	class:vec4
+draw_cube	pipeline.py	/^def draw_cube(size = 1, worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_FRAME):$/;"	f
 draw_flat_triangle	pipeline.py	/^def draw_flat_triangle(v0, v1, v2):$/;"	f
 draw_line	pipeline.py	/^def draw_line(x0, y0, x1, y1, color):$/;"	f
-draw_mesh	pipeline.py	/^def draw_mesh(mesh, worldMatrix = srmath.mat4.identity, wireframeColor = WHITE, mode = DrawMode./;"	f
+draw_mesh	pipeline.py	/^def draw_mesh(mesh, worldMatrix = srmath.mat4.identity, wireframeColor = WHITE, mode = DrawMode.WIRE_FRAME):$/;"	f
 draw_plane	pipeline.py	/^def draw_plane(worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_FRAME):$/;"	f
 draw_point	pipeline.py	/^def draw_point(x, y, color):$/;"	f
-draw_scanline	pipeline.py	/^def draw_scanline(left, right):$/;"	f
+draw_scanline	pipeline.py	/^def draw_scanline(left, right, y):$/;"	f
 draw_triangle	pipeline.py	/^def draw_triangle(v0, v1, v2, mode, color):$/;"	f
 draw_triangle_wireframe	pipeline.py	/^def draw_triangle_wireframe(v0, v1, v2, color):$/;"	f
-fast_inverse_mat4	.\\srmath.py	/^def fast_inverse_mat4(m):$/;"	f	language:Python	signature:(m)
-fetchDataFromFrameBuffer	.\\main.py	/^def fetchDataFromFrameBuffer():$/;"	f	language:Python	signature:()
+fast_inverse_mat4	.\srmath.py	/^def fast_inverse_mat4(m):$/;"	f
+fetchDataFromFrameBuffer	.\main.py	/^def fetchDataFromFrameBuffer():$/;"	f
 frameBuffer	pipeline.py	/^frameBuffer = [BLACK] * (WINDOW_HEIGHT * WINDOW_WIDTH)$/;"	v
-frameCount	.\\main.py	/^frameCount = 0$/;"	v	language:Python
-fromList	.\\srmath.py	/^	def fromList(self, l):$/;"	m	language:Python	class:vec2	signature:(self, l)
-fromList	.\\srmath.py	/^	def fromList(self, l):$/;"	m	language:Python	class:vec3	signature:(self, l)
-fromList	.\\srmath.py	/^	def fromList(self, l):$/;"	m	language:Python	class:vec4	signature:(self, l)
+frameCount	.\main.py	/^frameCount = 0$/;"	v
+fromList	.\srmath.py	/^	def fromList(self, l):$/;"	m	class:vec2
+fromList	.\srmath.py	/^	def fromList(self, l):$/;"	m	class:vec3
+fromList	.\srmath.py	/^	def fromList(self, l):$/;"	m	class:vec4
 frontFace	pipeline.py	/^frontFace = WindingOrder.CCW$/;"	v
-getInverseMat	.\\srmath.py	/^	def getInverseMat(self):$/;"	m	language:Python	class:mat3	signature:(self)
-getInverseMat	.\\srmath.py	/^	def getInverseMat(self):$/;"	m	language:Python	class:mat4	signature:(self)
+getInverseMat	.\srmath.py	/^	def getInverseMat(self):$/;"	m	class:mat3
+getInverseMat	.\srmath.py	/^	def getInverseMat(self):$/;"	m	class:mat4
 get_depth	pipeline.py	/^def get_depth(x, y):$/;"	f
 get_flat_triangles	pipeline.py	/^def get_flat_triangles(v0, v1, v2):$/;"	f
-image	.\\main.py	/^image = None$/;"	v	language:Python
+image	.\main.py	/^image = None$/;"	v
 inBound	pipeline.py	/^def inBound(x, y):$/;"	f
 interpolateVertex	pipeline.py	/^def interpolateVertex(v0, v1, t):$/;"	f
-lastFrameTime	.\\main.py	/^lastFrameTime = 0.0$/;"	v	language:Python
-length	.\\srmath.py	/^	def length(self):$/;"	m	language:Python	class:vec2	signature:(self)
-length	.\\srmath.py	/^	def length(self):$/;"	m	language:Python	class:vec3	signature:(self)
-length	.\\srmath.py	/^	def length(self):$/;"	m	language:Python	class:vec4	signature:(self)
-lerp	.\\srmath.py	/^def lerp(val0, val1, t):$/;"	f	language:Python	signature:(val0, val1, t)
+lastFrameTime	.\main.py	/^lastFrameTime = 0.0$/;"	v
+length	.\srmath.py	/^	def length(self):$/;"	m	class:vec2
+length	.\srmath.py	/^	def length(self):$/;"	m	class:vec3
+length	.\srmath.py	/^	def length(self):$/;"	m	class:vec4
+lerp	.\srmath.py	/^def lerp(val0, val1, t):$/;"	f
 lookAt	pipeline.py	/^lookAt = srmath.vec3(0, 0, 0)$/;"	v
-main	.\\main.py	/^def main():$/;"	f	language:Python	signature:()
-make_inv_view_mat	.\\srmath.py	/^def make_inv_view_mat(eye, lookat, up):$/;"	f	language:Python	signature:(eye, lookat, up)
-make_perspect_mat	.\\srmath.py	/^def make_perspect_mat(near, far, left, right, top, bottom):$/;"	f	language:Python	signature:(near, far, left, right, top, bottom)
-make_perspect_mat_fov	.\\srmath.py	/^def make_perspect_mat_fov(aspectRatio, near, far, fov):$/;"	f	language:Python	signature:(aspectRatio, near, far, fov)
-make_rotation_mat	.\\srmath.py	/^def make_rotation_mat(direction, angle):$/;"	f	language:Python	signature:(direction, angle)
-make_rotation_x_mat	.\\srmath.py	/^def make_rotation_x_mat(xAngle):$/;"	f	language:Python	signature:(xAngle)
-make_rotation_y_mat	.\\srmath.py	/^def make_rotation_y_mat(yAngle):$/;"	f	language:Python	signature:(yAngle)
-make_rotation_z_mat	.\\srmath.py	/^def make_rotation_z_mat(zAngle):$/;"	f	language:Python	signature:(zAngle)
-make_scale_mat	.\\srmath.py	/^def make_scale_mat(scale):$/;"	f	language:Python	signature:(scale)
-make_translation_mat	.\\srmath.py	/^def make_translation_mat(translation):$/;"	f	language:Python	signature:(translation)
-make_view_mat	.\\srmath.py	/^def make_view_mat(eye, lookat, up):$/;"	f	language:Python	signature:(eye, lookat, up)
-mat3	.\\srmath.py	/^class mat3(object):$/;"	c	language:Python
-mat4	.\\srmath.py	/^class mat4(mat3):$/;"	c	language:Python
-move_camera	.\\main.py	/^def move_camera(event, direction):$/;"	f	language:Python	signature:(event, direction)
+main	.\main.py	/^def main():$/;"	f
+make_inv_view_mat	.\srmath.py	/^def make_inv_view_mat(eye, lookat, up):$/;"	f
+make_perspect_mat	.\srmath.py	/^def make_perspect_mat(near, far, left, right, top, bottom):$/;"	f
+make_perspect_mat_fov	.\srmath.py	/^def make_perspect_mat_fov(aspectRatio, near, far, fov):$/;"	f
+make_rotation_mat	.\srmath.py	/^def make_rotation_mat(direction, angle):$/;"	f
+make_rotation_x_mat	.\srmath.py	/^def make_rotation_x_mat(xAngle):$/;"	f
+make_rotation_y_mat	.\srmath.py	/^def make_rotation_y_mat(yAngle):$/;"	f
+make_rotation_z_mat	.\srmath.py	/^def make_rotation_z_mat(zAngle):$/;"	f
+make_scale_mat	.\srmath.py	/^def make_scale_mat(scale):$/;"	f
+make_translation_mat	.\srmath.py	/^def make_translation_mat(translation):$/;"	f
+make_view_mat	.\srmath.py	/^def make_view_mat(eye, lookat, up):$/;"	f
+mat3	.\srmath.py	/^class mat3(object):$/;"	c
+mat4	.\srmath.py	/^class mat4(mat3):$/;"	c
+math	.\cube.py	/^import math$/;"	i
+math	.\srmath.py	/^import math$/;"	i
+move_camera	.\main.py	/^def move_camera(event, direction):$/;"	f
 move_camera	pipeline.py	/^def move_camera(offset, space = SpaceType.VIEW_SPACE):$/;"	f
-multipliableVecType	.\\srmath.py	/^	def multipliableVecType(self):$/;"	m	language:Python	class:mat3	signature:(self)
-multipliableVecType	.\\srmath.py	/^	def multipliableVecType(self):$/;"	m	language:Python	class:mat4	signature:(self)
-ndc_to_screen_coord	.\\srmath.py	/^def ndc_to_screen_coord(ndcPoint, width, height):$/;"	f	language:Python	signature:(ndcPoint, width, height)
-negate	.\\srmath.py	/^	def negate(self):$/;"	m	language:Python	class:vec2	signature:(self)
-negate	.\\srmath.py	/^	def negate(self):$/;"	m	language:Python	class:vec3	signature:(self)
-negate	.\\srmath.py	/^	def negate(self):$/;"	m	language:Python	class:vec4	signature:(self)
-normalize	.\\srmath.py	/^	def normalize(self):$/;"	m	language:Python	class:vec2	signature:(self)
-normalize	.\\srmath.py	/^	def normalize(self):$/;"	m	language:Python	class:vec3	signature:(self)
-normalize	.\\srmath.py	/^	def normalize(self):$/;"	m	language:Python	class:vec4	signature:(self)
-onKeyDown	.\\main.py	/^def onKeyDown(event):$/;"	f	language:Python	signature:(event)
+multipliableVecType	.\srmath.py	/^	def multipliableVecType(self):$/;"	m	class:mat3
+multipliableVecType	.\srmath.py	/^	def multipliableVecType(self):$/;"	m	class:mat4
+ndc_to_screen_coord	.\srmath.py	/^def ndc_to_screen_coord(ndcPoint, width, height):$/;"	f
+negate	.\srmath.py	/^	def negate(self):$/;"	m	class:vec2
+negate	.\srmath.py	/^	def negate(self):$/;"	m	class:vec3
+negate	.\srmath.py	/^	def negate(self):$/;"	m	class:vec4
+normalize	.\srmath.py	/^	def normalize(self):$/;"	m	class:vec2
+normalize	.\srmath.py	/^	def normalize(self):$/;"	m	class:vec3
+normalize	.\srmath.py	/^	def normalize(self):$/;"	m	class:vec4
+onKeyDown	.\main.py	/^def onKeyDown(event):$/;"	f
+pipeline	.\main.py	/^import pipeline$/;"	i
+plane	pipeline.py	/^import plane$/;"	i
 set_depth	pipeline.py	/^def set_depth(x, y, value):$/;"	f
 set_front_face	pipeline.py	/^def set_front_face(face):$/;"	f
-sqrLength	.\\srmath.py	/^	def sqrLength(self):$/;"	m	language:Python	class:vec2	signature:(self)
-sqrLength	.\\srmath.py	/^	def sqrLength(self):$/;"	m	language:Python	class:vec3	signature:(self)
-sqrLength	.\\srmath.py	/^	def sqrLength(self):$/;"	m	language:Python	class:vec4	signature:(self)
-statisticInfo	.\\main.py	/^statisticInfo = None$/;"	v	language:Python
-swapElements	.\\srmath.py	/^	def swapElements(self, idx0, idx1):$/;"	m	language:Python	class:mat3	signature:(self, idx0, idx1)
-toList	.\\srmath.py	/^	def toList(self):$/;"	m	language:Python	class:vec2	signature:(self)
-toList	.\\srmath.py	/^	def toList(self):$/;"	m	language:Python	class:vec3	signature:(self)
-toList	.\\srmath.py	/^	def toList(self):$/;"	m	language:Python	class:vec4	signature:(self)
-transpose	.\\srmath.py	/^	def transpose(self):$/;"	m	language:Python	class:mat3	signature:(self)
-transpose	.\\srmath.py	/^	def transpose(self):$/;"	m	language:Python	class:mat4	signature:(self)
+sqrLength	.\srmath.py	/^	def sqrLength(self):$/;"	m	class:vec2
+sqrLength	.\srmath.py	/^	def sqrLength(self):$/;"	m	class:vec3
+sqrLength	.\srmath.py	/^	def sqrLength(self):$/;"	m	class:vec4
+srmath	.\main.py	/^import srmath$/;"	i
+srmath	pipeline.py	/^import srmath$/;"	i
+statisticInfo	.\main.py	/^statisticInfo = None$/;"	v
+swapElements	.\srmath.py	/^	def swapElements(self, idx0, idx1):$/;"	m	class:mat3
+time	.\main.py	/^import time$/;"	i
+toList	.\srmath.py	/^	def toList(self):$/;"	m	class:vec2
+toList	.\srmath.py	/^	def toList(self):$/;"	m	class:vec3
+toList	.\srmath.py	/^	def toList(self):$/;"	m	class:vec4
+transpose	.\srmath.py	/^	def transpose(self):$/;"	m	class:mat3
+transpose	.\srmath.py	/^	def transpose(self):$/;"	m	class:mat4
 update	pipeline.py	/^def update():$/;"	f
-updateStatisticInfo	.\\main.py	/^def updateStatisticInfo():$/;"	f	language:Python	signature:()
-vec2	.\\srmath.py	/^class vec2(object):$/;"	c	language:Python
-vec3	.\\srmath.py	/^class vec3(object):$/;"	c	language:Python
-vec4	.\\srmath.py	/^class vec4(object):$/;"	c	language:Python
-window	.\\main.py	/^window = None$/;"	v	language:Python
-windowUpdate	.\\main.py	/^def windowUpdate():$/;"	f	language:Python	signature:()
+updateStatisticInfo	.\main.py	/^def updateStatisticInfo():$/;"	f
+vec2	.\srmath.py	/^class vec2(object):$/;"	c
+vec3	.\srmath.py	/^class vec3(object):$/;"	c
+vec4	.\srmath.py	/^class vec4(object):$/;"	c
+window	.\main.py	/^window = None$/;"	v
+windowUpdate	.\main.py	/^def windowUpdate():$/;"	f
