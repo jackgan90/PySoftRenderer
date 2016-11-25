@@ -49,7 +49,7 @@ clearColor = GREY
 frameBuffer = [clearColor] * (WINDOW_HEIGHT * WINDOW_WIDTH)
 depthBuffer = [1.0] * (WINDOW_HEIGHT * WINDOW_WIDTH)
 textures = []
-cameraPosition = srmath.vec3(0, 0, 3)
+cameraPosition = srmath.vec3(3, 3, 3)
 lookAt = srmath.vec3(0, 0, 0)
 cameraAspectRatio = 1.0
 cameraFOV = 60
@@ -60,9 +60,9 @@ frontFace = WindingOrder.CCW
 
 #called by main window once per frame
 def update():
-	rotMat = srmath.make_rotation_mat(srmath.vec3(1, 0, 0), 90.0)
-	draw_plane(rotMat, mode=DrawMode.TEXTURE_MAP)
-	# draw_cube(2.0, color=RED, mode=DrawMode.TEXTURE_MAP)
+	# rotMat = srmath.make_rotation_mat(srmath.vec3(1, 0, 0), 90.0)
+	# draw_plane(rotMat, mode=DrawMode.TEXTURE_MAP)
+	draw_cube(2.0, color=RED, mode=DrawMode.VERTEX_COLOR)
 
 def move_camera(offset, space = SpaceType.VIEW_SPACE):
 	global cameraPosition
@@ -221,7 +221,7 @@ def draw_scanline(left, right, y, mode):
 	for x in xrange(xStart, xEnd, 1):
 		if inBound(x, y):
 			depthInBuffer = get_depth(x, y)
-			if currentVertex.screenCoord.z <= depthInBuffer:
+			if currentVertex.screenCoord.z < depthInBuffer:
 				set_depth(x, y, currentVertex.screenCoord.z)
 				if mode == DrawMode.VERTEX_COLOR:
 					r = int(255 * currentVertex.color.x / currentVertex.interpolateParam) % 256

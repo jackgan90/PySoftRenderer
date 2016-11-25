@@ -17,10 +17,17 @@ statisticInfo = None
 frameCount = 0
 lastFrameTime = 0.0
 
-def save_texture(texture):
+def save_texture(texture, filename):
 	img = Image.new('RGB', (texture.width, texture.height))
 	img.putdata(texture.buffer)
-	img.save('texture.bmp')
+	img.save(filename)
+
+def save_depth_texture():
+	textureData = [(int(255 * (x * 0.5 + 0.5)) % 256, 
+		int(255 * (x * 0.5 + 0.5)) % 256, int(255 * (x * 0.5 + 0.5)) % 256) for x in pipeline.depthBuffer]
+	depthTexture = pipeline.Texture(pipeline.WINDOW_WIDTH, pipeline.WINDOW_HEIGHT)
+	depthTexture.buffer = textureData
+	save_texture(depthTexture, 'depth.bmp')
 
 def destroyWindow(event):
 	global canvas
@@ -118,7 +125,8 @@ def main():
 	window.bind('<Key>', onKeyDown)
 	window.bind('<MouseWheel>', changeFOV)
 	window.bind('<Button-1>', on_mouse_click)
-	window.bind('<F3>', lambda event : save_texture(pipeline.textures[0]))
+	window.bind('<F3>', lambda event : save_texture(pipeline.textures[0], 'chessboard.bmp'))
+	window.bind('<F4>', lambda event : save_depth_texture())
 	window.mainloop()
 
 
