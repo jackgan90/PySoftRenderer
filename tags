@@ -76,7 +76,7 @@ cameraAspectRatio	pipeline.py	/^cameraAspectRatio = 1.0$/;"	v
 cameraFOV	pipeline.py	/^cameraFOV = 60$/;"	v
 cameraFarPlane	pipeline.py	/^cameraFarPlane = 500.0$/;"	v
 cameraNearPlane	pipeline.py	/^cameraNearPlane = 1.0$/;"	v
-cameraPosition	pipeline.py	/^cameraPosition = srmath.vec3(4, 4, 4)$/;"	v
+cameraPosition	pipeline.py	/^cameraPosition = srmath.vec3(3, 3, 3)$/;"	v
 canvas	.\main.py	/^canvas = None$/;"	v
 changeFOV	.\main.py	/^def changeFOV(event):$/;"	f
 clearColor	pipeline.py	/^clearColor = BLACK$/;"	v

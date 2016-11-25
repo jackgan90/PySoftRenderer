@@ -38,7 +38,7 @@ class VertexAttribute(object):
 clearColor = BLACK
 frameBuffer = [BLACK] * (WINDOW_HEIGHT * WINDOW_WIDTH)
 depthBuffer = [1.0] * (WINDOW_HEIGHT * WINDOW_WIDTH)
-cameraPosition = srmath.vec3(4, 4, 4)
+cameraPosition = srmath.vec3(3, 3, 3)
 lookAt = srmath.vec3(0, 0, 0)
 cameraAspectRatio = 1.0
 cameraFOV = 60
@@ -68,7 +68,6 @@ def move_camera(offset, space = SpaceType.VIEW_SPACE):
 		cameraPosition += offset
 		lookAt += offset
 
-
 def clear_screen():
 	global frameBuffer
 	frameBuffer = [clearColor] * (WINDOW_HEIGHT * WINDOW_WIDTH)
@@ -83,7 +82,7 @@ def set_front_face(face):
 
 def draw_point(x, y, color):
 	coord = y * WINDOW_WIDTH + x
-	if 0 <= coord < len(frameBuffer):
+	if 0 <= x < WINDOW_WIDTH and 0 <= y < WINDOW_HEIGHT:
 		frameBuffer[coord] = color
 
 def get_depth(x, y):
