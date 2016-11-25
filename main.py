@@ -52,6 +52,10 @@ def move_camera(event, direction):
 	pipeline.clear_screen()
 	pipeline.clear_depth_buffer()
 
+def on_mouse_click(event):
+	color = pipeline.get_pixel(event.x, event.y)
+	print event.x, event.y, color
+
 def changeFOV(event):
 	pipeline.cameraFOV -= event.delta / 100
 	pipeline.clear_screen()
@@ -108,6 +112,7 @@ def main():
 	window.bind('<Down>', lambda event: move_camera(event, 'down'))
 	window.bind('<Key>', onKeyDown)
 	window.bind('<MouseWheel>', changeFOV)
+	window.bind('<Button-1>', on_mouse_click)
 	window.mainloop()
 
 

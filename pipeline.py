@@ -80,6 +80,13 @@ def set_front_face(face):
 	global frontFace
 	frontFace = face
 
+def get_pixel(x, y):
+	if x < 0 or x >= WINDOW_WIDTH:
+		return clearColor
+	if y < 0 or y >= WINDOW_HEIGHT:
+		return clearColor
+	return frameBuffer[y * WINDOW_WIDTH + x]
+
 def draw_point(x, y, color):
 	coord = y * WINDOW_WIDTH + x
 	if 0 <= x < WINDOW_WIDTH and 0 <= y < WINDOW_HEIGHT:
@@ -209,14 +216,14 @@ def draw_flat_triangle(v0, v1, v2):
 			left = v1
 			right = v0
 		bottom = v2
-		yStart = left.screenCoord.y
-		yEnd = bottom.screenCoord.y
-		if int(yStart) == int(yEnd):
-			draw_scanline(left, right, int(left.screenCoord.y))
+		yStart = int(left.screenCoord.y)
+		yEnd = int(bottom.screenCoord.y)
+		if yStart == yEnd:
+			draw_scanline(left, right, yStart)
 			return
-		for y in xrange(int(yStart), int(yEnd) + 1, 1):
-			interpolateLeft = interpolateVertex(left, bottom, (y - yStart) / (yEnd - yStart))
-			interpolateRight = interpolateVertex(right, bottom, (y - yStart) / (yEnd - yStart))
+		for y in xrange(yStart, yEnd + 1, 1):
+			interpolateLeft = interpolateVertex(left, bottom, float(y - yStart) / (yEnd - yStart))
+			interpolateRight = interpolateVertex(right, bottom, float(y - yStart) / (yEnd - yStart))
 			draw_scanline(interpolateLeft, interpolateRight, y)
 	elif int(v1.screenCoord.y) == int(v2.screenCoord.y):
 		if v1.screenCoord.x < v2.screenCoord.x:
@@ -226,14 +233,14 @@ def draw_flat_triangle(v0, v1, v2):
 			left = v2
 			right = v1
 		top = v0
-		yStart = v0.screenCoord.y
-		yEnd = left.screenCoord.y
-		if int(yStart) == int(yEnd):
-			draw_scanline(left, right, int(left.screenCoord.y))
+		yStart = int(v0.screenCoord.y)
+		yEnd = int(left.screenCoord.y)
+		if yStart == yEnd:
+			draw_scanline(left, right, yStart)
 			return
-		for y in xrange(int(yStart), int(yEnd) + 1, 1):
-			interpolateLeft = interpolateVertex(top, left, (y - yStart) / (yEnd - yStart))
-			interpolateRight = interpolateVertex(top, right, (y - yStart) / (yEnd - yStart))
+		for y in xrange(yStart, yEnd + 1, 1):
+			interpolateLeft = interpolateVertex(top, left, float(y - yStart) / (yEnd - yStart))
+			interpolateRight = interpolateVertex(top, right, float(y - yStart) / (yEnd - yStart))
 			draw_scanline(interpolateLeft, interpolateRight, y)
 	else:
 		print '-' * 30
