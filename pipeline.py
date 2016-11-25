@@ -38,7 +38,7 @@ class VertexAttribute(object):
 clearColor = BLACK
 frameBuffer = [BLACK] * (WINDOW_HEIGHT * WINDOW_WIDTH)
 depthBuffer = [1.0] * (WINDOW_HEIGHT * WINDOW_WIDTH)
-cameraPosition = srmath.vec3(0, 0, 4)
+cameraPosition = srmath.vec3(0, 4, 4)
 lookAt = srmath.vec3(0, 0, 0)
 cameraAspectRatio = 1.0
 cameraFOV = 60
@@ -49,9 +49,9 @@ frontFace = WindingOrder.CCW
 
 #called by main window once per frame
 def update():
-	rotMat = srmath.make_rotation_mat(srmath.vec3(1, 0, 0), 90.0)
-	draw_plane(rotMat)
-	# draw_cube(2.0, color=RED, mode=DrawMode.VERTEX_COLOR)
+	# rotMat = srmath.make_rotation_mat(srmath.vec3(1, 0, 0), 90.0)
+	# draw_plane(rotMat)
+	draw_cube(2.0, color=RED, mode=DrawMode.VERTEX_COLOR)
 
 def move_camera(offset, space = SpaceType.VIEW_SPACE):
 	global cameraPosition
@@ -193,7 +193,7 @@ def draw_scanline(left, right):
 				g = int(255 * currentVertex.color.y / currentVertex.interpolateParam) % 256
 				b = int(255 * currentVertex.color.z / currentVertex.interpolateParam) % 256
 				draw_point(x, y, (r, g, b))
-		currentVertex = interpolateVertex(left, right, (x + 1 - xStart) / (xEnd - xStart))
+		currentVertex = interpolateVertex(left, right, float(x + 1 - xStart) / (xEnd - xStart))
 
 def draw_flat_triangle(v0, v1, v2):
 	if int(v0.screenCoord.y) == int(v1.screenCoord.y) and int(v1.screenCoord.y) == int(v2.screenCoord.y):

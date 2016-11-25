@@ -9,7 +9,7 @@ BLACK	pipeline.py	/^BLACK = (0, 0, 0)$/;"	v
 BLUE	pipeline.py	/^BLUE = (0, 0, 255)$/;"	v
 CCW	pipeline.py	/^	CCW = 2$/;"	v	class:WindingOrder
 CW	pipeline.py	/^	CW = 1$/;"	v	class:WindingOrder
-Cube	.\\cube.py	/^class Cube(object):$/;"	c	language:Python
+Cube	cube.py	/^class Cube(object):$/;"	c
 DrawMode	pipeline.py	/^class DrawMode(object):$/;"	c
 EPSILON	.\\srmath.py	/^EPSILON = 0.00001$/;"	v	language:Python
 FRAME_RATE	.\\main.py	/^FRAME_RATE = 30$/;"	v	language:Python
@@ -40,12 +40,12 @@ __getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	language:Python	clas
 __getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	language:Python	class:vec3	signature:(self, i)
 __getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	language:Python	class:vec4	signature:(self, i)
 __getitem__	.\\srmath.py	/^	def __getitem__(self, xy):$/;"	m	language:Python	class:mat3	signature:(self, xy)
-__init__	.\\cube.py	/^	def __init__(self, size = 1):$/;"	m	language:Python	class:Cube	signature:(self, size = 1)
 __init__	.\\srmath.py	/^	def __init__(self, matList=None):$/;"	m	language:Python	class:mat3	signature:(self, matList=None)
 __init__	.\\srmath.py	/^	def __init__(self, matList=None):$/;"	m	language:Python	class:mat4	signature:(self, matList=None)
 __init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0):$/;"	m	language:Python	class:vec2	signature:(self, x = 0.0, y = 0.0)
 __init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0):$/;"	m	language:Python	class:vec3	signature:(self, x = 0.0, y = 0.0, z = 0.0)
 __init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0, w = 0.0):$/;"	m	language:Python	class:vec4	signature:(self, x = 0.0, y = 0.0, z = 0.0, w = 0.0)
+__init__	cube.py	/^	def __init__(self, size = 1):$/;"	m	class:Cube
 __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:VertexAttribute
 __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:VertexInput
 __init__	plane.py	/^	def __init__(self, width = 2, height = 2):$/;"	m	class:Plane
@@ -73,7 +73,7 @@ cameraAspectRatio	pipeline.py	/^cameraAspectRatio = 1.0$/;"	v
 cameraFOV	pipeline.py	/^cameraFOV = 60$/;"	v
 cameraFarPlane	pipeline.py	/^cameraFarPlane = 500.0$/;"	v
 cameraNearPlane	pipeline.py	/^cameraNearPlane = 1.0$/;"	v
-cameraPosition	pipeline.py	/^cameraPosition = srmath.vec3(0, 0, 4)$/;"	v
+cameraPosition	pipeline.py	/^cameraPosition = srmath.vec3(0, 4, 4)$/;"	v
 canvas	.\\main.py	/^canvas = None$/;"	v	language:Python
 changeFOV	.\\main.py	/^def changeFOV(event):$/;"	f	language:Python	signature:(event)
 clearColor	pipeline.py	/^clearColor = BLACK$/;"	v
