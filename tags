@@ -7,7 +7,7 @@
 BLACK	main.py	/^BLACK = (0, 0, 0)$/;"	v
 BLACK	pipeline.py	/^BLACK = (0, 0, 0)$/;"	v
 BLUE	pipeline.py	/^BLUE = (0, 0, 255)$/;"	v
-Cube	cube.py	/^class Cube(object):$/;"	c
+Cube	.\\cube.py	/^class Cube(object):$/;"	c
 DrawMode	pipeline.py	/^class DrawMode(object):$/;"	c
 EPSILON	srmath.py	/^EPSILON = 0.00001$/;"	v
 FRAME_RATE	main.py	/^FRAME_RATE = 30$/;"	v
@@ -29,11 +29,14 @@ __add__	srmath.py	/^	def __add__(self, m):$/;"	m	class:mat3
 __add__	srmath.py	/^	def __add__(self, v):$/;"	m	class:vec2
 __add__	srmath.py	/^	def __add__(self, v):$/;"	m	class:vec3
 __add__	srmath.py	/^	def __add__(self, v):$/;"	m	class:vec4
+__div__	srmath.py	/^	def __div__(self, scalar):$/;"	m	class:vec2
+__div__	srmath.py	/^	def __div__(self, scalar):$/;"	m	class:vec3
+__div__	srmath.py	/^	def __div__(self, scalar):$/;"	m	class:vec4
 __getitem__	srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec2
 __getitem__	srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec3
 __getitem__	srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec4
 __getitem__	srmath.py	/^	def __getitem__(self, xy):$/;"	m	class:mat3
-__init__	cube.py	/^	def __init__(self, size = 1):$/;"	m	class:Cube
+__init__	.\\cube.py	/^	def __init__(self, size = 1):$/;"	m	class:Cube
 __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:VertexAttribute
 __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:VertexInput
 __init__	srmath.py	/^	def __init__(self, matList=None):$/;"	m	class:mat3
@@ -60,7 +63,7 @@ __sub__	srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec3
 __sub__	srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec4
 adjugateMat	srmath.py	/^	def adjugateMat(self):$/;"	m	class:mat3
 adjugateMat	srmath.py	/^	def adjugateMat(self):$/;"	m	class:mat4
-calc_vertex_attribute	pipeline.py	/^def calc_vertex_attribute(mvp, vertexInput):$/;"	f
+calc_vertex_attribute	pipeline.py	/^def calc_vertex_attribute(mvp, vertexInput, mode):$/;"	f
 cameraAspectRatio	pipeline.py	/^cameraAspectRatio = 1.0$/;"	v
 cameraFOV	pipeline.py	/^cameraFOV = 60$/;"	v
 cameraFarPlane	pipeline.py	/^cameraFarPlane = 500.0$/;"	v
@@ -69,6 +72,7 @@ cameraPosition	pipeline.py	/^cameraPosition = srmath.vec3(4, 4, 4)$/;"	v
 canvas	main.py	/^canvas = None$/;"	v
 changeFOV	main.py	/^def changeFOV(event):$/;"	f
 clearColor	pipeline.py	/^clearColor = BLACK$/;"	v
+clear_depth_buffer	pipeline.py	/^def clear_depth_buffer():$/;"	f
 clear_screen	pipeline.py	/^def clear_screen():$/;"	f
 create_vector	srmath.py	/^def create_vector(componentCount):$/;"	f
 cross	srmath.py	/^	def cross(self, v):$/;"	m	class:vec3
@@ -81,8 +85,10 @@ dot	srmath.py	/^	def dot(self, v):$/;"	m	class:vec2
 dot	srmath.py	/^	def dot(self, v):$/;"	m	class:vec3
 dot	srmath.py	/^	def dot(self, v):$/;"	m	class:vec4
 draw_cube	pipeline.py	/^def draw_cube(size = 1, worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_/;"	f
+draw_flat_triangle	pipeline.py	/^def draw_flat_triangle(v0, v1, v2):$/;"	f
 draw_line	pipeline.py	/^def draw_line(x0, y0, x1, y1, color):$/;"	f
 draw_point	pipeline.py	/^def draw_point(x, y, color):$/;"	f
+draw_scanline	pipeline.py	/^def draw_scanline(left, right):$/;"	f
 draw_triangle	pipeline.py	/^def draw_triangle(v0, v1, v2, mode, color):$/;"	f
 draw_triangle_wireframe	pipeline.py	/^def draw_triangle_wireframe(v0, v1, v2, color):$/;"	f
 fast_inverse_mat4	srmath.py	/^def fast_inverse_mat4(m):$/;"	f
@@ -94,11 +100,16 @@ fromList	srmath.py	/^	def fromList(self, l):$/;"	m	class:vec3
 fromList	srmath.py	/^	def fromList(self, l):$/;"	m	class:vec4
 getInverseMat	srmath.py	/^	def getInverseMat(self):$/;"	m	class:mat3
 getInverseMat	srmath.py	/^	def getInverseMat(self):$/;"	m	class:mat4
+get_depth	pipeline.py	/^def get_depth(x, y):$/;"	f
+get_flat_triangles	pipeline.py	/^def get_flat_triangles(v0, v1, v2):$/;"	f
 image	main.py	/^image = None$/;"	v
+inBound	pipeline.py	/^def inBound(x, y):$/;"	f
+interpolateVertex	pipeline.py	/^def interpolateVertex(v0, v1, t):$/;"	f
 lastFrameTime	main.py	/^lastFrameTime = 0.0$/;"	v
 length	srmath.py	/^	def length(self):$/;"	m	class:vec2
 length	srmath.py	/^	def length(self):$/;"	m	class:vec3
 length	srmath.py	/^	def length(self):$/;"	m	class:vec4
+lerp	srmath.py	/^def lerp(val0, val1, t):$/;"	f
 lookAt	pipeline.py	/^lookAt = srmath.vec3(0, 0, 0)$/;"	v
 main	main.py	/^def main():$/;"	f
 make_inv_view_mat	srmath.py	/^def make_inv_view_mat(eye, lookat, up):$/;"	f
@@ -125,6 +136,7 @@ normalize	srmath.py	/^	def normalize(self):$/;"	m	class:vec2
 normalize	srmath.py	/^	def normalize(self):$/;"	m	class:vec3
 normalize	srmath.py	/^	def normalize(self):$/;"	m	class:vec4
 onKeyDown	main.py	/^def onKeyDown(event):$/;"	f
+set_depth	pipeline.py	/^def set_depth(x, y, value):$/;"	f
 sqrLength	srmath.py	/^	def sqrLength(self):$/;"	m	class:vec2
 sqrLength	srmath.py	/^	def sqrLength(self):$/;"	m	class:vec3
 sqrLength	srmath.py	/^	def sqrLength(self):$/;"	m	class:vec4

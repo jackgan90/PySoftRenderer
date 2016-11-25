@@ -21,6 +21,12 @@ class vec2(object):
 		v.x *= scalar
 		v.y *= scalar
 		return v
+	
+	def __div__(self, scalar):
+		v = vec2(self.x, self.y)
+		v.x /= scalar
+		v.y /= scalar
+		return v
 
 	def __getitem__(self, i):
 		if i == 0:
@@ -96,6 +102,13 @@ class vec3(object):
 		v.x *= scalar
 		v.y *= scalar
 		v.z *= scalar
+		return v
+
+	def __div__(self, scalar):
+		v = vec3(self.x, self.y, self.z)
+		v.x /= scalar
+		v.y /= scalar
+		v.z /= scalar
 		return v
 
 	def __getitem__(self, i):
@@ -178,6 +191,14 @@ class vec4(object):
 		v.y *= scalar
 		v.z *= scalar
 		v.w *= scalar
+		return v
+
+	def __div__(self, scalar):
+		v = vec4(self.x, self.y, self.z, self.w)
+		v.x /= scalar
+		v.y /= scalar
+		v.z /= scalar
+		v.w /= scalar
 		return v
 
 	def __getitem__(self, i):
@@ -593,4 +614,7 @@ def ndc_to_screen_coord(ndcPoint, width, height):
 	screenPoint.y = (0.5 - ndcPoint.y * 0.5) * height
 	screenPoint.z = ndcPoint.z
 	return screenPoint
+
+def lerp(val0, val1, t):
+	return val0 + (val1 - val0) * t
 

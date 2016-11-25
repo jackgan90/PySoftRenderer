@@ -50,10 +50,12 @@ def move_camera(event, direction):
 		offset = srmath.vec3(0.0, -0.5, 0.0)
 	pipeline.move_camera(offset)
 	pipeline.clear_screen()
+	pipeline.clear_depth_buffer()
 
 def changeFOV(event):
 	pipeline.cameraFOV -= event.delta / 100
 	pipeline.clear_screen()
+	pipeline.clear_depth_buffer()
 
 def fetchDataFromFrameBuffer():
 	global image
