@@ -10,7 +10,7 @@ Buffer3D	.\buffer3d.py	/^class Buffer3D(resource.Resource):$/;"	c	language:Pytho
 CCW	rasterizer.py	/^	CCW = 2$/;"	v	class:WindingOrder
 CW	rasterizer.py	/^	CW = 1$/;"	v	class:WindingOrder
 Camera	.\camera.py	/^class Camera(object):$/;"	c	language:Python
-Cube	.\simplemesh.py	/^class Cube(object):$/;"	c	language:Python
+Cube	simplemesh.py	/^class Cube(object):$/;"	c
 DEFAULT_FRAME_RATE	.\window.py	/^DEFAULT_FRAME_RATE = 30$/;"	v	language:Python
 DEFAULT_WINDOW_HEIGHT	pipeline.py	/^DEFAULT_WINDOW_HEIGHT = 400$/;"	v
 DEFAULT_WINDOW_WIDTH	pipeline.py	/^DEFAULT_WINDOW_WIDTH = 400$/;"	v
@@ -26,7 +26,7 @@ Image	.\window.py	/^from PIL import Image, ImageTk$/;"	i	language:Python
 ImageTk	.\window.py	/^from PIL import Image, ImageTk$/;"	i	language:Python
 MODEL_SPACE	.\space.py	/^	MODEL_SPACE = 1$/;"	v	language:Python	class:SpaceType
 Pipeline	pipeline.py	/^class Pipeline(object):$/;"	c
-Plane	.\simplemesh.py	/^class Plane(object):$/;"	c	language:Python
+Plane	simplemesh.py	/^class Plane(object):$/;"	c
 RED	.\color.py	/^RED = (255, 0, 0)$/;"	v	language:Python
 RasterizeData	rasterizer.py	/^class RasterizeData(object):$/;"	c
 RasterizeInput	pipeline.py	/^class RasterizeInput(object):$/;"	c
@@ -74,8 +74,6 @@ __init__	.\buffer3d.py	/^	def __init__(self, w, h, initialValue = None):$/;"	m	l
 __init__	.\camera.py	/^	def __init__(self):$/;"	m	language:Python	class:Camera
 __init__	.\resource.py	/^	def __init__(self):$/;"	m	language:Python	class:Resource
 __init__	.\shadermgr.py	/^	def __init__(self):$/;"	m	language:Python	class:ShaderMgr
-__init__	.\simplemesh.py	/^	def __init__(self, size = 1):$/;"	m	language:Python	class:Cube
-__init__	.\simplemesh.py	/^	def __init__(self, width = 1, height = 1):$/;"	m	language:Python	class:Plane
 __init__	.\srmath.py	/^	def __init__(self, matList=None):$/;"	m	language:Python	class:mat3
 __init__	.\srmath.py	/^	def __init__(self, matList=None):$/;"	m	language:Python	class:mat4
 __init__	.\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0):$/;"	m	language:Python	class:vec2
@@ -99,6 +97,8 @@ __init__	shader.py	/^	def __init__(self):$/;"	m	class:TextureVS
 __init__	shader.py	/^	def __init__(self):$/;"	m	class:VertexColorFS
 __init__	shader.py	/^	def __init__(self):$/;"	m	class:VertexColorVS
 __init__	shader.py	/^	def __init__(self):$/;"	m	class:VertexShader
+__init__	simplemesh.py	/^	def __init__(self, size = 1):$/;"	m	class:Cube
+__init__	simplemesh.py	/^	def __init__(self, width = 1, height = 1):$/;"	m	class:Plane
 __init__	vertexprocessor.py	/^	def __init__(self, pipeline):$/;"	m	class:VertexProcessor
 __iter__	.\srmath.py	/^	def __iter__(self):$/;"	m	language:Python	class:vec2	file:
 __mul__	.\srmath.py	/^	def __mul__(self, multiplier):$/;"	m	language:Python	class:mat3	file:
@@ -189,8 +189,8 @@ make_view_mat	.\srmath.py	/^def make_view_mat(eye, lookat, up):$/;"	f	language:P
 make_view_mat_axis	.\srmath.py	/^def make_view_mat_axis(xAxis, yAxis, zAxis, eye):$/;"	f	language:Python
 mat3	.\srmath.py	/^class mat3(object):$/;"	c	language:Python
 mat4	.\srmath.py	/^class mat4(mat3):$/;"	c	language:Python
-math	.\simplemesh.py	/^import math$/;"	i	language:Python
 math	.\srmath.py	/^import math$/;"	i	language:Python
+math	simplemesh.py	/^import math$/;"	i
 move	.\camera.py	/^	def move(self, offset, st = space.SpaceType.VIEW_SPACE):$/;"	m	language:Python	class:Camera
 move_camera	.\window.py	/^	def move_camera(self, event, direction):$/;"	m	language:Python	class:Window
 move_camera	scene.py	/^	def move_camera(self, offset, st = space.SpaceType.VIEW_SPACE):$/;"	m	class:Scene
