@@ -6,38 +6,58 @@
 !_TAG_PROGRAM_VERSION	5.8	//
 BLACK	.\color.py	/^BLACK = (0, 0, 0)$/;"	v	language:Python
 BLUE	.\color.py	/^BLUE = (0, 0, 255)$/;"	v	language:Python
-Buffer3D	.\buffer3d.py	/^class Buffer3D(object):$/;"	c	language:Python
-CCW	pipeline.py	/^	CCW = 2$/;"	v	class:WindingOrder
-CW	pipeline.py	/^	CW = 1$/;"	v	class:WindingOrder
+Buffer3D	.\buffer3d.py	/^class Buffer3D(resource.Resource):$/;"	c	language:Python
+CCW	rasterizer.py	/^	CCW = 2$/;"	v	class:WindingOrder
+CW	rasterizer.py	/^	CW = 1$/;"	v	class:WindingOrder
 Camera	.\camera.py	/^class Camera(object):$/;"	c	language:Python
 Cube	.\simplemesh.py	/^class Cube(object):$/;"	c	language:Python
-DEFAULT_FRAME_RATE	window.py	/^DEFAULT_FRAME_RATE = 30$/;"	v
+DEFAULT_FRAME_RATE	.\window.py	/^DEFAULT_FRAME_RATE = 30$/;"	v	language:Python
 DEFAULT_WINDOW_HEIGHT	pipeline.py	/^DEFAULT_WINDOW_HEIGHT = 400$/;"	v
 DEFAULT_WINDOW_WIDTH	pipeline.py	/^DEFAULT_WINDOW_WIDTH = 400$/;"	v
 DrawMode	pipeline.py	/^class DrawMode(object):$/;"	c
 EPSILON	.\srmath.py	/^EPSILON = 0.00001$/;"	v	language:Python
+FILL	pipeline.py	/^	FILL = 2$/;"	v	class:DrawMode
+FragmentProcessor	fragmentprocessor.py	/^class FragmentProcessor(object):$/;"	c
+FragmentProcessor	pipeline.py	/^from  fragmentprocessor import FragmentProcessor$/;"	i
+FragmentShader	shader.py	/^class FragmentShader(Shader):$/;"	c
 GREEN	.\color.py	/^GREEN = (0, 255, 0)$/;"	v	language:Python
 GREY	.\color.py	/^GREY = (128, 128, 128)$/;"	v	language:Python
-Image	window.py	/^from PIL import Image, ImageTk$/;"	i
-ImageTk	window.py	/^from PIL import Image, ImageTk$/;"	i
+Image	.\window.py	/^from PIL import Image, ImageTk$/;"	i	language:Python
+ImageTk	.\window.py	/^from PIL import Image, ImageTk$/;"	i	language:Python
 MODEL_SPACE	.\space.py	/^	MODEL_SPACE = 1$/;"	v	language:Python	class:SpaceType
 Pipeline	pipeline.py	/^class Pipeline(object):$/;"	c
 Plane	.\simplemesh.py	/^class Plane(object):$/;"	c	language:Python
 RED	.\color.py	/^RED = (255, 0, 0)$/;"	v	language:Python
+RasterizeData	rasterizer.py	/^class RasterizeData(object):$/;"	c
 RasterizeInput	pipeline.py	/^class RasterizeInput(object):$/;"	c
+RasterizeInput	rasterizer.py	/^class RasterizeInput(object):$/;"	c
+RasterizeInput	vertexprocessor.py	/^from rasterizer import RasterizeInput  $/;"	i
+Rasterizer	pipeline.py	/^from rasterizer import Rasterizer$/;"	i
+Rasterizer	rasterizer.py	/^class Rasterizer(object):$/;"	c
+Resource	.\resource.py	/^class Resource(object):$/;"	c	language:Python
+Resource	shader.py	/^from resource import Resource$/;"	i
 Scene	scene.py	/^class Scene(object):$/;"	c
+Shader	shader.py	/^class Shader(Resource):$/;"	c
+ShaderMgr	.\shadermgr.py	/^class ShaderMgr(object):$/;"	c	language:Python
 SpaceType	.\space.py	/^class SpaceType(object):$/;"	c	language:Python
-TEXTURE_MAP	pipeline.py	/^	TEXTURE_MAP = 3$/;"	v	class:DrawMode
 Texture	.\texture.py	/^class Texture(buffer3d.Buffer3D):$/;"	c	language:Python
-Tkinter	window.py	/^import Tkinter$/;"	i
-VERTEX_COLOR	pipeline.py	/^	VERTEX_COLOR = 2$/;"	v	class:DrawMode
+Texture	.\texturemgr.py	/^from texture import Texture$/;"	i	language:Python
+TextureFS	shader.py	/^class TextureFS(FragmentShader):$/;"	c
+TextureMgr	.\texturemgr.py	/^class TextureMgr(object):$/;"	c	language:Python
+TextureVS	shader.py	/^class TextureVS(VertexShader):$/;"	c
+Tkinter	.\window.py	/^import Tkinter$/;"	i	language:Python
 VIEW_SPACE	.\space.py	/^	VIEW_SPACE = 3$/;"	v	language:Python	class:SpaceType
+VertexColorFS	shader.py	/^class VertexColorFS(FragmentShader):$/;"	c
+VertexColorVS	shader.py	/^class VertexColorVS(VertexShader):$/;"	c
 VertexInput	pipeline.py	/^class VertexInput(object):$/;"	c
+VertexProcessor	pipeline.py	/^from vertexprocessor import VertexProcessor$/;"	i
+VertexProcessor	vertexprocessor.py	/^class VertexProcessor(object):$/;"	c
+VertexShader	shader.py	/^class VertexShader(Shader):$/;"	c
 WHITE	.\color.py	/^WHITE = (255, 255, 255)$/;"	v	language:Python
 WIRE_FRAME	pipeline.py	/^	WIRE_FRAME = 1$/;"	v	class:DrawMode
 WORLD_SPACE	.\space.py	/^	WORLD_SPACE = 2$/;"	v	language:Python	class:SpaceType
-WindingOrder	pipeline.py	/^class WindingOrder(object):$/;"	c
-Window	window.py	/^class Window(object):$/;"	c
+WindingOrder	rasterizer.py	/^class WindingOrder(object):$/;"	c
+Window	.\window.py	/^class Window(object):$/;"	c	language:Python
 YELLOW	.\color.py	/^YELLOW = (255, 255, 0)$/;"	v	language:Python
 __add__	.\srmath.py	/^	def __add__(self, m):$/;"	m	language:Python	class:mat3	file:
 __add__	.\srmath.py	/^	def __add__(self, v):$/;"	m	language:Python	class:vec2	file:
@@ -52,6 +72,8 @@ __getitem__	.\srmath.py	/^	def __getitem__(self, i):$/;"	m	language:Python	class
 __getitem__	.\srmath.py	/^	def __getitem__(self, xy):$/;"	m	language:Python	class:mat3	file:
 __init__	.\buffer3d.py	/^	def __init__(self, w, h, initialValue = None):$/;"	m	language:Python	class:Buffer3D
 __init__	.\camera.py	/^	def __init__(self):$/;"	m	language:Python	class:Camera
+__init__	.\resource.py	/^	def __init__(self):$/;"	m	language:Python	class:Resource
+__init__	.\shadermgr.py	/^	def __init__(self):$/;"	m	language:Python	class:ShaderMgr
 __init__	.\simplemesh.py	/^	def __init__(self, size = 1):$/;"	m	language:Python	class:Cube
 __init__	.\simplemesh.py	/^	def __init__(self, width = 1, height = 1):$/;"	m	language:Python	class:Plane
 __init__	.\srmath.py	/^	def __init__(self, matList=None):$/;"	m	language:Python	class:mat3
@@ -60,11 +82,24 @@ __init__	.\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0):$/;"	m	language:Pyt
 __init__	.\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0):$/;"	m	language:Python	class:vec3
 __init__	.\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0, w = 0.0):$/;"	m	language:Python	class:vec4
 __init__	.\texture.py	/^	def __init__(self, w, h):$/;"	m	language:Python	class:Texture
+__init__	.\texturemgr.py	/^	def __init__(self):$/;"	m	language:Python	class:TextureMgr
+__init__	.\window.py	/^	def __init__(self, graphicsPipeline):$/;"	m	language:Python	class:Window
+__init__	fragmentprocessor.py	/^	def __init__(self, pipeline):$/;"	m	class:FragmentProcessor
 __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:Pipeline
 __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:RasterizeInput
 __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:VertexInput
+__init__	rasterizer.py	/^	def __init__(self):$/;"	m	class:RasterizeData
+__init__	rasterizer.py	/^	def __init__(self):$/;"	m	class:RasterizeInput
+__init__	rasterizer.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Rasterizer
 __init__	scene.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Scene
-__init__	window.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Window
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:FragmentShader
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:Shader
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:TextureFS
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:TextureVS
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:VertexColorFS
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:VertexColorVS
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:VertexShader
+__init__	vertexprocessor.py	/^	def __init__(self, pipeline):$/;"	m	class:VertexProcessor
 __iter__	.\srmath.py	/^	def __iter__(self):$/;"	m	language:Python	class:vec2	file:
 __mul__	.\srmath.py	/^	def __mul__(self, multiplier):$/;"	m	language:Python	class:mat3	file:
 __mul__	.\srmath.py	/^	def __mul__(self, scalar):$/;"	m	language:Python	class:vec2	file:
@@ -82,25 +117,28 @@ __sub__	.\srmath.py	/^	def __sub__(self, m):$/;"	m	language:Python	class:mat3	fi
 __sub__	.\srmath.py	/^	def __sub__(self, v):$/;"	m	language:Python	class:vec2	file:
 __sub__	.\srmath.py	/^	def __sub__(self, v):$/;"	m	language:Python	class:vec3	file:
 __sub__	.\srmath.py	/^	def __sub__(self, v):$/;"	m	language:Python	class:vec4	file:
+_current_id	.\helpers.py	/^_current_id = 0$/;"	v	language:Python
+_instance	.\shadermgr.py	/^_instance = None$/;"	v	language:Python
+_instance	.\texturemgr.py	/^_instance = None$/;"	v	language:Python
 _pipelineInstance	pipeline.py	/^_pipelineInstance = None$/;"	v
 adjugateMat	.\srmath.py	/^	def adjugateMat(self):$/;"	m	language:Python	class:mat3
 adjugateMat	.\srmath.py	/^	def adjugateMat(self):$/;"	m	language:Python	class:mat4
 buffer3d	.\texture.py	/^import buffer3d$/;"	i	language:Python
 buffer3d	pipeline.py	/^import buffer3d$/;"	i
-calc_vertex_attribute	pipeline.py	/^	def calc_vertex_attribute(self, mvp, vertexInput, mode):$/;"	m	class:Pipeline
 camera	scene.py	/^import camera$/;"	i
-change_fov	window.py	/^	def change_fov(self, event):$/;"	m	class:Window
+change_fov	.\window.py	/^	def change_fov(self, event):$/;"	m	language:Python	class:Window
 clamp	.\srmath.py	/^def clamp(x, minVal, maxVal):$/;"	f	language:Python
 clear_depth_buffer	pipeline.py	/^	def clear_depth_buffer(self):$/;"	m	class:Pipeline
 clear_screen	pipeline.py	/^	def clear_screen(self):$/;"	m	class:Pipeline
 collections	.\srmath.py	/^import collections$/;"	i	language:Python
 color	pipeline.py	/^import color$/;"	i
 color	scene.py	/^import color$/;"	i
-create_chess_board_texture	.\texture.py	/^def create_chess_board_texture(w, h, color0, color1, cells = 5):$/;"	f	language:Python
+create_chess_board_texture	.\texturemgr.py	/^	def create_chess_board_texture(self, w, h, color0, color1, cells = 5):$/;"	m	language:Python	class:TextureMgr
+create_shader	.\shadermgr.py	/^	def create_shader(self, name):$/;"	m	language:Python	class:ShaderMgr
 create_vector	.\srmath.py	/^def create_vector(componentCount):$/;"	f	language:Python
 cross	.\srmath.py	/^	def cross(self, v):$/;"	m	language:Python	class:vec3
-cull_back_face	pipeline.py	/^	def cull_back_face(self, v0, v1, v2):$/;"	m	class:Pipeline
-destroy_window	window.py	/^	def destroy_window(self, event):$/;"	m	class:Window
+cull_back_face	rasterizer.py	/^	def cull_back_face(self, rasterDatas):$/;"	m	class:Rasterizer
+destroy_window	.\window.py	/^	def destroy_window(self, event):$/;"	m	language:Python	class:Window
 determinant	.\srmath.py	/^	def determinant(self):$/;"	m	language:Python	class:mat3
 determinant	.\srmath.py	/^	def determinant(self):$/;"	m	language:Python	class:mat4
 doInit	.\srmath.py	/^	def doInit(self, matList):$/;"	m	language:Python	class:mat3
@@ -108,14 +146,9 @@ dot	.\srmath.py	/^	def dot(self, v):$/;"	m	language:Python	class:vec2
 dot	.\srmath.py	/^	def dot(self, v):$/;"	m	language:Python	class:vec3
 dot	.\srmath.py	/^	def dot(self, v):$/;"	m	language:Python	class:vec4
 draw_cube	scene.py	/^	def draw_cube(self):$/;"	m	class:Scene
-draw_flat_triangle	pipeline.py	/^	def draw_flat_triangle(self, v0, v1, v2, mode):$/;"	m	class:Pipeline
-draw_line	pipeline.py	/^	def draw_line(self, x0, y0, x1, y1, color):$/;"	m	class:Pipeline
-draw_mesh	pipeline.py	/^	def draw_mesh(self, mesh, cam, worldMatrix = srmath.mat4.identity, wireframeColor = color.WHITE, mode = DrawMode.WIRE_FRAME):$/;"	m	class:Pipeline
+draw_mesh	pipeline.py	/^	def draw_mesh(self, mesh, cam, vs, fs, worldMat = srmath.mat4.identity, wireframeColor = color.WHITE, mode = DrawMode.WIRE_FRAME):$/;"	m	class:Pipeline
 draw_plane	scene.py	/^	def draw_plane(self):$/;"	m	class:Scene
-draw_point	pipeline.py	/^	def draw_point(self, x, y, color):$/;"	m	class:Pipeline
-draw_scanline	pipeline.py	/^	def draw_scanline(self, left, right, y, mode):$/;"	m	class:Pipeline
-draw_triangle	pipeline.py	/^	def draw_triangle(self, v0, v1, v2, mode, color):$/;"	m	class:Pipeline
-draw_triangle_wireframe	pipeline.py	/^	def draw_triangle_wireframe(self, v0, v1, v2, color):$/;"	m	class:Pipeline
+draw_scanline	rasterizer.py	/^	def draw_scanline(self, left, right, y, mode, shader):$/;"	m	class:Rasterizer
 fast_inverse_mat4	.\srmath.py	/^def fast_inverse_mat4(m):$/;"	f	language:Python
 fromList	.\srmath.py	/^	def fromList(self, l):$/;"	m	language:Python	class:vec2
 fromList	.\srmath.py	/^	def fromList(self, l):$/;"	m	language:Python	class:vec3
@@ -123,15 +156,20 @@ fromList	.\srmath.py	/^	def fromList(self, l):$/;"	m	language:Python	class:vec4
 getInverseMat	.\srmath.py	/^	def getInverseMat(self):$/;"	m	language:Python	class:mat3
 getInverseMat	.\srmath.py	/^	def getInverseMat(self):$/;"	m	language:Python	class:mat4
 get_depth	pipeline.py	/^	def get_depth(self, x, y):$/;"	m	class:Pipeline
-get_flat_triangles	pipeline.py	/^	def get_flat_triangles(self, v0, v1, v2):$/;"	m	class:Pipeline
+get_flat_triangles	rasterizer.py	/^	def get_flat_triangles(self, v0, v1, v2):$/;"	m	class:Rasterizer
 get_pipeline	pipeline.py	/^def get_pipeline():$/;"	f
 get_pixel	pipeline.py	/^	def get_pixel(self, x, y):$/;"	m	class:Pipeline
 get_projection_mat	.\camera.py	/^	def get_projection_mat(self):$/;"	m	language:Python	class:Camera
+get_shader_mgr	.\shadermgr.py	/^def get_shader_mgr():$/;"	f	language:Python
+get_tex_mgr	.\texturemgr.py	/^def get_tex_mgr():$/;"	f	language:Python
+get_unique_id	.\helpers.py	/^def get_unique_id():$/;"	f	language:Python
 get_value	.\buffer3d.py	/^	def get_value(self, x, y, default=None):$/;"	m	language:Python	class:Buffer3D
 get_world_to_view_mat	.\camera.py	/^	def get_world_to_view_mat(self):$/;"	m	language:Python	class:Camera
+helpers	.\resource.py	/^import helpers$/;"	i	language:Python
+init	.\window.py	/^	def init(self):$/;"	m	language:Python	class:Window
 init	pipeline.py	/^	def init(self):$/;"	m	class:Pipeline
-init	window.py	/^	def init(self):$/;"	m	class:Window
-interpolate_rasterize_input	pipeline.py	/^	def interpolate_rasterize_input(self, v0, v1, t):$/;"	m	class:Pipeline
+init_raster_data	rasterizer.py	/^	def init_raster_data(self, rasterInput):$/;"	m	class:Rasterizer
+interpolate_rasterize_data	rasterizer.py	/^	def interpolate_rasterize_data(self, v0, v1, t):$/;"	m	class:Rasterizer
 length	.\srmath.py	/^	def length(self):$/;"	m	language:Python	class:vec2
 length	.\srmath.py	/^	def length(self):$/;"	m	language:Python	class:vec3
 length	.\srmath.py	/^	def length(self):$/;"	m	language:Python	class:vec4
@@ -154,8 +192,8 @@ mat4	.\srmath.py	/^class mat4(mat3):$/;"	c	language:Python
 math	.\simplemesh.py	/^import math$/;"	i	language:Python
 math	.\srmath.py	/^import math$/;"	i	language:Python
 move	.\camera.py	/^	def move(self, offset, st = space.SpaceType.VIEW_SPACE):$/;"	m	language:Python	class:Camera
+move_camera	.\window.py	/^	def move_camera(self, event, direction):$/;"	m	language:Python	class:Window
 move_camera	scene.py	/^	def move_camera(self, offset, st = space.SpaceType.VIEW_SPACE):$/;"	m	class:Scene
-move_camera	window.py	/^	def move_camera(self, event, direction):$/;"	m	class:Window
 multipliableVecType	.\srmath.py	/^	def multipliableVecType(self):$/;"	m	language:Python	class:mat3
 multipliableVecType	.\srmath.py	/^	def multipliableVecType(self):$/;"	m	language:Python	class:mat4
 ndc_to_screen_coord	.\srmath.py	/^def ndc_to_screen_coord(ndcPoint, width, height):$/;"	f	language:Python
@@ -165,18 +203,42 @@ negate	.\srmath.py	/^	def negate(self):$/;"	m	language:Python	class:vec4
 normalize	.\srmath.py	/^	def normalize(self):$/;"	m	language:Python	class:vec2
 normalize	.\srmath.py	/^	def normalize(self):$/;"	m	language:Python	class:vec3
 normalize	.\srmath.py	/^	def normalize(self):$/;"	m	language:Python	class:vec4
-on_key_down	window.py	/^	def on_key_down(self, event):$/;"	m	class:Window
-on_mouse_click	window.py	/^	def on_mouse_click(self, event):$/;"	m	class:Window
-pipeline	main.py	/^import pipeline$/;"	i
+on_key_down	.\window.py	/^	def on_key_down(self, event):$/;"	m	language:Python	class:Window
+on_mouse_click	.\window.py	/^	def on_mouse_click(self, event):$/;"	m	language:Python	class:Window
+pipeline	.\main.py	/^import pipeline$/;"	i	language:Python
+pipeline	rasterizer.py	/^import pipeline$/;"	i
 pipeline	scene.py	/^import pipeline$/;"	i
+pipeline	shader.py	/^import pipeline$/;"	i
+process	fragmentprocessor.py	/^	def process(self, rasterData, shader):$/;"	m	class:FragmentProcessor
+process	rasterizer.py	/^	def process(self, rasterInputs, mode, wireframeColor, shader):$/;"	m	class:Rasterizer
+process	vertexprocessor.py	/^	def process(self, mesh, indices, shader):$/;"	m	class:VertexProcessor
 put_value	.\buffer3d.py	/^	def put_value(self, x, y, value):$/;"	m	language:Python	class:Buffer3D
+rasterize_flat_triangle	rasterizer.py	/^	def rasterize_flat_triangle(self, v0, v1, v2, mode, shader):$/;"	m	class:Rasterizer
+rasterize_line	rasterizer.py	/^	def rasterize_line(self, x0, y0, x1, y1, color):$/;"	m	class:Rasterizer
+rasterize_point	rasterizer.py	/^	def rasterize_point(self, x, y, color):$/;"	m	class:Rasterizer
+rasterize_triangle	rasterizer.py	/^	def rasterize_triangle(self, rasterDatas, mode, color, shader):$/;"	m	class:Rasterizer
+rasterize_triangle_wireframe	rasterizer.py	/^	def rasterize_triangle_wireframe(self, v0, v1, v2, color):$/;"	m	class:Rasterizer
+resource	.\buffer3d.py	/^import resource$/;"	i	language:Python
+run	shader.py	/^	def run(self):$/;"	m	class:FragmentShader
+run	shader.py	/^	def run(self):$/;"	m	class:TextureFS
+run	shader.py	/^	def run(self):$/;"	m	class:TextureVS
+run	shader.py	/^	def run(self):$/;"	m	class:VertexColorFS
+run	shader.py	/^	def run(self):$/;"	m	class:VertexColorVS
+run	shader.py	/^	def run(self):$/;"	m	class:VertexShader
 sample_texture	pipeline.py	/^	def sample_texture(self, tex, uv):$/;"	m	class:Pipeline
-save_depth_texture	window.py	/^	def save_depth_texture(self):$/;"	m	class:Window
-save_texture	window.py	/^	def save_texture(self, tex, filename):$/;"	m	class:Window
-scene	window.py	/^import scene$/;"	i
+sample_texture	shader.py	/^	def sample_texture(self, tex, uv):$/;"	m	class:Shader
+save_depth_texture	.\window.py	/^	def save_depth_texture(self):$/;"	m	language:Python	class:Window
+save_texture	.\window.py	/^	def save_texture(self, tex, filename):$/;"	m	language:Python	class:Window
+scene	.\window.py	/^import scene$/;"	i	language:Python
 set_all_value	.\buffer3d.py	/^	def set_all_value(self, value):$/;"	m	language:Python	class:Buffer3D
 set_depth	pipeline.py	/^	def set_depth(self, x, y, value):$/;"	m	class:Pipeline
 set_front_face	pipeline.py	/^	def set_front_face(self, face):$/;"	m	class:Pipeline
+set_front_face	rasterizer.py	/^	def set_front_face(self, face):$/;"	m	class:Rasterizer
+set_pixel	pipeline.py	/^	def set_pixel(self, x, y, color):$/;"	m	class:Pipeline
+set_uniform	shader.py	/^	def set_uniform(self, name, value):$/;"	m	class:Shader
+set_varying	shader.py	/^	def set_varying(self, name, value):$/;"	m	class:Shader
+shader	.\shadermgr.py	/^import shader$/;"	i	language:Python
+shadermgr	scene.py	/^import shadermgr$/;"	i
 simplemesh	scene.py	/^import simplemesh$/;"	i
 space	.\camera.py	/^import space$/;"	i	language:Python
 space	scene.py	/^import space$/;"	i
@@ -184,24 +246,27 @@ sqrLength	.\srmath.py	/^	def sqrLength(self):$/;"	m	language:Python	class:vec2
 sqrLength	.\srmath.py	/^	def sqrLength(self):$/;"	m	language:Python	class:vec3
 sqrLength	.\srmath.py	/^	def sqrLength(self):$/;"	m	language:Python	class:vec4
 srmath	.\camera.py	/^import srmath$/;"	i	language:Python
+srmath	.\window.py	/^import srmath$/;"	i	language:Python
 srmath	pipeline.py	/^import srmath$/;"	i
+srmath	rasterizer.py	/^import srmath$/;"	i
 srmath	scene.py	/^import srmath$/;"	i
-srmath	window.py	/^import srmath$/;"	i
+srmath	shader.py	/^import srmath$/;"	i
+srmath	vertexprocessor.py	/^import srmath$/;"	i
 swapElements	.\srmath.py	/^	def swapElements(self, idx0, idx1):$/;"	m	language:Python	class:mat3
-texture	pipeline.py	/^import texture$/;"	i
-texture	window.py	/^import texture$/;"	i
-time	window.py	/^import time$/;"	i
+texture	.\window.py	/^import texture$/;"	i	language:Python
+texturemgr	scene.py	/^import texturemgr$/;"	i
+time	.\window.py	/^import time$/;"	i	language:Python
 toList	.\srmath.py	/^	def toList(self):$/;"	m	language:Python	class:vec2
 toList	.\srmath.py	/^	def toList(self):$/;"	m	language:Python	class:vec3
 toList	.\srmath.py	/^	def toList(self):$/;"	m	language:Python	class:vec4
 transpose	.\srmath.py	/^	def transpose(self):$/;"	m	language:Python	class:mat3
 transpose	.\srmath.py	/^	def transpose(self):$/;"	m	language:Python	class:mat4
 update	scene.py	/^	def update(self):$/;"	m	class:Scene
-update_screen	window.py	/^	def update_screen(self):$/;"	m	class:Window
-update_statistic_info	window.py	/^	def update_statistic_info(self):$/;"	m	class:Window
+update_screen	.\window.py	/^	def update_screen(self):$/;"	m	language:Python	class:Window
+update_statistic_info	.\window.py	/^	def update_statistic_info(self):$/;"	m	language:Python	class:Window
 vec2	.\srmath.py	/^class vec2(object):$/;"	c	language:Python
 vec3	.\srmath.py	/^class vec3(object):$/;"	c	language:Python
 vec4	.\srmath.py	/^class vec4(object):$/;"	c	language:Python
-w	main.py	/^	w = window.Window(pipeline.get_pipeline())$/;"	v
-window	main.py	/^import window$/;"	i
-window_update	window.py	/^	def window_update(self):$/;"	m	class:Window
+w	.\main.py	/^	w = window.Window(pipeline.get_pipeline())$/;"	v	language:Python
+window	.\main.py	/^import window$/;"	i	language:Python
+window_update	.\window.py	/^	def window_update(self):$/;"	m	language:Python	class:Window

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+import resource
 
-class Buffer3D(object):
+class Buffer3D(resource.Resource):
 	def __init__(self, w, h, initialValue = None):
+		super(Buffer3D, self).__init__()
 		self.width = w
 		self.height = h
 		if not initialValue:
