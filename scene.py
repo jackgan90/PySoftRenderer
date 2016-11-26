@@ -30,7 +30,7 @@ class Scene(object):
 	def draw_cube(self):
 		c = simplemesh.Cube(2)
 		transformMat = srmath.make_translation_mat(srmath.vec3(0, 1, 0))
-		self.graphicsPipeline.draw_mesh(c, self.cam, self.vs, self.fs, transformMat, color.WHITE, pipeline.DrawMode.WIRE_FRAME)
+		self.graphicsPipeline.draw_mesh(c, self.cam, self.vs, self.fs, transformMat, color.WHITE, pipeline.DrawMode.FILL)
 
 	def draw_plane(self):
 		p = simplemesh.Plane(3, 3)

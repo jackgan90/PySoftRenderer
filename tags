@@ -138,6 +138,7 @@ create_shader	.\shadermgr.py	/^	def create_shader(self, name):$/;"	m	language:Py
 create_vector	.\srmath.py	/^def create_vector(componentCount):$/;"	f	language:Python
 cross	.\srmath.py	/^	def cross(self, v):$/;"	m	language:Python	class:vec3
 cull_back_face	rasterizer.py	/^	def cull_back_face(self, rasterDatas):$/;"	m	class:Rasterizer
+cull_cvv	rasterizer.py	/^	def cull_cvv(self, rasterDatas):$/;"	m	class:Rasterizer
 destroy_window	.\window.py	/^	def destroy_window(self, event):$/;"	m	language:Python	class:Window
 determinant	.\srmath.py	/^	def determinant(self):$/;"	m	language:Python	class:mat3
 determinant	.\srmath.py	/^	def determinant(self):$/;"	m	language:Python	class:mat4
@@ -170,6 +171,7 @@ init	.\window.py	/^	def init(self):$/;"	m	language:Python	class:Window
 init	pipeline.py	/^	def init(self):$/;"	m	class:Pipeline
 init_raster_data	rasterizer.py	/^	def init_raster_data(self, rasterInput):$/;"	m	class:Rasterizer
 interpolate_rasterize_data	rasterizer.py	/^	def interpolate_rasterize_data(self, v0, v1, t):$/;"	m	class:Rasterizer
+is_out_of_cvv	rasterizer.py	/^	def is_out_of_cvv(self, rasterInput):$/;"	m	class:Rasterizer
 length	.\srmath.py	/^	def length(self):$/;"	m	language:Python	class:vec2
 length	.\srmath.py	/^	def length(self):$/;"	m	language:Python	class:vec3
 length	.\srmath.py	/^	def length(self):$/;"	m	language:Python	class:vec4

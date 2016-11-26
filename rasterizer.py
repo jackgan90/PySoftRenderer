@@ -88,23 +88,23 @@ class Rasterizer(object):
 				interpolateRight = self.interpolate_rasterize_data(top, right, float(y - yStart) / (yEnd - yStart))
 				self.draw_scanline(interpolateLeft, interpolateRight, y, mode, shader)
 		else:
-			raise Exception('rasterize_flat_triangle should only handle flat triangle!')
+			raise Exception('rasterize_flat_triangle should only handle flat triangle!', v0.screenCoord, v1.screenCoord, v2.screenCoord)
 
 	def draw_scanline(self, left, right, y, mode, shader):
 		xStart = int(left.screenCoord.x)
 		xEnd = int(right.screenCoord.x + 1)
-		currentVertex = left
+		currentFragment = left
 		for x in xrange(xStart, xEnd, 1):
 			if 0 <= x < self.graphicsPipeline.frameBuffer.width and 0 <= y < self.graphicsPipeline.frameBuffer.height:
 				depthInBuffer = self.graphicsPipeline.get_depth(x, y)
-				if currentVertex.screenCoord.z < depthInBuffer:
-					self.graphicsPipeline.set_depth(x, y, currentVertex.screenCoord.z)
-					color = self.graphicsPipeline.fragmentProcessor.process(currentVertex, shader)
+				if currentFragment.screenCoord.z < depthInBuffer:
+					self.graphicsPipeline.set_depth(x, y, currentFragment.screenCoord.z)
+					color = self.graphicsPipeline.fragmentProcessor.process(currentFragment, shader)
 					r = int(255 * color.x) % 256
 					g = int(255 * color.y) % 256
 					b = int(255 * color.z) % 256
 					self.rasterize_point(x, y, (r, g, b))
-			currentVertex = self.interpolate_rasterize_data(left, right, float(x + 1 - xStart) / (xEnd - xStart))
+			currentFragment = self.interpolate_rasterize_data(left, right, float(x + 1 - xStart) / (xEnd - xStart))
 
 	def interpolate_rasterize_data(self, v0, v1, t):
 		rasterData = RasterizeData()
@@ -189,8 +189,31 @@ class Rasterizer(object):
 			return True
 		else:
 			return False
+	
+	def is_out_of_cvv(self, rasterInput):
+		if rasterInput.clipPos.x > rasterInput.clipPos.w:
+			return True
+		if rasterInput.clipPos.x < -rasterInput.clipPos.w:
+			return True
+
+		if rasterInput.clipPos.y > rasterInput.clipPos.w:
+			return True
+		if rasterInput.clipPos.y < -rasterInput.clipPos.w:
+			return True
+
+		if rasterInput.clipPos.z > rasterInput.clipPos.w:
+			return True
+		if rasterInput.clipPos.z < -rasterInput.clipPos.w:
+			return True
+
+		return False
+
+	def cull_cvv(self, rasterDatas):
+		return all([self.is_out_of_cvv(rasterInput) for rasterInput in rasterDatas])
 
 	def process(self, rasterInputs, mode, wireframeColor, shader):
+		if self.cull_cvv(rasterInputs):
+			return
 		rasterDatas = [self.init_raster_data(rasterInput) for rasterInput in rasterInputs]
 		if self.cull_back_face(rasterDatas):
 			return
