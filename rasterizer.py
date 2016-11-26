@@ -123,6 +123,8 @@ class Rasterizer(object):
 		else:
 			t = (triList[1].screenCoord.y - triList[0].screenCoord.y) / (triList[2].screenCoord.y - triList[0].screenCoord.y)
 			v3 = self.interpolate_rasterize_data(triList[0], triList[2], t)
+			#make sure v3's y is equal to triList[1] to eleminate potential float accurate issue
+			v3.screenCoord.y = triList[1].screenCoord.y
 			return ((triList[0], triList[1], v3, ), (v3, triList[1], triList[2], ), )
 
 	def rasterize_triangle_wireframe(self, v0, v1, v2, color):
