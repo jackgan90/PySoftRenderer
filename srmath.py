@@ -565,6 +565,9 @@ def make_view_mat(eye, lookat, up):
 	xAxis = up.cross(zAxis)
 	xAxis.normalize()
 	yAxis = zAxis.cross(xAxis)
+	return make_view_mat_axis(xAxis, yAxis, zAxis, eye)
+
+def make_view_mat_axis(xAxis, yAxis, zAxis, eye):
 	return mat4([
 		xAxis.x, yAxis.x, zAxis.x, 0,
 		xAxis.y, yAxis.y, zAxis.y, 0,
@@ -578,12 +581,16 @@ def make_inv_view_mat(eye, lookat, up):
 	xAxis = up.cross(zAxis)
 	xAxis.normalize()
 	yAxis = zAxis.cross(xAxis)
+	return make_inv_view_mat_axies(xAxis, yAxis, zAxis, eye)
+
+def make_inv_view_mat_axies(xAxis, yAxis, zAxis, eye):
 	return mat4([
 		xAxis.x, xAxis.y, xAxis.z, 0,
 		yAxis.x, yAxis.y, yAxis.z, 0,
 		zAxis.x, zAxis.y, zAxis.z, 0,
 		eye.x, eye.y, eye.z, 1.0,
 	])
+
 
 
 

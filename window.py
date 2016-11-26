@@ -3,7 +3,9 @@ import Tkinter
 from PIL import Image, ImageTk
 import time
 import pipeline
+import texture
 import srmath
+import scene
 
 DEFAULT_FRAME_RATE = 30
 
@@ -16,16 +18,17 @@ class Window(object):
 		self.statisticInfo = None
 		self.frameCount = 0
 		self.lastFrameTime = 0.0
+		self.renderScene = scene.Scene()
 
-	def save_texture(self, texture, filename):
-		img = Image.new('RGB', (texture.width, texture.height))
-		img.putdata(texture.buffer)
+	def save_texture(self, tex, filename):
+		img = Image.new('RGB', (tex.width, tex.height))
+		img.putdata(tex.buffer)
 		img.save(filename)
 
 	def save_depth_texture(self):
 		textureData = [(int(255 * (x * 0.5 + 0.5)) % 256, 
-			int(255 * (x * 0.5 + 0.5)) % 256, int(255 * (x * 0.5 + 0.5)) % 256) for x in pipeline.depthBuffer]
-		depthTexture = pipeline.Texture(pipeline.WINDOW_WIDTH, pipeline.WINDOW_HEIGHT)
+			int(255 * (x * 0.5 + 0.5)) % 256, int(255 * (x * 0.5 + 0.5)) % 256) for x in pipeline.depthBuffer.data]
+		depthTexture = texture.Texture(pipeline.WINDOW_WIDTH, pipeline.WINDOW_HEIGHT)
 		depthTexture.buffer = textureData
 		self.save_texture(depthTexture, 'depth.bmp')
 
@@ -57,7 +60,7 @@ class Window(object):
 			offset = srmath.vec3(0.0, 0.5, 0.0)
 		elif direction == 'down':
 			offset = srmath.vec3(0.0, -0.5, 0.0)
-		pipeline.move_camera(offset)
+		self.renderScene.move_camera(offset)
 		pipeline.clear_screen()
 		pipeline.clear_depth_buffer()
 
@@ -66,15 +69,15 @@ class Window(object):
 		print event.x, event.y, color
 
 	def change_fov(self, event):
-		pipeline.cameraFOV -= event.delta / 100
+		self.renderScene.cam.fov -= event.delta / 100
 		pipeline.clear_screen()
 		pipeline.clear_depth_buffer()
 
 	def update_screen(self):
 		if not self.image:
 			self.image = Image.new('RGB', (pipeline.WINDOW_WIDTH, pipeline.WINDOW_HEIGHT))
-		pipeline.update()
-		self.image.putdata(pipeline.frameBuffer)
+		self.renderScene.update()
+		self.image.putdata(pipeline.frameBuffer.data)
 		img = ImageTk.PhotoImage(self.image)
 		self.canvas.create_image(pipeline.WINDOW_WIDTH / 2, pipeline.WINDOW_HEIGHT / 2, image=img)
 		self.canvas.image = img
