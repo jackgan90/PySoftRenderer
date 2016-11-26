@@ -7,7 +7,8 @@ import pipeline
 import space
 
 class Scene(object):
-	def __init__(self):
+	def __init__(self, graphicsPipeline):
+		self.graphicsPipeline = graphicsPipeline
 		self.cam = camera.Camera()
 		self.cam.position = srmath.vec3(3, 3, 3)
 		self.cam.look_at(srmath.vec3(0, 0, 0))
@@ -22,10 +23,10 @@ class Scene(object):
 	def draw_cube(self):
 		c = simplemesh.Cube(2)
 		transformMat = srmath.make_translation_mat(srmath.vec3(0, 1, 0))
-		pipeline.draw_mesh(c, self.cam, transformMat, color.WHITE, pipeline.DrawMode.VERTEX_COLOR)
+		self.graphicsPipeline.draw_mesh(c, self.cam, transformMat, color.WHITE, pipeline.DrawMode.VERTEX_COLOR)
 
 	def draw_plane(self):
 		p = simplemesh.Plane(3, 3)
-		pipeline.draw_mesh(p, self.cam, srmath.mat4.identity, color.WHITE, pipeline.DrawMode.TEXTURE_MAP)
+		self.graphicsPipeline.draw_mesh(p, self.cam, srmath.mat4.identity, color.WHITE, pipeline.DrawMode.TEXTURE_MAP)
 
 

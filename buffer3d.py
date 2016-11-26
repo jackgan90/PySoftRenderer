@@ -13,8 +13,11 @@ class Buffer3D(object):
 		if 0 <= x < self.width and 0 <= y < self.height:
 			self.data[y * self.width + x] = value
 
-	def get_value(self, x, y):
-		return self.data[y * self.width + x]
+	def get_value(self, x, y, default=None):
+		if 0 <= x < self.width and 0 <= y < self.height:
+			return self.data[y * self.width + x]
+		else:
+			return default
 
 	def set_all_value(self, value):
 		self.data = [value] * (self.width * self.height)
