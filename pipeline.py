@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-import cube
-import plane
+import simplemesh
 import srmath
 WINDOW_HEIGHT = 400
 WINDOW_WIDTH = 400
@@ -31,7 +30,7 @@ class VertexInput(object):
 		self.color = None
 		self.uv = None
 
-class VertexAttribute(object):
+class RasterizeInput(object):
 	def __init__(self):
 		self.screenCoord = None
 		self.interpolateParam = 0.0
@@ -61,8 +60,8 @@ frontFace = WindingOrder.CCW
 #called by main window once per frame
 def update():
 	# rotMat = srmath.make_rotation_mat(srmath.vec3(1, 0, 0), 90.0)
-	# draw_plane(rotMat, mode=DrawMode.TEXTURE_MAP)
-	draw_cube(2.0, color=RED, mode=DrawMode.VERTEX_COLOR)
+	# draw_plane(rotMat, mode=DrawMode.VERTEX_COLOR)
+	draw_cube(2.0, color=RED, mode=DrawMode.TEXTURE_MAP)
 
 def move_camera(offset, space = SpaceType.VIEW_SPACE):
 	global cameraPosition
@@ -183,27 +182,27 @@ def draw_triangle(v0, v1, v2, mode, color):
 			draw_flat_triangle(vertex0, vertex1, vertex2, mode)
 
 def calc_vertex_attribute(mvp, vertexInput, mode):
-	vertex = VertexAttribute()
-	vertex.screenCoord = mvp * vertexInput.pos
-	vertex.interpolateParam = 1.0 / vertex.screenCoord.w
+	rInput = RasterizeInput()
+	rInput.screenCoord = mvp * vertexInput.pos
+	rInput.interpolateParam = 1.0 / rInput.screenCoord.w
 	#perspective division
-	vertex.screenCoord *= vertex.interpolateParam
-	vertex.screenCoord = srmath.ndc_to_screen_coord(vertex.screenCoord, WINDOW_WIDTH, WINDOW_HEIGHT)
+	rInput.screenCoord *= rInput.interpolateParam
+	rInput.screenCoord = srmath.ndc_to_screen_coord(rInput.screenCoord, WINDOW_WIDTH, WINDOW_HEIGHT)
 	#invert the interpolate param because we use right-hand coordinate system
 	if mode != DrawMode.WIRE_FRAME:
-		vertex.color = srmath.vec3(vertexInput.color[0] * vertex.interpolateParam, \
-				vertexInput.color[1] * vertex.interpolateParam, vertexInput.color[2] * vertex.interpolateParam)
+		rInput.color = srmath.vec3(vertexInput.color[0] * rInput.interpolateParam, \
+				vertexInput.color[1] * rInput.interpolateParam, vertexInput.color[2] * rInput.interpolateParam)
 	if mode == DrawMode.TEXTURE_MAP:
-		vertex.uv = vertexInput.uv * vertex.interpolateParam
-	return vertex
+		rInput.uv = vertexInput.uv * rInput.interpolateParam
+	return rInput
 
-def interpolateVertex(v0, v1, t):
-	vertex = VertexAttribute()
-	vertex.interpolateParam = srmath.lerp(v0.interpolateParam, v1.interpolateParam, t)
-	vertex.color = srmath.lerp(v0.color, v1.color, t)
-	vertex.screenCoord = srmath.lerp(v0.screenCoord, v1.screenCoord, t)
-	vertex.uv = srmath.lerp(v0.uv, v1.uv, t)
-	return vertex
+def interpolateRasterizeInput(v0, v1, t):
+	rInput = RasterizeInput()
+	rInput.interpolateParam = srmath.lerp(v0.interpolateParam, v1.interpolateParam, t)
+	rInput.color = srmath.lerp(v0.color, v1.color, t)
+	rInput.screenCoord = srmath.lerp(v0.screenCoord, v1.screenCoord, t)
+	rInput.uv = srmath.lerp(v0.uv, v1.uv, t)
+	return rInput
 
 def inBound(x, y):
 	return 0 <= x < WINDOW_WIDTH and 0 <= y < WINDOW_HEIGHT
@@ -233,7 +232,7 @@ def draw_scanline(left, right, y, mode):
 					r, g, b = sample_texture(texture, uv)
 					# print r, g, b
 				draw_point(x, y, (r, g, b))
-		currentVertex = interpolateVertex(left, right, float(x + 1 - xStart) / (xEnd - xStart))
+		currentVertex = interpolateRasterizeInput(left, right, float(x + 1 - xStart) / (xEnd - xStart))
 
 def draw_flat_triangle(v0, v1, v2, mode):
 	if int(v0.screenCoord.y) == int(v1.screenCoord.y) and int(v1.screenCoord.y) == int(v2.screenCoord.y):
@@ -257,8 +256,8 @@ def draw_flat_triangle(v0, v1, v2, mode):
 			draw_scanline(left, right, yStart, mode)
 			return
 		for y in xrange(yStart, yEnd + 1, 1):
-			interpolateLeft = interpolateVertex(left, bottom, float(y - yStart) / (yEnd - yStart))
-			interpolateRight = interpolateVertex(right, bottom, float(y - yStart) / (yEnd - yStart))
+			interpolateLeft = interpolateRasterizeInput(left, bottom, float(y - yStart) / (yEnd - yStart))
+			interpolateRight = interpolateRasterizeInput(right, bottom, float(y - yStart) / (yEnd - yStart))
 			draw_scanline(interpolateLeft, interpolateRight, y, mode)
 	elif int(v1.screenCoord.y) == int(v2.screenCoord.y):
 		if v1.screenCoord.x < v2.screenCoord.x:
@@ -274,8 +273,8 @@ def draw_flat_triangle(v0, v1, v2, mode):
 			draw_scanline(left, right, yStart, mode)
 			return
 		for y in xrange(yStart, yEnd + 1, 1):
-			interpolateLeft = interpolateVertex(top, left, float(y - yStart) / (yEnd - yStart))
-			interpolateRight = interpolateVertex(top, right, float(y - yStart) / (yEnd - yStart))
+			interpolateLeft = interpolateRasterizeInput(top, left, float(y - yStart) / (yEnd - yStart))
+			interpolateRight = interpolateRasterizeInput(top, right, float(y - yStart) / (yEnd - yStart))
 			draw_scanline(interpolateLeft, interpolateRight, y, mode)
 	else:
 		print '-' * 30
@@ -291,7 +290,7 @@ def get_flat_triangles(v0, v1, v2):
 		return ((triList[0], triList[1], triList[2]), )
 	else:
 		t = (triList[1].screenCoord.y - triList[0].screenCoord.y) / (triList[2].screenCoord.y - triList[0].screenCoord.y)
-		v3 = interpolateVertex(triList[0], triList[2], t)
+		v3 = interpolateRasterizeInput(triList[0], triList[2], t)
 		return ((triList[0], triList[1], v3, ), (v3, triList[1], triList[2], ), )
 
 def cull_back_face(v0, v1, v2):
@@ -349,9 +348,9 @@ def draw_mesh(mesh, worldMatrix = srmath.mat4.identity, wireframeColor = WHITE, 
 
 
 def draw_cube(size = 1, worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_FRAME):
-	c = cube.Cube(size)
+	c = simplemesh.Cube(size)
 	draw_mesh(c, worldMatrix, color, mode)
 
 def draw_plane(worldMatrix = srmath.mat4.identity, color = WHITE, mode = DrawMode.WIRE_FRAME):
-	p = plane.Plane()
+	p = simplemesh.Plane()
 	draw_mesh(p, worldMatrix, color, mode)
