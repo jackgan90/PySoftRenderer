@@ -8,8 +8,8 @@ class FragmentProcessor(object):
 		#don't need to use predifined semantics,because vertex shader already
 		#produces what fragment shader needs
 		for uniform in shader.uniforms:
-			if uniform in self.pipeline.uniformCache:
-				shader.set_uniform(uniform, self.pipeline.uniformCache[uniform])
+			if self.pipeline.has_pipeline_uniform(uniform):
+				shader.set_uniform(uniform, self.pipeline.get_pipeline_uniform(uniform))
 
 		for varyingName, attr in rasterData.fragmentAttrs.iteritems():
 			if varyingName in shader.varyings:

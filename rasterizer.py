@@ -21,6 +21,7 @@ class Rasterizer(object):
 	def __init__(self, graphicsPipeline):
 		self.graphicsPipeline = graphicsPipeline
 		self.frontFace = WindingOrder.CCW
+		self.width, self.height = self.graphicsPipeline.get_frame_buffer_dimension()
 
 	def set_front_face(self, face):
 		self.frontFace = face
@@ -30,8 +31,7 @@ class Rasterizer(object):
 		rasterData.interpolateParam = 1.0 / rasterInput.clipPos.w
 		rasterData.screenCoord = rasterInput.clipPos * rasterData.interpolateParam
 		#perspective division
-		rasterData.screenCoord = srmath.ndc_to_screen_coord(rasterData.screenCoord, \
-				self.graphicsPipeline.frameBuffer.width, self.graphicsPipeline.frameBuffer.height)
+		rasterData.screenCoord = srmath.ndc_to_screen_coord(rasterData.screenCoord, self.width, self.height)
 		for varyingName, attr in rasterInput.vertexAttrs.iteritems():
 			rasterData.fragmentAttrs[varyingName] = attr * rasterData.interpolateParam
 
@@ -95,7 +95,7 @@ class Rasterizer(object):
 		xEnd = int(right.screenCoord.x + 1)
 		currentFragment = left
 		for x in xrange(xStart, xEnd, 1):
-			if 0 <= x < self.graphicsPipeline.frameBuffer.width and 0 <= y < self.graphicsPipeline.frameBuffer.height:
+			if 0 <= x < self.width and 0 <= y < self.height:
 				depthInBuffer = self.graphicsPipeline.get_depth(x, y)
 				if currentFragment.screenCoord.z < depthInBuffer:
 					self.graphicsPipeline.set_depth(x, y, currentFragment.screenCoord.z)

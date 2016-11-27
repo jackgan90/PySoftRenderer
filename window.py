@@ -75,14 +75,13 @@ class Window(object):
 		self.graphicsPipeline.clear_depth_buffer()
 
 	def update_screen(self):
+		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
 		if not self.image:
-			self.image = Image.new('RGB', (self.graphicsPipeline.frameBuffer.width, \
-					self.graphicsPipeline.frameBuffer.height))
+			self.image = Image.new('RGB', (width, height))
 		self.renderScene.update()
-		self.image.putdata(self.graphicsPipeline.frameBuffer.data)
+		self.image.putdata(self.graphicsPipeline.get_frame_buffer_data())
 		img = ImageTk.PhotoImage(self.image)
-		self.canvas.create_image(self.graphicsPipeline.frameBuffer.width / 2, \
-				self.graphicsPipeline.frameBuffer.height / 2, image=img)
+		self.canvas.create_image(width / 2, height / 2, image=img)
 		self.canvas.image = img
 
 	def window_update(self):
@@ -105,8 +104,8 @@ class Window(object):
 		self.statisticInfo = Tkinter.StringVar()
 		statisticLabel = Tkinter.Label(self.window, textvariable=self.statisticInfo, fg="red")
 		statisticLabel.pack()
-		self.canvas = Tkinter.Canvas(self.window, width=self.graphicsPipeline.frameBuffer.width, \
-				height=self.graphicsPipeline.frameBuffer.height)
+		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
+		self.canvas = Tkinter.Canvas(self.window, width=width, height=height)
 
 		self.canvas.pack()
 		self.update_screen()

@@ -39,20 +39,35 @@ class Pipeline(object):
 		self.clearColor = color.GREY
 		self.frameBuffer = None
 		self.depthBuffer = None
-		self.vertexProcessor = VertexProcessor(self)
-		self.fragmentProcessor = FragmentProcessor(self)
-		self.rasterizer = Rasterizer(self)
+		self.vertexProcessor = None
+		self.fragmentProcessor = None
+		self.rasterizer = None
 		self.uniformCache = dict()
 
 	def init(self):
 		self.frameBuffer = buffer3d.Buffer3D(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, self.clearColor)
 		self.depthBuffer = buffer3d.Buffer3D(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, 1.0)
+		self.vertexProcessor = VertexProcessor(self)
+		self.fragmentProcessor = FragmentProcessor(self)
+		self.rasterizer = Rasterizer(self)
 
 	def clear_screen(self):
 		self.frameBuffer.set_all_value(self.clearColor)
 
 	def clear_depth_buffer(self):
 		self.depthBuffer.set_all_value(1.0)
+
+	def get_frame_buffer_dimension(self):
+		return (self.frameBuffer.width, self.frameBuffer.height)
+
+	def get_frame_buffer_data(self):
+		return self.frameBuffer.data
+
+	def has_pipeline_uniform(self, uniform):
+		return uniform in self.uniformCache
+
+	def get_pipeline_uniform(self, uniform):
+		return self.uniformCache.get(uniform, None)
 
 	def sample_texture(self, tex, uv):
 		x = int(srmath.clamp(srmath.clamp(uv.x, 0.0, 1.0) * tex.width, 0, tex.width - 1))

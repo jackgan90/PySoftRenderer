@@ -24,8 +24,8 @@ class VertexProcessor(object):
 				shader.set_varying('uv', uv)
 
 			for uniform in shader.uniforms:
-				if uniform in self.pipeline.uniformCache:
-					shader.set_uniform(uniform, self.pipeline.uniformCache[uniform])
+				if self.pipeline.has_pipeline_uniform(uniform):
+					shader.set_uniform(uniform, self.pipeline.get_pipeline_uniform(uniform))
 			
 			shader.run()
 			rasterInput = RasterizeInput()
