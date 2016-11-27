@@ -192,29 +192,26 @@ class Rasterizer(object):
 		else:
 			return False
 	
-	def is_out_of_cvv(self, rasterInput):
-		if rasterInput.clipPos.x > rasterInput.clipPos.w:
-			return True
-		if rasterInput.clipPos.x < -rasterInput.clipPos.w:
-			return True
+	def check_cvv_out(self, rasterInput):
+		outType = 0
+		outType |= 0x01 if rasterInput.clipPos.x > rasterInput.clipPos.w else 0
+		outType |= 0x02 if rasterInput.clipPos.x < -rasterInput.clipPos.w else 0
+		outType |= 0x04 if rasterInput.clipPos.y > rasterInput.clipPos.w else 0
+		outType |= 0x08 if rasterInput.clipPos.y < -rasterInput.clipPos.w else 0
+		outType |= 0x10 if rasterInput.clipPos.z > rasterInput.clipPos.w else 0
+		outType |= 0x20 if rasterInput.clipPos.z < -rasterInput.clipPos.w else 0
 
-		if rasterInput.clipPos.y > rasterInput.clipPos.w:
-			return True
-		if rasterInput.clipPos.y < -rasterInput.clipPos.w:
-			return True
+		return outType
 
-		if rasterInput.clipPos.z > rasterInput.clipPos.w:
+	def cull_cvv(self, cvvOutTypes):
+		if cvvOutTypes[0] & cvvOutTypes[1] & cvvOutTypes[2]:
 			return True
-		if rasterInput.clipPos.z < -rasterInput.clipPos.w:
-			return True
-
 		return False
 
-	def cull_cvv(self, rasterDatas):
-		return all([self.is_out_of_cvv(rasterInput) for rasterInput in rasterDatas])
 
 	def process(self, rasterInputs, mode, wireframeColor, shader):
-		if self.cull_cvv(rasterInputs):
+		outTypes = [self.check_cvv_out(rasterInput) for rasterInput in rasterInputs]
+		if self.cull_cvv(outTypes):
 			return
 		rasterDatas = [self.init_raster_data(rasterInput) for rasterInput in rasterInputs]
 		if self.cull_back_face(rasterDatas):
