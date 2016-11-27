@@ -89,7 +89,7 @@ class Pipeline(object):
 	def set_depth(self, x, y, value):
 		self.depthBuffer.put_value(x, y, value)
 
-	def draw_mesh(self, mesh, cam, vs, fs, worldMat = srmath.mat4.identity, wireframeColor = color.WHITE, mode = DrawMode.WIRE_FRAME):
+	def draw_mesh(self, mesh, cam, program, worldMat = srmath.mat4.identity, wireframeColor = color.WHITE, mode = DrawMode.WIRE_FRAME):
 		viewMat = cam.get_world_to_view_mat()
 		projMat = cam.get_projection_mat()
 		mvp = projMat * viewMat * worldMat
@@ -98,6 +98,6 @@ class Pipeline(object):
 		self.uniformCache['projection_matrix'] = projMat
 		self.uniformCache['mvp'] = mvp
 		for i in xrange(0, len(mesh.indices), 3):
-			rasterInputs = self.vertexProcessor.process(mesh, mesh.indices[i : i + 3], vs)
-			self.rasterizer.process(rasterInputs, mode, wireframeColor, fs)
+			rasterInputs = self.vertexProcessor.process(mesh, mesh.indices[i : i + 3], program)
+			self.rasterizer.process(rasterInputs, mode, wireframeColor, program)
 

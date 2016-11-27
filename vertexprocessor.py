@@ -6,30 +6,31 @@ class VertexProcessor(object):
 	def __init__(self, pipeline):
 		self.pipeline = pipeline
 
-	def process(self, mesh, indices, shader):
+	def process(self, mesh, indices, program):
 		rasterInputs = []
 		for idx in indices:
 			# variable semantics are predifined,position is always coordinate in object space
 			# color is vertex color
 			# uv is vertex texture coordinate
-			if 'position' in shader.varyings:
+			if 'position' in program.vs.varyings:
 				position = srmath.vec4(mesh.vertices[idx * 3], mesh.vertices[idx * 3 + 1], \
 						mesh.vertices[idx * 3 + 2], 1.0)
-				shader.set_varying('position', position)
-			if 'color' in shader.varyings:
+				program.vs.set_varying('position', position)
+			if 'color' in program.vs.varyings:
 				color = srmath.vec3(mesh.colors[idx * 3], mesh.colors[idx * 3 + 1], mesh.colors[idx * 3 + 2])
-				shader.set_varying('color', color)
-			if 'uv' in shader.varyings:
+				program.vs.set_varying('color', color)
+			if 'uv' in program.vs.varyings:
 				uv = srmath.vec2(mesh.uvs[idx * 3], mesh.uvs[idx * 3 + 1])
-				shader.set_varying('uv', uv)
+				program.vs.set_varying('uv', uv)
 
-			for uniform in shader.uniforms:
+			for uniform in program.vs.uniforms:
 				if self.pipeline.has_pipeline_uniform(uniform):
-					shader.set_uniform(uniform, self.pipeline.get_pipeline_uniform(uniform))
+					program.vs.set_uniform(uniform, self.pipeline.get_pipeline_uniform(uniform))
 			
-			shader.run()
+			program.vs.run()
 			rasterInput = RasterizeInput()
-			rasterInput.clipPos = srmath.vec4(shader.vspos.x, shader.vspos.y, shader.vspos.z, shader.vspos.w)
-			rasterInput.vertexAttrs = dict(shader.vsattrs)
+			rasterInput.clipPos = srmath.vec4(program.vs.vspos.x, program.vs.vspos.y, \
+					program.vs.vspos.z, program.vs.vspos.w)
+			rasterInput.vertexAttrs = dict(program.vs.vsattrs)
 			rasterInputs.append(rasterInput)
 		return rasterInputs
