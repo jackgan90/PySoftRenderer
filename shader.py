@@ -60,19 +60,21 @@ class VertexColorFS(FragmentShader):
 class TextureVS(VertexShader):
 	def __init__(self):
 		super(TextureVS, self).__init__()
-		self.varyings = ['position', 'uv', ]
+		self.varyings = ['position', 'uv', 'color']
 
 	def run(self):
 		super(TextureVS, self).run()
 		self.vsattrs['uv'] = self.uv
+		self.vsattrs['color'] = self.color
 
 class TextureFS(FragmentShader):
 	def __init__(self):
 		super(TextureFS, self).__init__()
-		self.varyings = ['uv', ]
+		self.varyings = ['uv', 'color', ]
 		self.uniforms = ['texChessboard', ]
 
 	def run(self):
-		self.fragcolor = self.sample_texture(self.texChessboard, self.uv)
+		texColor = self.sample_texture(self.texChessboard, self.uv)
+		self.fragcolor = srmath.vec3(texColor.x * self.color.x, texColor.y * self.color.y, texColor.z * self.color.z)
 
 

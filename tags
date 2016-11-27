@@ -19,7 +19,7 @@ EPSILON	.\srmath.py	/^EPSILON = 0.00001$/;"	v
 FILL	pipeline.py	/^	FILL = 2$/;"	v	class:DrawMode
 FragmentProcessor	fragmentprocessor.py	/^class FragmentProcessor(object):$/;"	c
 FragmentProcessor	pipeline.py	/^from  fragmentprocessor import FragmentProcessor$/;"	i
-FragmentShader	.\shader.py	/^class FragmentShader(Shader):$/;"	c
+FragmentShader	shader.py	/^class FragmentShader(Shader):$/;"	c
 GREEN	.\color.py	/^GREEN = (0, 255, 0)$/;"	v
 GREY	.\color.py	/^GREY = (128, 128, 128)$/;"	v
 Image	window.py	/^from PIL import Image, ImageTk$/;"	i
@@ -35,24 +35,24 @@ RasterizeInput	vertexprocessor.py	/^from rasterizer import RasterizeInput  $/;"	
 Rasterizer	pipeline.py	/^from rasterizer import Rasterizer$/;"	i
 Rasterizer	rasterizer.py	/^class Rasterizer(object):$/;"	c
 Resource	.\resource.py	/^class Resource(object):$/;"	c
-Resource	.\shader.py	/^from resource import Resource$/;"	i
+Resource	shader.py	/^from resource import Resource$/;"	i
 Scene	.\scene.py	/^class Scene(object):$/;"	c
-Shader	.\shader.py	/^class Shader(Resource):$/;"	c
+Shader	shader.py	/^class Shader(Resource):$/;"	c
 ShaderMgr	.\shadermgr.py	/^class ShaderMgr(object):$/;"	c
 SpaceType	.\space.py	/^class SpaceType(object):$/;"	c
 Texture	.\texture.py	/^class Texture(buffer3d.Buffer3D):$/;"	c
 Texture	.\texturemgr.py	/^from texture import Texture$/;"	i
-TextureFS	.\shader.py	/^class TextureFS(FragmentShader):$/;"	c
+TextureFS	shader.py	/^class TextureFS(FragmentShader):$/;"	c
 TextureMgr	.\texturemgr.py	/^class TextureMgr(object):$/;"	c
-TextureVS	.\shader.py	/^class TextureVS(VertexShader):$/;"	c
+TextureVS	shader.py	/^class TextureVS(VertexShader):$/;"	c
 Tkinter	window.py	/^import Tkinter$/;"	i
 VIEW_SPACE	.\space.py	/^	VIEW_SPACE = 3$/;"	v	class:SpaceType
-VertexColorFS	.\shader.py	/^class VertexColorFS(FragmentShader):$/;"	c
-VertexColorVS	.\shader.py	/^class VertexColorVS(VertexShader):$/;"	c
+VertexColorFS	shader.py	/^class VertexColorFS(FragmentShader):$/;"	c
+VertexColorVS	shader.py	/^class VertexColorVS(VertexShader):$/;"	c
 VertexInput	pipeline.py	/^class VertexInput(object):$/;"	c
 VertexProcessor	pipeline.py	/^from vertexprocessor import VertexProcessor$/;"	i
 VertexProcessor	vertexprocessor.py	/^class VertexProcessor(object):$/;"	c
-VertexShader	.\shader.py	/^class VertexShader(Shader):$/;"	c
+VertexShader	shader.py	/^class VertexShader(Shader):$/;"	c
 WHITE	.\color.py	/^WHITE = (255, 255, 255)$/;"	v
 WIRE_FRAME	pipeline.py	/^	WIRE_FRAME = 1$/;"	v	class:DrawMode
 WORLD_SPACE	.\space.py	/^	WORLD_SPACE = 2$/;"	v	class:SpaceType
@@ -74,13 +74,6 @@ __init__	.\buffer3d.py	/^	def __init__(self, w, h, initialValue = None):$/;"	m	c
 __init__	.\camera.py	/^	def __init__(self):$/;"	m	class:Camera
 __init__	.\resource.py	/^	def __init__(self):$/;"	m	class:Resource
 __init__	.\scene.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Scene
-__init__	.\shader.py	/^	def __init__(self):$/;"	m	class:FragmentShader
-__init__	.\shader.py	/^	def __init__(self):$/;"	m	class:Shader
-__init__	.\shader.py	/^	def __init__(self):$/;"	m	class:TextureFS
-__init__	.\shader.py	/^	def __init__(self):$/;"	m	class:TextureVS
-__init__	.\shader.py	/^	def __init__(self):$/;"	m	class:VertexColorFS
-__init__	.\shader.py	/^	def __init__(self):$/;"	m	class:VertexColorVS
-__init__	.\shader.py	/^	def __init__(self):$/;"	m	class:VertexShader
 __init__	.\shadermgr.py	/^	def __init__(self):$/;"	m	class:ShaderMgr
 __init__	.\simplemesh.py	/^	def __init__(self, size = 1):$/;"	m	class:Cube
 __init__	.\simplemesh.py	/^	def __init__(self, width = 1, height = 1):$/;"	m	class:Plane
@@ -98,6 +91,13 @@ __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:VertexInput
 __init__	rasterizer.py	/^	def __init__(self):$/;"	m	class:RasterizeData
 __init__	rasterizer.py	/^	def __init__(self):$/;"	m	class:RasterizeInput
 __init__	rasterizer.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Rasterizer
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:FragmentShader
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:Shader
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:TextureFS
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:TextureVS
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:VertexColorFS
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:VertexColorVS
+__init__	shader.py	/^	def __init__(self):$/;"	m	class:VertexShader
 __init__	vertexprocessor.py	/^	def __init__(self, pipeline):$/;"	m	class:VertexProcessor
 __init__	window.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Window
 __iter__	.\srmath.py	/^	def __iter__(self):$/;"	m	class:vec2	file:
@@ -213,8 +213,8 @@ on_key_down	window.py	/^	def on_key_down(self, event):$/;"	m	class:Window
 on_mouse_click	window.py	/^	def on_mouse_click(self, event):$/;"	m	class:Window
 pipeline	.\main.py	/^import pipeline$/;"	i
 pipeline	.\scene.py	/^import pipeline$/;"	i
-pipeline	.\shader.py	/^import pipeline$/;"	i
 pipeline	rasterizer.py	/^import pipeline$/;"	i
+pipeline	shader.py	/^import pipeline$/;"	i
 process	fragmentprocessor.py	/^	def process(self, rasterData, shader):$/;"	m	class:FragmentProcessor
 process	rasterizer.py	/^	def process(self, rasterInputs, mode, wireframeColor, shader):$/;"	m	class:Rasterizer
 process	vertexprocessor.py	/^	def process(self, mesh, indices, shader):$/;"	m	class:VertexProcessor
@@ -225,14 +225,14 @@ rasterize_point	rasterizer.py	/^	def rasterize_point(self, x, y, color):$/;"	m	c
 rasterize_triangle	rasterizer.py	/^	def rasterize_triangle(self, rasterDatas, mode, color, shader):$/;"	m	class:Rasterizer
 rasterize_triangle_wireframe	rasterizer.py	/^	def rasterize_triangle_wireframe(self, v0, v1, v2, color):$/;"	m	class:Rasterizer
 resource	.\buffer3d.py	/^import resource$/;"	i
-run	.\shader.py	/^	def run(self):$/;"	m	class:FragmentShader
-run	.\shader.py	/^	def run(self):$/;"	m	class:TextureFS
-run	.\shader.py	/^	def run(self):$/;"	m	class:TextureVS
-run	.\shader.py	/^	def run(self):$/;"	m	class:VertexColorFS
-run	.\shader.py	/^	def run(self):$/;"	m	class:VertexColorVS
-run	.\shader.py	/^	def run(self):$/;"	m	class:VertexShader
-sample_texture	.\shader.py	/^	def sample_texture(self, tex, uv):$/;"	m	class:Shader
+run	shader.py	/^	def run(self):$/;"	m	class:FragmentShader
+run	shader.py	/^	def run(self):$/;"	m	class:TextureFS
+run	shader.py	/^	def run(self):$/;"	m	class:TextureVS
+run	shader.py	/^	def run(self):$/;"	m	class:VertexColorFS
+run	shader.py	/^	def run(self):$/;"	m	class:VertexColorVS
+run	shader.py	/^	def run(self):$/;"	m	class:VertexShader
 sample_texture	pipeline.py	/^	def sample_texture(self, tex, uv):$/;"	m	class:Pipeline
+sample_texture	shader.py	/^	def sample_texture(self, tex, uv):$/;"	m	class:Shader
 save_depth_texture	window.py	/^	def save_depth_texture(self):$/;"	m	class:Window
 save_texture	window.py	/^	def save_texture(self, tex, filename):$/;"	m	class:Window
 scene	window.py	/^import scene$/;"	i
@@ -241,8 +241,8 @@ set_depth	pipeline.py	/^	def set_depth(self, x, y, value):$/;"	m	class:Pipeline
 set_front_face	pipeline.py	/^	def set_front_face(self, face):$/;"	m	class:Pipeline
 set_front_face	rasterizer.py	/^	def set_front_face(self, face):$/;"	m	class:Rasterizer
 set_pixel	pipeline.py	/^	def set_pixel(self, x, y, color):$/;"	m	class:Pipeline
-set_uniform	.\shader.py	/^	def set_uniform(self, name, value):$/;"	m	class:Shader
-set_varying	.\shader.py	/^	def set_varying(self, name, value):$/;"	m	class:Shader
+set_uniform	shader.py	/^	def set_uniform(self, name, value):$/;"	m	class:Shader
+set_varying	shader.py	/^	def set_varying(self, name, value):$/;"	m	class:Shader
 shader	.\shadermgr.py	/^import shader$/;"	i
 shadermgr	.\scene.py	/^import shadermgr$/;"	i
 simplemesh	.\scene.py	/^import simplemesh$/;"	i
@@ -253,9 +253,9 @@ sqrLength	.\srmath.py	/^	def sqrLength(self):$/;"	m	class:vec3
 sqrLength	.\srmath.py	/^	def sqrLength(self):$/;"	m	class:vec4
 srmath	.\camera.py	/^import srmath$/;"	i
 srmath	.\scene.py	/^import srmath$/;"	i
-srmath	.\shader.py	/^import srmath$/;"	i
 srmath	pipeline.py	/^import srmath$/;"	i
 srmath	rasterizer.py	/^import srmath$/;"	i
+srmath	shader.py	/^import srmath$/;"	i
 srmath	vertexprocessor.py	/^import srmath$/;"	i
 srmath	window.py	/^import srmath$/;"	i
 swapElements	.\srmath.py	/^	def swapElements(self, idx0, idx1):$/;"	m	class:mat3
