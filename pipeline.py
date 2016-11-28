@@ -42,6 +42,11 @@ class Pipeline(object):
 		self.vertexProcessor = None
 		self.fragmentProcessor = None
 		self.rasterizer = None
+		#different window system has different pixel binding
+		#to boost performance(avoid copying framebuffer)
+		#expose an interface to manipulate window specific frame buffer
+		self.set_pixel_callback = None
+		self.clear_screen_callback = None
 		self.uniformCache = dict()
 
 	def init(self):
@@ -51,8 +56,17 @@ class Pipeline(object):
 		self.fragmentProcessor = FragmentProcessor(self)
 		self.rasterizer = Rasterizer(self)
 
+	#pipeline event registration
+	def register_set_pixel_callback(self, callback):
+		self.set_pixel_callback = callback
+
+	def register_clear_screen_callback(self, callback):
+		self.clear_screen_callback = callback
+
 	def clear_screen(self):
 		self.frameBuffer.set_all_value(self.clearColor)
+		if self.clear_screen_callback:
+			self.clear_screen_callback()
 
 	def clear_depth_buffer(self):
 		self.depthBuffer.set_all_value(1.0)
@@ -82,6 +96,8 @@ class Pipeline(object):
 
 	def set_pixel(self, x, y, color):
 		self.frameBuffer.put_value(x, y, color)
+		if self.set_pixel_callback:
+			self.set_pixel_callback(x, y, color)
 
 	def get_depth(self, x, y):
 		return self.depthBuffer.get_value(x, y, 1.0)

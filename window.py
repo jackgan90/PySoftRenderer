@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+DEFAULT_FRAME_RATE = 30
 
 class Window(object):
 	def __init__(self, graphicsPipeline):
 		self.graphicsPipeline = graphicsPipeline
+		self.targetFrameRate = DEFAULT_FRAME_RATE
 		self.window = None
 
 	def destroy_window(self):

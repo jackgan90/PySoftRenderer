@@ -7,12 +7,10 @@ import texture
 import srmath
 import scene
 
-DEFAULT_FRAME_RATE = 30
 
 class TkinterWindow(Window):
 	def __init__(self, graphicsPipeline):
 		super(TkinterWindow, self).__init__(graphicsPipeline)
-		self.frameRate = DEFAULT_FRAME_RATE
 		self.window = None
 		self.canvas = None
 		self.image = None
@@ -89,7 +87,7 @@ class TkinterWindow(Window):
 		self.update_statistic_info()
 		self.update_screen()
 		if self.window:
-			self.window.after(1000 / DEFAULT_FRAME_RATE, self.window_update)
+			self.window.after(1000 / self.targetFrameRate, self.window_update)
 
 	def update_statistic_info(self):
 		now = time.time()
@@ -99,7 +97,7 @@ class TkinterWindow(Window):
 		self.lastFrameTime = now
 
 	def register_event_listeners(self):
-		self.window.after(1000 / DEFAULT_FRAME_RATE, self.window_update)
+		self.window.after(1000 / self.targetFrameRate, self.window_update)
 		self.window.bind('<Escape>', lambda event: self.destroy_window())
 		self.window.bind('<Right>', lambda event: self.on_key_down('right'))
 		self.window.bind('<Left>', lambda event: self.on_key_down('left'))
