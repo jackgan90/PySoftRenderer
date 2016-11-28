@@ -1,125 +1,33 @@
 # -*- coding: utf-8 -*-
-import Tkinter
-from PIL import Image, ImageTk
-import time
-import texture
-import srmath
-import scene
-
-DEFAULT_FRAME_RATE = 30
 
 class Window(object):
 	def __init__(self, graphicsPipeline):
 		self.graphicsPipeline = graphicsPipeline
-		self.frameRate = DEFAULT_FRAME_RATE
 		self.window = None
-		self.canvas = None
-		self.image = None
-		self.statisticInfo = None
-		self.frameCount = 0
-		self.lastFrameTime = 0.0
-		self.renderScene = scene.Scene(graphicsPipeline)
 
-	def save_texture(self, tex, filename):
-		img = Image.new('RGB', (tex.width, tex.height))
-		img.putdata(tex.buffer)
-		img.save(filename)
+	def destroy_window(self):
+		raise Exception('destroy_window not implemented!', self.__class__.__name__)
 
-	def save_depth_texture(self):
-		textureData = [(int(255 * (x * 0.5 + 0.5)) % 256, 
-			int(255 * (x * 0.5 + 0.5)) % 256, int(255 * (x * 0.5 + 0.5)) % 256)\
-					for x in self.graphicsPipeline.depthBuffer.data]
-		depthTexture = texture.Texture(self.graphicsPipeline.depthBuffer.width, self.graphicsPipeline.depthBuffer.height)
-		depthTexture.buffer = textureData
-		self.save_texture(depthTexture, 'depth.bmp')
+	def on_key_down(self, key):
+		raise Exception('on_key_down not implemented!', self.__class__.__name__)
 
-	def destroy_window(self, event):
-		if self.canvas:
-			self.canvas.destroy()
-			self.canvas = None
-		if self.window:
-			self.window.destroy()
-			self.window = None
-		self.image = None
+	def on_mouse_click(self, x, y):
+		raise Exception('on_mouse_click not implemented!', self.__class__.__name__)
 
-	def on_key_down(self, event):
-		if event.char.lower() == 'a':
-			self.move_camera(event, 'left')
-		if event.char.lower() == 'd':
-			self.move_camera(event, 'right')
-		if event.char.lower() == 'w':
-			self.move_camera(event, 'up')
-		if event.char.lower() == 's':
-			self.move_camera(event, 'down')
-
-	def move_camera(self, event, direction):
-		if direction == 'left':
-			offset = srmath.vec3(-0.5, 0.0, 0.0)
-		elif direction == 'right':
-			offset = srmath.vec3(0.5, 0.0, 0.0)
-		elif direction == 'up':
-			offset = srmath.vec3(0.0, 0.5, 0.0)
-		elif direction == 'down':
-			offset = srmath.vec3(0.0, -0.5, 0.0)
-		self.renderScene.move_camera(offset)
-		self.graphicsPipeline.clear_screen()
-		self.graphicsPipeline.clear_depth_buffer()
-
-	def on_mouse_click(self, event):
-		color = self.graphicsPipeline.get_pixel(event.x, event.y)
-		print event.x, event.y, color
-
-	def change_fov(self, event):
-		self.renderScene.cam.fov -= event.delta / 100
-		self.graphicsPipeline.clear_screen()
-		self.graphicsPipeline.clear_depth_buffer()
+	def on_mouse_wheel_scroll(self, delta):
+		raise Exception('on_mouse_wheel_scroll not implemented!', self.__class__.__name__)
 
 	def update_screen(self):
-		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
-		if not self.image:
-			self.image = Image.new('RGB', (width, height))
-		self.renderScene.update()
-		self.image.putdata(self.graphicsPipeline.get_frame_buffer_data())
-		img = ImageTk.PhotoImage(self.image)
-		self.canvas.create_image(width / 2, height / 2, image=img)
-		self.canvas.image = img
+		raise Exception('update_screen not implemented!', self.__class__.__name__)
 
 	def window_update(self):
-		self.update_statistic_info()
-		self.update_screen()
-		if self.window:
-			self.window.after(1000 / DEFAULT_FRAME_RATE, self.window_update)
+		raise Exception('window_update not implemented!', self.__class__.__name__)
 
 	def update_statistic_info(self):
-		now = time.time()
-		self.frameCount += 1
-		deltaFrameTime = now - self.lastFrameTime
-		self.statisticInfo.set("FPS %.1f/s frameTime:%.2fs" % (1.0 / deltaFrameTime, deltaFrameTime))
-		self.lastFrameTime = now
+		raise Exception('update_statistic_info not implemented!', self.__class__.__name__)
 
+	def register_event_listeners(self):
+		pass
 
 	def init(self):
-		self.window = Tkinter.Tk()
-		self.window.resizable(0, 0)
-		self.statisticInfo = Tkinter.StringVar()
-		statisticLabel = Tkinter.Label(self.window, textvariable=self.statisticInfo, fg="red")
-		statisticLabel.pack()
-		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
-		self.canvas = Tkinter.Canvas(self.window, width=width, height=height)
-
-		self.canvas.pack()
-		self.update_screen()
-		self.lastFrameTime = time.time()
-		self.window.after(1000 / DEFAULT_FRAME_RATE, self.window_update)
-		self.window.bind('<Escape>', self.destroy_window)
-		self.window.bind('<Right>', lambda event: self.move_camera(event, 'right'))
-		self.window.bind('<Left>', lambda event: self.move_camera(event, 'left'))
-		self.window.bind('<Up>', lambda event: self.move_camera(event, 'up'))
-		self.window.bind('<Down>', lambda event: self.move_camera(event, 'down'))
-		self.window.bind('<Key>', self.on_key_down)
-		self.window.bind('<MouseWheel>', self.change_fov)
-		self.window.bind('<Button-1>', self.on_mouse_click)
-		self.window.bind('<F3>', lambda event : self.save_texture(self.graphicsPipeline.textures[0], 'chessboard.bmp'))
-		self.window.bind('<F4>', lambda event : self.save_depth_texture())
-		self.window.mainloop()
-		
+		raise Exception('init not implemented!', self.__class__.__name__)
