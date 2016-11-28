@@ -13,8 +13,9 @@ class PyGameWindow(Window):
 		self.renderScene = scene.Scene(graphicsPipeline)
 		self.frameCount = 0
 		self.lastFrameTime = 0.0
+		self.done = False
 		self.eventKeys = [pygame.K_a, pygame.K_s, pygame.K_d, pygame.K_w, 
-			pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN, ]
+			pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN, pygame.K_ESCAPE]
 
 	def on_frame_buffer_set_pixel(self, x, y, color):
 		self.pixelArray[x, y] = color
@@ -32,6 +33,9 @@ class PyGameWindow(Window):
 			self.move_camera('up')
 		if key in (pygame.K_d, pygame.K_DOWN):
 			self.move_camera('down')
+		if key == pygame.K_ESCAPE:
+			self.done = True
+			pygame.quit()
 
 	def move_camera(self, direction):
 		if direction == 'left':
@@ -52,22 +56,22 @@ class PyGameWindow(Window):
 		self.graphicsPipeline.clear_depth_buffer()
 
 	def window_update(self):
-		done = False
-		while not done:
+		while not self.done:
 			# --- Main event loop
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
-					done = True
+					self.done = True
 				elif event.type == pygame.KEYDOWN:
 					if event.key in self.eventKeys:
 						self.on_key_down(event.key)
 				elif event.type in (pygame.MOUSEBUTTONUP, pygame.MOUSEBUTTONDOWN):
 					if event.button in (4, 5):
 						self.on_mouse_wheel_scroll(50 if event.button == 4 else -50)
-			self.update_statistic_info()
-			self.update_screen()
-			pygame.display.flip()
-			self.clock.tick(self.targetFrameRate)
+			if not self.done:
+				self.update_statistic_info()
+				self.update_screen()
+				pygame.display.flip()
+				self.clock.tick(self.targetFrameRate)
 
 		pygame.quit()
 
