@@ -20,11 +20,13 @@ FILL	.\\pipeline.py	/^	FILL = 2$/;"	v	language:Python	class:DrawMode
 FragmentProcessor	.\\fragmentprocessor.py	/^class FragmentProcessor(object):$/;"	c	language:Python
 FragmentShader	.\\shader.py	/^class FragmentShader(Shader):$/;"	c	language:Python
 GL	.\\test.py	/^import OpenGL.GL as GL$/;"	I	language:Python
-GL	openglwindow.py	/^import OpenGL.GL as GL$/;"	I
-GLUT	openglwindow.py	/^import OpenGL.GLUT as GLUT$/;"	I
+GL	openglwindow.py	/^import OpenGL.GL as GL$/;"	i
+GLUT	openglwindow.py	/^import OpenGL.GLUT as GLUT$/;"	i
 GREEN	.\\color.py	/^GREEN = (0, 255, 0)$/;"	v	language:Python
 GREY	.\\color.py	/^GREY = (128, 128, 128)$/;"	v	language:Python
 MODEL_SPACE	.\\space.py	/^	MODEL_SPACE = 1$/;"	v	language:Python	class:SpaceType
+OpenGL	openglwindow.py	/^import OpenGL.GL as GL$/;"	i
+OpenGL	openglwindow.py	/^import OpenGL.GLUT as GLUT$/;"	i
 OpenGLWindow	openglwindow.py	/^class OpenGLWindow(Window):$/;"	c
 Pipeline	.\\pipeline.py	/^class Pipeline(object):$/;"	c	language:Python
 Plane	.\\simplemesh.py	/^class Plane(object):$/;"	c	language:Python
@@ -57,6 +59,7 @@ WIRE_FRAME	.\\pipeline.py	/^	WIRE_FRAME = 1$/;"	v	language:Python	class:DrawMode
 WORLD_SPACE	.\\space.py	/^	WORLD_SPACE = 2$/;"	v	language:Python	class:SpaceType
 WindingOrder	.\\rasterizer.py	/^class WindingOrder(object):$/;"	c	language:Python
 Window	.\\window.py	/^class Window(object):$/;"	c	language:Python
+Window	openglwindow.py	/^from window import Window$/;"	i
 YELLOW	.\\color.py	/^YELLOW = (255, 255, 0)$/;"	v	language:Python
 __add__	.\\srmath.py	/^	def __add__(self, m):$/;"	m	language:Python	class:mat3	signature:(self, m)
 __add__	.\\srmath.py	/^	def __add__(self, v):$/;"	m	language:Python	class:vec2	signature:(self, v)
@@ -136,6 +139,7 @@ create_program	.\\shadermgr.py	/^	def create_program(self):$/;"	m	language:Pytho
 create_shader	.\\shadermgr.py	/^	def create_shader(self, name):$/;"	m	language:Python	class:ShaderMgr	signature:(self, name)
 create_vector	.\\srmath.py	/^def create_vector(componentCount):$/;"	f	language:Python	signature:(componentCount)
 cross	.\\srmath.py	/^	def cross(self, v):$/;"	m	language:Python	class:vec3	signature:(self, v)
+ctypes	openglwindow.py	/^import ctypes$/;"	i
 cull_back_face	.\\rasterizer.py	/^	def cull_back_face(self, rasterDatas):$/;"	m	language:Python	class:Rasterizer	signature:(self, rasterDatas)
 cull_cvv	.\\rasterizer.py	/^	def cull_cvv(self, cvvOutTypes):$/;"	m	language:Python	class:Rasterizer	signature:(self, cvvOutTypes)
 destroy_window	.\\tkinterwindow.py	/^	def destroy_window(self):$/;"	m	language:Python	class:TkinterWindow	signature:(self)
@@ -215,6 +219,7 @@ negate	.\\srmath.py	/^	def negate(self):$/;"	m	language:Python	class:vec4	signat
 normalize	.\\srmath.py	/^	def normalize(self):$/;"	m	language:Python	class:vec2	signature:(self)
 normalize	.\\srmath.py	/^	def normalize(self):$/;"	m	language:Python	class:vec3	signature:(self)
 normalize	.\\srmath.py	/^	def normalize(self):$/;"	m	language:Python	class:vec4	signature:(self)
+numpy	openglwindow.py	/^import numpy$/;"	i
 on_clear_frame_buffer	.\\pygamewindow.py	/^	def on_clear_frame_buffer(self):$/;"	m	language:Python	class:PyGameWindow	signature:(self)
 on_frame_buffer_set_pixel	.\\pygamewindow.py	/^	def on_frame_buffer_set_pixel(self, x, y, color):$/;"	m	language:Python	class:PyGameWindow	signature:(self, x, y, color)
 on_key_down	.\\pygamewindow.py	/^	def on_key_down(self, key):$/;"	m	language:Python	class:PyGameWindow	signature:(self, key)
@@ -255,6 +260,7 @@ set_front_face	.\\rasterizer.py	/^	def set_front_face(self, face):$/;"	m	languag
 set_pixel	.\\pipeline.py	/^	def set_pixel(self, x, y, color):$/;"	m	language:Python	class:Pipeline	signature:(self, x, y, color)
 set_uniform	.\\shader.py	/^	def set_uniform(self, name, value):$/;"	m	language:Python	class:Shader	signature:(self, name, value)
 set_varying	.\\shader.py	/^	def set_varying(self, name, value):$/;"	m	language:Python	class:Shader	signature:(self, name, value)
+shaders	openglwindow.py	/^from OpenGL.GL import shaders$/;"	i
 sqrLength	.\\srmath.py	/^	def sqrLength(self):$/;"	m	language:Python	class:vec2	signature:(self)
 sqrLength	.\\srmath.py	/^	def sqrLength(self):$/;"	m	language:Python	class:vec3	signature:(self)
 sqrLength	.\\srmath.py	/^	def sqrLength(self):$/;"	m	language:Python	class:vec4	signature:(self)

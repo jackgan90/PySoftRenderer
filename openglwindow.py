@@ -33,6 +33,7 @@ class OpenGLWindow(Window):
 		GL.glDrawArrays(GL.GL_QUADS, 0, 4)
 		GL.glBindVertexArray(0)
 		GL.glUseProgram(0)
+		GL.glFlush()
 		GLUT.glutSwapBuffers()
 
 	def init_gl(self):
