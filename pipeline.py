@@ -141,6 +141,7 @@ class Pipeline(object):
 
 	def set_pixel(self, x, y, color, isBack=True):
 		pixelBuffer = self.backBuffer if isBack else self.frontBuffer
+		if 0 <= x < pixelBuffer.width and 0 <= y < pixelBuffer.height:
 			pixelBuffer.put_value(x, y, color)
 
 	def get_depth(self, x, y):
