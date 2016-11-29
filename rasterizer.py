@@ -37,21 +37,21 @@ class Rasterizer(object):
 
 		return rasterData
 
-	def rasterize_triangle(self, rasterDatas, mode, color, shader):
+	def rasterize_triangle(self, rasterDatas, mode, color, program):
 		if mode == pipeline.DrawMode.WIRE_FRAME:
 			self.rasterize_triangle_wireframe(rasterDatas[0], rasterDatas[1], rasterDatas[2], color)
 		else:
 			flatTriangles = self.get_flat_triangles(rasterDatas[0], rasterDatas[1], rasterDatas[2])
 			for vertex0, vertex1, vertex2 in flatTriangles:
-				self.rasterize_flat_triangle(vertex0, vertex1, vertex2, mode, shader)
+				self.rasterize_flat_triangle(vertex0, vertex1, vertex2, mode, program)
 
-	def rasterize_flat_triangle(self, v0, v1, v2, mode, shader):
+	def rasterize_flat_triangle(self, v0, v1, v2, mode, program):
 		if int(v0.screenCoord.y) == int(v1.screenCoord.y) and int(v1.screenCoord.y) == int(v2.screenCoord.y):
 			left = v0 if v0.screenCoord.x < v1.screenCoord.x else v1
 			left = left if left.screenCoord.x < v2.screenCoord.x else v2
 			right = v0 if v0.screenCoord.x > v1.screenCoord.x else v1
 			right = right if right.screenCoord.x > v2.screenCoord.x else v2
-			self.draw_scanline(left, right, int(v0.screenCoord.y), mode, shader)
+			self.draw_scanline(left, right, int(v0.screenCoord.y), mode, program)
 			#single point
 		elif int(v0.screenCoord.y) == int(v1.screenCoord.y):
 			if v0.screenCoord.x < v1.screenCoord.x:
@@ -64,12 +64,12 @@ class Rasterizer(object):
 			yStart = int(left.screenCoord.y)
 			yEnd = int(bottom.screenCoord.y)
 			if yStart == yEnd:
-				self.draw_scanline(left, right, yStart, mode, shader)
+				self.draw_scanline(left, right, yStart, mode, program)
 				return
 			for y in xrange(yStart, yEnd + 1, 1):
 				interpolateLeft = self.interpolate_rasterize_data(left, bottom, float(y - yStart) / (yEnd - yStart))
 				interpolateRight = self.interpolate_rasterize_data(right, bottom, float(y - yStart) / (yEnd - yStart))
-				self.draw_scanline(interpolateLeft, interpolateRight, y, mode, shader)
+				self.draw_scanline(interpolateLeft, interpolateRight, y, mode, program)
 		elif int(v1.screenCoord.y) == int(v2.screenCoord.y):
 			if v1.screenCoord.x < v2.screenCoord.x:
 				left = v1
@@ -81,16 +81,16 @@ class Rasterizer(object):
 			yStart = int(v0.screenCoord.y)
 			yEnd = int(left.screenCoord.y)
 			if yStart == yEnd:
-				self.draw_scanline(left, right, yStart, mode, shader)
+				self.draw_scanline(left, right, yStart, mode, program)
 				return
 			for y in xrange(yStart, yEnd + 1, 1):
 				interpolateLeft = self.interpolate_rasterize_data(top, left, float(y - yStart) / (yEnd - yStart))
 				interpolateRight = self.interpolate_rasterize_data(top, right, float(y - yStart) / (yEnd - yStart))
-				self.draw_scanline(interpolateLeft, interpolateRight, y, mode, shader)
+				self.draw_scanline(interpolateLeft, interpolateRight, y, mode, program)
 		else:
 			raise Exception('rasterize_flat_triangle should only handle flat triangle!', v0.screenCoord, v1.screenCoord, v2.screenCoord)
 
-	def draw_scanline(self, left, right, y, mode, shader):
+	def draw_scanline(self, left, right, y, mode, program):
 		xStart = int(left.screenCoord.x)
 		xEnd = int(right.screenCoord.x + 1)
 		currentFragment = left
@@ -99,7 +99,7 @@ class Rasterizer(object):
 				depthInBuffer = self.graphicsPipeline.get_depth(x, y)
 				if currentFragment.screenCoord.z < depthInBuffer:
 					self.graphicsPipeline.set_depth(x, y, currentFragment.screenCoord.z)
-					color = self.graphicsPipeline.fragmentProcessor.process(currentFragment, shader)
+					color = self.graphicsPipeline.fragmentProcessor.process(currentFragment, program)
 					r = int(255 * color.x) % 256
 					g = int(255 * color.y) % 256
 					b = int(255 * color.z) % 256
@@ -209,11 +209,11 @@ class Rasterizer(object):
 		return False
 
 
-	def process(self, rasterInputs, mode, wireframeColor, shader):
+	def process(self, rasterInputs, mode, wireframeColor, program):
 		outTypes = [self.check_cvv_out(rasterInput) for rasterInput in rasterInputs]
 		if self.cull_cvv(outTypes):
 			return
 		rasterDatas = [self.init_raster_data(rasterInput) for rasterInput in rasterInputs]
 		if self.cull_back_face(rasterDatas):
 			return
-		self.rasterize_triangle(rasterDatas, mode, wireframeColor, shader)
+		self.rasterize_triangle(rasterDatas, mode, wireframeColor, program)
