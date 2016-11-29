@@ -38,7 +38,10 @@ class OpenGLWindow(Window):
 		GLUT.glutReshapeWindow(width, height)
 
 	def update_screen(self):
+		self.graphicsPipeline.clear_screen()
+		self.graphicsPipeline.clear_depth_buffer()
 		self.renderScene.update()
+		self.graphicsPipeline.swap_front_back_buffers()
 		self.init_opengl_texture(self.graphicsPipeline.get_frame_buffer_data())
 		GL.glClear(GL.GL_COLOR_BUFFER_BIT)
 		GL.glUseProgram(self.program)
@@ -65,8 +68,8 @@ class OpenGLWindow(Window):
 		elif direction == 'down':
 			offset = srmath.vec3(0.0, -0.5, 0.0)
 		self.renderScene.move_camera(offset)
-		self.graphicsPipeline.clear_screen()
-		self.graphicsPipeline.clear_depth_buffer()
+		# self.graphicsPipeline.clear_screen()
+		# self.graphicsPipeline.clear_depth_buffer()
 
 	def on_key_down(self, key):
 		direction = ''
@@ -96,8 +99,8 @@ class OpenGLWindow(Window):
 				
 	def on_mouse_wheel_scroll(self, delta):
 		self.renderScene.cam.fov -= delta / 100
-		self.graphicsPipeline.clear_screen()
-		self.graphicsPipeline.clear_depth_buffer()
+		# self.graphicsPipeline.clear_screen()
+		# self.graphicsPipeline.clear_depth_buffer()
 
 	def init_gl(self):
 		clearColor = self.graphicsPipeline.clearColor

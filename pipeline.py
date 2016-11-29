@@ -2,6 +2,7 @@
 import srmath
 import color
 import buffer3d
+import depthbuffer
 from rasterizer import Rasterizer
 from vertexprocessor import VertexProcessor
 from  fragmentprocessor import FragmentProcessor
@@ -35,34 +36,34 @@ class RasterizeInput(object):
 class Pipeline(object):
 	def __init__(self):
 		self.clearColor = color.GREY
-		self.frameBuffer = None
+		self.frontBuffer = None
+		self.backBuffer = None
 		self.depthBuffer = None
 		self.vertexProcessor = None
 		self.fragmentProcessor = None
 		self.rasterizer = None
-		#different window system has different pixel binding
-		#to boost performance(avoid copying framebuffer)
-		#expose an interface to manipulate window specific frame buffer
 		self.uniformCache = dict()
 
 	def init(self):
-		self.frameBuffer = buffer3d.Buffer3D(config.RESOLUTION[0], config.RESOLUTION[1], self.clearColor)
-		self.depthBuffer = buffer3d.Buffer3D(config.RESOLUTION[0], config.RESOLUTION[1], 1.0)
+		self.frontBuffer = buffer3d.Buffer3D(config.RESOLUTION[0], config.RESOLUTION[1], self.clearColor)
+		self.backBuffer = buffer3d.Buffer3D(config.RESOLUTION[0], config.RESOLUTION[1], self.clearColor)
+		self.depthBuffer = depthbuffer.DepthBuffer(config.RESOLUTION[0], config.RESOLUTION[1], 1.0)
 		self.vertexProcessor = VertexProcessor(self)
 		self.fragmentProcessor = FragmentProcessor(self)
 		self.rasterizer = Rasterizer(self)
 
 	def clear_screen(self):
-		self.frameBuffer.set_all_value(self.clearColor)
+		self.backBuffer.set_all_value(self.clearColor)
 
 	def clear_depth_buffer(self):
 		self.depthBuffer.set_all_value(1.0)
 
 	def get_frame_buffer_dimension(self):
-		return (self.frameBuffer.width, self.frameBuffer.height)
+		return (self.backBuffer.width, self.backBuffer.height)
 
-	def get_frame_buffer_data(self):
-		return self.frameBuffer.data
+	def get_frame_buffer_data(self, isBack=False):
+		pixelBuffer = self.backBuffer if isBack else self.frontBuffer
+		return pixelBuffer.data
 
 	def has_pipeline_uniform(self, uniform):
 		return uniform in self.uniformCache
@@ -75,14 +76,21 @@ class Pipeline(object):
 		y = int(srmath.clamp(srmath.clamp(uv.y, 0.0, 1.0) * tex.height, 0, tex.height - 1))
 		return tex.get_value(x, y)
 
+	def swap_front_back_buffers(self):
+		temp = self.frontBuffer
+		self.frontBuffer = self.backBuffer
+		self.backBuffer = temp
+
 	def set_front_face(self, face):
 		self.rasterizer.set_front_face(face)
 
-	def get_pixel(self, x, y):
-		return self.frameBuffer.get_value(x, y, self.clearColor)
+	def get_pixel(self, x, y, isBack=False):
+		pixelBuffer = self.backBuffer if isBack else self.frontBuffer
+		return pixelBuffer.get_value(x, y, self.clearColor)
 
-	def set_pixel(self, x, y, color):
-		self.frameBuffer.put_value(x, y, color)
+	def set_pixel(self, x, y, color, isBack=True):
+		pixelBuffer = self.backBuffer if isBack else self.frontBuffer
+		pixelBuffer.put_value(x, y, color)
 
 	def get_depth(self, x, y):
 		return self.depthBuffer.get_value(x, y, 1.0)

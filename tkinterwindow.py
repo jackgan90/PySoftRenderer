@@ -61,8 +61,6 @@ class TkinterWindow(Window):
 		elif direction == 'down':
 			offset = srmath.vec3(0.0, -0.5, 0.0)
 		self.renderScene.move_camera(offset)
-		self.graphicsPipeline.clear_screen()
-		self.graphicsPipeline.clear_depth_buffer()
 
 	def on_mouse_click(self, x, y):
 		color = self.graphicsPipeline.get_pixel(x, y)
@@ -70,14 +68,15 @@ class TkinterWindow(Window):
 
 	def on_mouse_wheel_scroll(self, delta):
 		self.renderScene.cam.fov -= delta / 100
-		self.graphicsPipeline.clear_screen()
-		self.graphicsPipeline.clear_depth_buffer()
 
 	def update_screen(self):
 		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
 		if not self.image:
 			self.image = Image.new('RGB', (width, height))
+		self.graphicsPipeline.clear_screen()
+		self.graphicsPipeline.clear_depth_buffer()
 		self.renderScene.update()
+		self.graphicsPipeline.swap_front_back_buffers()
 		self.image.putdata(self.graphicsPipeline.get_frame_buffer_data())
 		img = ImageTk.PhotoImage(self.image)
 		self.canvas.create_image(width / 2, height / 2, image=img)

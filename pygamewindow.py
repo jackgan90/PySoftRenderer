@@ -41,13 +41,9 @@ class PyGameWindow(Window):
 		elif direction == 'down':
 			offset = srmath.vec3(0.0, -0.5, 0.0)
 		self.renderScene.move_camera(offset)
-		self.graphicsPipeline.clear_screen()
-		self.graphicsPipeline.clear_depth_buffer()
 
 	def on_mouse_wheel_scroll(self, delta):
 		self.renderScene.cam.fov -= delta / 100
-		self.graphicsPipeline.clear_screen()
-		self.graphicsPipeline.clear_depth_buffer()
 
 	def window_update(self):
 		while not self.done:
@@ -77,7 +73,10 @@ class PyGameWindow(Window):
 		self.lastFrameTime = now
 
 	def update_screen(self):
+		self.graphicsPipeline.clear_screen()
+		self.graphicsPipeline.clear_depth_buffer()
 		self.renderScene.update()
+		self.graphicsPipeline.swap_front_back_buffers()
 		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
 		data = self.graphicsPipeline.get_frame_buffer_data()
 		for x in xrange(width):
