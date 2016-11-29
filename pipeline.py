@@ -6,6 +6,8 @@ import depthbuffer
 from rasterizer import Rasterizer
 from vertexprocessor import VertexProcessor
 from  fragmentprocessor import FragmentProcessor
+from Queue import Queue
+from threading import Thread
 import config
 
 _pipelineInstance = None
@@ -19,12 +21,6 @@ def get_pipeline():
 class DrawMode(object):
 	WIRE_FRAME = 1
 	FILL = 2
-
-class VertexInput(object):
-	def __init__(self):
-		self.pos = None
-		self.color = None
-		self.uv = None
 
 class RasterizeInput(object):
 	def __init__(self):
