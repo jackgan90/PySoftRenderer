@@ -288,6 +288,7 @@ space	scene.py	/^import space$/;"	i
 sqrLength	srmath.py	/^	def sqrLength(self):$/;"	m	class:vec2
 sqrLength	srmath.py	/^	def sqrLength(self):$/;"	m	class:vec3
 sqrLength	srmath.py	/^	def sqrLength(self):$/;"	m	class:vec4
+srmath	fragmentprocessor.py	/^import srmath$/;"	i
 srmath	pipeline.py	/^import srmath$/;"	i
 srmath	rasterizer.py	/^import srmath$/;"	i
 srmath	scene.py	/^import srmath$/;"	i

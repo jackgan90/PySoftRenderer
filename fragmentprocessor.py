@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import srmath
 
 class FragmentProcessor(object):
 	def __init__(self, pipeline):
@@ -16,7 +17,13 @@ class FragmentProcessor(object):
 
 		for varyingName, attr in rasterData.fragmentAttrs.iteritems():
 			if varyingName in fs.varyings:
-				fs.set_varying(varyingName, attr / rasterData.interpolateParam)
+				if isinstance(attr, srmath.vec3):
+					x = attr.x / rasterData.interpolateParam
+					y = attr.y / rasterData.interpolateParam
+					z = attr.z / rasterData.interpolateParam
+					fs.set_varying(varyingName, srmath.vec3(x, y, z))
+				else:
+					fs.set_varying(varyingName, attr / rasterData.interpolateParam)
 
 		fs.run()
 		return fs.fragcolor
