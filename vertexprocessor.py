@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from rasterizer import RasterizeInput  
 import srmath
+import config
 
 class VertexProcessor(object):
 	def __init__(self, pipeline):
@@ -36,4 +37,7 @@ class VertexProcessor(object):
 					vs.vspos.z, vs.vspos.w)
 			rasterInput.vertexAttrs = dict(vs.vsattrs)
 			rasterInputs.append(rasterInput)
-		self.pipeline.triangleProcessQueue.put({'rasterInputs' : rasterInputs, 'mode' : mode, 'wireframeColor' : wireframeColor, 'program' : program})
+		if config.USE_MULTI_THREAD:
+			self.pipeline.triangleProcessQueue.put({'rasterInputs' : rasterInputs, 'mode' : mode, 'wireframeColor' : wireframeColor, 'program' : program})
+		else:
+			return rasterInputs

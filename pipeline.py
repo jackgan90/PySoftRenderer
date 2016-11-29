@@ -53,14 +53,15 @@ class Pipeline(object):
 		self.vertexProcessor = VertexProcessor(self)
 		self.fragmentProcessor = FragmentProcessor(self)
 		self.rasterizer = Rasterizer(self)
-		t1 = Thread(target = self.processVertexThread)
-		t2 = Thread(target = self.processTriangleThread)
-		t1.start()
-		t2.start()
-		scanlineDrawThreadCnt = self.cpuCount - 3 if self.cpuCount > 3 else 1
-		for i in xrange(scanlineDrawThreadCnt):
-			t = Thread(target = self.drawScanlineThread)
-			t.start()
+		if config.USE_MULTI_THREAD:
+			t1 = Thread(target = self.processVertexThread)
+			t2 = Thread(target = self.processTriangleThread)
+			t1.start()
+			t2.start()
+			scanlineDrawThreadCnt = self.cpuCount - 3 if self.cpuCount > 3 else 1
+			for i in xrange(scanlineDrawThreadCnt):
+				t = Thread(target = self.drawScanlineThread)
+				t.start()
 
 	def processVertexThread(self):
 		while not self.quit:
@@ -159,12 +160,15 @@ class Pipeline(object):
 		self.uniformCache['projection_matrix'] = projMat
 		self.uniformCache['mvp'] = mvp
 		for i in xrange(0, len(mesh.indices), 3):
-			# rasterInputs = self.vertexProcessor.process(mesh, mesh.indices[i : i + 3], program)
-			self.vertexProcessQueue.put({'mesh' : mesh, 'indices' : mesh.indices[i : i + 3], 'program' : program,
-				'mode' : mode, 'wireframeColor' : wireframeColor})
-			# self.rasterizer.process(rasterInputs, mode, wireframeColor, program)
+			if config.USE_MULTI_THREAD:
+				self.vertexProcessQueue.put({'mesh' : mesh, 'indices' : mesh.indices[i : i + 3], 'program' : program,
+					'mode' : mode, 'wireframeColor' : wireframeColor})
+			else:
+				rasterInputs = self.vertexProcessor.process(mesh, mesh.indices[i : i + 3], program, mode, wireframeColor)
+				self.rasterizer.process(rasterInputs, mode, wireframeColor, program)
 
-		self.vertexProcessQueue.join()
-		self.triangleProcessQueue.join()
-		self.scanlineDrawQueue.join()
+		if config.USE_MULTI_THREAD:
+			self.vertexProcessQueue.join()
+			self.triangleProcessQueue.join()
+			self.scanlineDrawQueue.join()
 

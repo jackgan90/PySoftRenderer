@@ -15,8 +15,8 @@ class Scene(object):
 		self.cam.position = srmath.vec3(3, 3, 3)
 		self.cam.look_at(srmath.vec3(0, 0, 0))
 		self.program = shadermgr.get_shader_mgr().create_program()
-		self.program.vs = shadermgr.get_shader_mgr().create_shader('TextureVS')
-		self.program.fs = shadermgr.get_shader_mgr().create_shader('TextureFS')
+		self.program.vs = shadermgr.get_shader_mgr().create_shader('VertexColorVS')
+		self.program.fs = shadermgr.get_shader_mgr().create_shader('VertexColorFS')
 		self.texChessboard = texturemgr.get_tex_mgr().create_chess_board_texture(400, 400, \
 				srmath.vec3(20.0 / 255, 160.0 /255, 135.0 /255), srmath.vec3(160.0 /255, 204.0 /255, 20.0 /255))
 		self.program.fs.set_uniform('texChessboard', self.texChessboard)
@@ -25,8 +25,20 @@ class Scene(object):
 		self.cam.move(offset, st)
 
 	def update(self):
+		import cProfile
+		pr = cProfile.Profile()
+		pr.enable()
 		self.draw_cube()
-		self.draw_plane()
+		# self.draw_plane()
+		pr.disable()
+		outfile = r'f:\PySoftRenderer\profresult'
+		s = open(outfile, 'wb')
+		sortby = 'cumulative'
+		import pstats
+		ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+		ps.dump_stats(outfile + '.prof')
+		ps.print_stats()
+		s.close()
 
 	def draw_cube(self):
 		c = simplemesh.Cube(2)

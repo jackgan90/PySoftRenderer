@@ -3,3 +3,5 @@
 WINDOW_SYSTEM = 'opengl'
 
 RESOLUTION = (400, 400)
+
+USE_MULTI_THREAD = True
