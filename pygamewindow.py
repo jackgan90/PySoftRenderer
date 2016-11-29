@@ -17,12 +17,6 @@ class PyGameWindow(Window):
 		self.eventKeys = [pygame.K_a, pygame.K_s, pygame.K_d, pygame.K_w, 
 			pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN, pygame.K_ESCAPE]
 
-	def on_frame_buffer_set_pixel(self, x, y, color):
-		self.pixelArray[x, y] = color
-
-	def on_clear_frame_buffer(self):
-		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
-		self.window.fill(self.graphicsPipeline.clearColor)
 
 	def on_key_down(self, key):
 		if key in (pygame.K_a, pygame.K_LEFT):
@@ -84,13 +78,15 @@ class PyGameWindow(Window):
 
 	def update_screen(self):
 		self.renderScene.update()
+		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
+		data = self.graphicsPipeline.get_frame_buffer_data()
+		for x in xrange(width):
+			for y in xrange(height):
+				self.pixelArray[x, y] = data[y * width + x]
 
 	def init(self):
 		pygame.init()
 		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
 		self.window = pygame.display.set_mode((width, height))
 		self.pixelArray = pygame.PixelArray(self.window)
-		self.graphicsPipeline.register_set_pixel_callback(self.on_frame_buffer_set_pixel)
-		self.graphicsPipeline.register_clear_screen_callback(self.on_clear_frame_buffer)
-		self.on_clear_frame_buffer()
 		self.window_update()
