@@ -6,10 +6,7 @@ class Buffer3D(resource.Resource):
 		super(Buffer3D, self).__init__()
 		self.width = w
 		self.height = h
-		if not initialValue:
-			self.data = []
-		else:
-			self.data = [initialValue] * (self.width * self.height)
+		self.data = [initialValue] * (self.width * self.height)
 
 	def put_value(self, x, y, value):
 		if 0 <= x < self.width and 0 <= y < self.height:

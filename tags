@@ -6,7 +6,7 @@
 !_TAG_PROGRAM_VERSION	0.0.0	//
 BLACK	.\\color.py	/^BLACK = (0, 0, 0)$/;"	v
 BLUE	.\\color.py	/^BLUE = (0, 0, 255)$/;"	v
-Buffer3D	.\\buffer3d.py	/^class Buffer3D(resource.Resource):$/;"	c
+Buffer3D	buffer3d.py	/^class Buffer3D(resource.Resource):$/;"	c
 CCW	.\\rasterizer.py	/^	CCW = 2$/;"	v	class:WindingOrder
 CW	.\\rasterizer.py	/^	CW = 1$/;"	v	class:WindingOrder
 Camera	.\\camera.py	/^class Camera(object):$/;"	c
@@ -28,7 +28,7 @@ OpenGLWindow	openglwindow.py	/^class OpenGLWindow(Window):$/;"	c
 Pipeline	.\\pipeline.py	/^class Pipeline(object):$/;"	c
 Plane	.\\simplemesh.py	/^class Plane(object):$/;"	c
 Program	.\\program.py	/^class Program(Resource):$/;"	c
-PyGameWindow	.\\pygamewindow.py	/^class PyGameWindow(Window):$/;"	c
+PyGameWindow	pygamewindow.py	/^class PyGameWindow(Window):$/;"	c
 RED	.\\color.py	/^RED = (255, 0, 0)$/;"	v
 RasterizeData	.\\rasterizer.py	/^class RasterizeData(object):$/;"	c
 RasterizeInput	.\\pipeline.py	/^class RasterizeInput(object):$/;"	c
@@ -41,7 +41,7 @@ ShaderMgr	.\\shadermgr.py	/^class ShaderMgr(object):$/;"	c
 SpaceType	.\\space.py	/^class SpaceType(object):$/;"	c
 Texture	.\\texture.py	/^class Texture(buffer3d.Buffer3D):$/;"	c
 TextureFS	.\\shader.py	/^class TextureFS(FragmentShader):$/;"	c
-TextureMgr	.\\texturemgr.py	/^class TextureMgr(object):$/;"	c
+TextureMgr	texturemgr.py	/^class TextureMgr(object):$/;"	c
 TextureVS	.\\shader.py	/^class TextureVS(VertexShader):$/;"	c
 TkinterWindow	.\\tkinterwindow.py	/^class TkinterWindow(Window):$/;"	c
 VIEW_SPACE	.\\space.py	/^	VIEW_SPACE = 3$/;"	v	class:SpaceType
@@ -51,7 +51,7 @@ VertexInput	.\\pipeline.py	/^class VertexInput(object):$/;"	c
 VertexProcessor	.\\vertexprocessor.py	/^class VertexProcessor(object):$/;"	c
 VertexShader	.\\shader.py	/^class VertexShader(Shader):$/;"	c
 WHITE	.\\color.py	/^WHITE = (255, 255, 255)$/;"	v
-WINDOW_SYSTEM	.\\config.py	/^WINDOW_SYSTEM = 'opengl'$/;"	v
+WINDOW_SYSTEM	config.py	/^WINDOW_SYSTEM = 'pygame'$/;"	v
 WIRE_FRAME	.\\pipeline.py	/^	WIRE_FRAME = 1$/;"	v	class:DrawMode
 WORLD_SPACE	.\\space.py	/^	WORLD_SPACE = 2$/;"	v	class:SpaceType
 WindingOrder	.\\rasterizer.py	/^class WindingOrder(object):$/;"	c
@@ -68,14 +68,12 @@ __getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec2
 __getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec3
 __getitem__	.\\srmath.py	/^	def __getitem__(self, i):$/;"	m	class:vec4
 __getitem__	.\\srmath.py	/^	def __getitem__(self, xy):$/;"	m	class:mat3
-__init__	.\\buffer3d.py	/^	def __init__(self, w, h, initialValue = None):$/;"	m	class:Buffer3D
 __init__	.\\camera.py	/^	def __init__(self):$/;"	m	class:Camera
 __init__	.\\fragmentprocessor.py	/^	def __init__(self, pipeline):$/;"	m	class:FragmentProcessor
 __init__	.\\pipeline.py	/^	def __init__(self):$/;"	m	class:Pipeline
 __init__	.\\pipeline.py	/^	def __init__(self):$/;"	m	class:RasterizeInput
 __init__	.\\pipeline.py	/^	def __init__(self):$/;"	m	class:VertexInput
 __init__	.\\program.py	/^	def __init__(self):$/;"	m	class:Program
-__init__	.\\pygamewindow.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:PyGameWindow
 __init__	.\\rasterizer.py	/^	def __init__(self):$/;"	m	class:RasterizeData
 __init__	.\\rasterizer.py	/^	def __init__(self):$/;"	m	class:RasterizeInput
 __init__	.\\rasterizer.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Rasterizer
@@ -97,11 +95,13 @@ __init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0):$/;"	m	class:vec2
 __init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0):$/;"	m	class:vec3
 __init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0, w = 0.0):$/;"	m	class:vec4
 __init__	.\\texture.py	/^	def __init__(self, w, h):$/;"	m	class:Texture
-__init__	.\\texturemgr.py	/^	def __init__(self):$/;"	m	class:TextureMgr
 __init__	.\\tkinterwindow.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:TkinterWindow
 __init__	.\\vertexprocessor.py	/^	def __init__(self, pipeline):$/;"	m	class:VertexProcessor
 __init__	.\\window.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Window
+__init__	buffer3d.py	/^	def __init__(self, w, h, initialValue = None):$/;"	m	class:Buffer3D
 __init__	openglwindow.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:OpenGLWindow
+__init__	pygamewindow.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:PyGameWindow
+__init__	texturemgr.py	/^	def __init__(self):$/;"	m	class:TextureMgr
 __iter__	.\\srmath.py	/^	def __iter__(self):$/;"	m	class:vec2
 __mul__	.\\srmath.py	/^	def __mul__(self, multiplier):$/;"	m	class:mat3
 __mul__	.\\srmath.py	/^	def __mul__(self, scalar):$/;"	m	class:vec2
@@ -121,7 +121,7 @@ __sub__	.\\srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec3
 __sub__	.\\srmath.py	/^	def __sub__(self, v):$/;"	m	class:vec4
 _current_id	.\\helpers.py	/^_current_id = 0$/;"	v
 _instance	.\\shadermgr.py	/^_instance = None$/;"	v
-_instance	.\\texturemgr.py	/^_instance = None$/;"	v
+_instance	texturemgr.py	/^_instance = None$/;"	v
 _pipelineInstance	.\\pipeline.py	/^_pipelineInstance = None$/;"	v
 adjugateMat	.\\srmath.py	/^	def adjugateMat(self):$/;"	m	class:mat3
 adjugateMat	.\\srmath.py	/^	def adjugateMat(self):$/;"	m	class:mat4
@@ -129,7 +129,7 @@ check_cvv_out	.\\rasterizer.py	/^	def check_cvv_out(self, rasterInput):$/;"	m	cl
 clamp	.\\srmath.py	/^def clamp(x, minVal, maxVal):$/;"	f
 clear_depth_buffer	.\\pipeline.py	/^	def clear_depth_buffer(self):$/;"	m	class:Pipeline
 clear_screen	.\\pipeline.py	/^	def clear_screen(self):$/;"	m	class:Pipeline
-create_chess_board_texture	.\\texturemgr.py	/^	def create_chess_board_texture(self, w, h, color0, color1, cells = 5):$/;"	m	class:TextureMgr
+create_chess_board_texture	texturemgr.py	/^	def create_chess_board_texture(self, w, h, color0, color1, cells = 5):$/;"	m	class:TextureMgr
 create_program	.\\shadermgr.py	/^	def create_program(self):$/;"	m	class:ShaderMgr
 create_shader	.\\shadermgr.py	/^	def create_shader(self, name):$/;"	m	class:ShaderMgr
 create_vector	.\\srmath.py	/^def create_vector(componentCount):$/;"	f
@@ -164,16 +164,16 @@ get_pipeline_uniform	.\\pipeline.py	/^	def get_pipeline_uniform(self, uniform):$
 get_pixel	.\\pipeline.py	/^	def get_pixel(self, x, y):$/;"	m	class:Pipeline
 get_projection_mat	.\\camera.py	/^	def get_projection_mat(self):$/;"	m	class:Camera
 get_shader_mgr	.\\shadermgr.py	/^def get_shader_mgr():$/;"	f
-get_tex_mgr	.\\texturemgr.py	/^def get_tex_mgr():$/;"	f
+get_tex_mgr	texturemgr.py	/^def get_tex_mgr():$/;"	f
 get_unique_id	.\\helpers.py	/^def get_unique_id():$/;"	f
-get_value	.\\buffer3d.py	/^	def get_value(self, x, y, default=None):$/;"	m	class:Buffer3D
+get_value	buffer3d.py	/^	def get_value(self, x, y, default=None):$/;"	m	class:Buffer3D
 get_world_to_view_mat	.\\camera.py	/^	def get_world_to_view_mat(self):$/;"	m	class:Camera
 has_pipeline_uniform	.\\pipeline.py	/^	def has_pipeline_uniform(self, uniform):$/;"	m	class:Pipeline
 init	.\\pipeline.py	/^	def init(self):$/;"	m	class:Pipeline
-init	.\\pygamewindow.py	/^	def init(self):$/;"	m	class:PyGameWindow
 init	.\\tkinterwindow.py	/^	def init(self):$/;"	m	class:TkinterWindow
 init	.\\window.py	/^	def init(self):$/;"	m	class:Window
 init	openglwindow.py	/^	def init(self):$/;"	m	class:OpenGLWindow
+init	pygamewindow.py	/^	def init(self):$/;"	m	class:PyGameWindow
 init_gl	openglwindow.py	/^	def init_gl(self):$/;"	m	class:OpenGLWindow
 init_opengl_texture	openglwindow.py	/^	def init_opengl_texture(self, pixelData):$/;"	m	class:OpenGLWindow
 init_raster_data	.\\rasterizer.py	/^	def init_raster_data(self, rasterInput):$/;"	m	class:Rasterizer
@@ -198,10 +198,10 @@ make_view_mat_axis	.\\srmath.py	/^def make_view_mat_axis(xAxis, yAxis, zAxis, ey
 mat3	.\\srmath.py	/^class mat3(object):$/;"	c
 mat4	.\\srmath.py	/^class mat4(mat3):$/;"	c
 move	.\\camera.py	/^	def move(self, offset, st = space.SpaceType.VIEW_SPACE):$/;"	m	class:Camera
-move_camera	.\\pygamewindow.py	/^	def move_camera(self, direction):$/;"	m	class:PyGameWindow
 move_camera	.\\scene.py	/^	def move_camera(self, offset, st = space.SpaceType.VIEW_SPACE):$/;"	m	class:Scene
 move_camera	.\\tkinterwindow.py	/^	def move_camera(self, direction):$/;"	m	class:TkinterWindow
 move_camera	openglwindow.py	/^	def move_camera(self, direction):$/;"	m	class:OpenGLWindow
+move_camera	pygamewindow.py	/^	def move_camera(self, direction):$/;"	m	class:PyGameWindow
 multipliableVecType	.\\srmath.py	/^	def multipliableVecType(self):$/;"	m	class:mat3
 multipliableVecType	.\\srmath.py	/^	def multipliableVecType(self):$/;"	m	class:mat4
 ndc_to_screen_coord	.\\srmath.py	/^def ndc_to_screen_coord(ndcPoint, width, height):$/;"	f
@@ -211,24 +211,24 @@ negate	.\\srmath.py	/^	def negate(self):$/;"	m	class:vec4
 normalize	.\\srmath.py	/^	def normalize(self):$/;"	m	class:vec2
 normalize	.\\srmath.py	/^	def normalize(self):$/;"	m	class:vec3
 normalize	.\\srmath.py	/^	def normalize(self):$/;"	m	class:vec4
-on_clear_frame_buffer	.\\pygamewindow.py	/^	def on_clear_frame_buffer(self):$/;"	m	class:PyGameWindow
-on_frame_buffer_set_pixel	.\\pygamewindow.py	/^	def on_frame_buffer_set_pixel(self, x, y, color):$/;"	m	class:PyGameWindow
-on_key_down	.\\pygamewindow.py	/^	def on_key_down(self, key):$/;"	m	class:PyGameWindow
+on_clear_frame_buffer	pygamewindow.py	/^	def on_clear_frame_buffer(self):$/;"	m	class:PyGameWindow
+on_frame_buffer_set_pixel	pygamewindow.py	/^	def on_frame_buffer_set_pixel(self, x, y, color):$/;"	m	class:PyGameWindow
 on_key_down	.\\tkinterwindow.py	/^	def on_key_down(self, key):$/;"	m	class:TkinterWindow
 on_key_down	.\\window.py	/^	def on_key_down(self, key):$/;"	m	class:Window
 on_key_down	openglwindow.py	/^	def on_key_down(self, key):$/;"	m	class:OpenGLWindow
+on_key_down	pygamewindow.py	/^	def on_key_down(self, key):$/;"	m	class:PyGameWindow
 on_mouse_click	.\\tkinterwindow.py	/^	def on_mouse_click(self, x, y):$/;"	m	class:TkinterWindow
 on_mouse_click	.\\window.py	/^	def on_mouse_click(self, x, y):$/;"	m	class:Window
 on_mouse_event	openglwindow.py	/^	def on_mouse_event(self, button, state, x, y):$/;"	m	class:OpenGLWindow
-on_mouse_wheel_scroll	.\\pygamewindow.py	/^	def on_mouse_wheel_scroll(self, delta):$/;"	m	class:PyGameWindow
 on_mouse_wheel_scroll	.\\tkinterwindow.py	/^	def on_mouse_wheel_scroll(self, delta):$/;"	m	class:TkinterWindow
 on_mouse_wheel_scroll	.\\window.py	/^	def on_mouse_wheel_scroll(self, delta):$/;"	m	class:Window
 on_mouse_wheel_scroll	openglwindow.py	/^	def on_mouse_wheel_scroll(self, delta):$/;"	m	class:OpenGLWindow
+on_mouse_wheel_scroll	pygamewindow.py	/^	def on_mouse_wheel_scroll(self, delta):$/;"	m	class:PyGameWindow
 on_window_resize	openglwindow.py	/^	def on_window_resize(self, width, height):$/;"	m	class:OpenGLWindow
 process	.\\fragmentprocessor.py	/^	def process(self, rasterData, program):$/;"	m	class:FragmentProcessor
 process	.\\rasterizer.py	/^	def process(self, rasterInputs, mode, wireframeColor, shader):$/;"	m	class:Rasterizer
 process	.\\vertexprocessor.py	/^	def process(self, mesh, indices, program):$/;"	m	class:VertexProcessor
-put_value	.\\buffer3d.py	/^	def put_value(self, x, y, value):$/;"	m	class:Buffer3D
+put_value	buffer3d.py	/^	def put_value(self, x, y, value):$/;"	m	class:Buffer3D
 rasterize_flat_triangle	.\\rasterizer.py	/^	def rasterize_flat_triangle(self, v0, v1, v2, mode, shader):$/;"	m	class:Rasterizer
 rasterize_line	.\\rasterizer.py	/^	def rasterize_line(self, x0, y0, x1, y1, color):$/;"	m	class:Rasterizer
 rasterize_point	.\\rasterizer.py	/^	def rasterize_point(self, x, y, color):$/;"	m	class:Rasterizer
@@ -248,7 +248,7 @@ sample_texture	.\\pipeline.py	/^	def sample_texture(self, tex, uv):$/;"	m	class:
 sample_texture	.\\shader.py	/^	def sample_texture(self, tex, uv):$/;"	m	class:Shader
 save_depth_texture	.\\tkinterwindow.py	/^	def save_depth_texture(self):$/;"	m	class:TkinterWindow
 save_texture	.\\tkinterwindow.py	/^	def save_texture(self, tex, filename):$/;"	m	class:TkinterWindow
-set_all_value	.\\buffer3d.py	/^	def set_all_value(self, value):$/;"	m	class:Buffer3D
+set_all_value	buffer3d.py	/^	def set_all_value(self, value):$/;"	m	class:Buffer3D
 set_depth	.\\pipeline.py	/^	def set_depth(self, x, y, value):$/;"	m	class:Pipeline
 set_front_face	.\\pipeline.py	/^	def set_front_face(self, face):$/;"	m	class:Pipeline
 set_front_face	.\\rasterizer.py	/^	def set_front_face(self, face):$/;"	m	class:Rasterizer
@@ -265,21 +265,21 @@ toList	.\\srmath.py	/^	def toList(self):$/;"	m	class:vec4
 transpose	.\\srmath.py	/^	def transpose(self):$/;"	m	class:mat3
 transpose	.\\srmath.py	/^	def transpose(self):$/;"	m	class:mat4
 update	.\\scene.py	/^	def update(self):$/;"	m	class:Scene
-update_screen	.\\pygamewindow.py	/^	def update_screen(self):$/;"	m	class:PyGameWindow
 update_screen	.\\tkinterwindow.py	/^	def update_screen(self):$/;"	m	class:TkinterWindow
 update_screen	.\\window.py	/^	def update_screen(self):$/;"	m	class:Window
 update_screen	openglwindow.py	/^	def update_screen(self):$/;"	m	class:OpenGLWindow
-update_statistic_info	.\\pygamewindow.py	/^	def update_statistic_info(self):$/;"	m	class:PyGameWindow
+update_screen	pygamewindow.py	/^	def update_screen(self):$/;"	m	class:PyGameWindow
 update_statistic_info	.\\tkinterwindow.py	/^	def update_statistic_info(self):$/;"	m	class:TkinterWindow
 update_statistic_info	.\\window.py	/^	def update_statistic_info(self):$/;"	m	class:Window
 update_statistic_info	openglwindow.py	/^	def update_statistic_info(self):$/;"	m	class:OpenGLWindow
+update_statistic_info	pygamewindow.py	/^	def update_statistic_info(self):$/;"	m	class:PyGameWindow
 vec2	.\\srmath.py	/^class vec2(object):$/;"	c
 vec3	.\\srmath.py	/^class vec3(object):$/;"	c
 vec4	.\\srmath.py	/^class vec4(object):$/;"	c
 w	.\\main.py	/^		w = openglwindow.OpenGLWindow(pipeline.get_pipeline())$/;"	v
 w	.\\main.py	/^		w = pygamewindow.PyGameWindow(pipeline.get_pipeline())$/;"	v
 w	.\\main.py	/^		w = tkinterwindow.TkinterWindow(pipeline.get_pipeline())$/;"	v
-window_update	.\\pygamewindow.py	/^	def window_update(self):$/;"	m	class:PyGameWindow
 window_update	.\\tkinterwindow.py	/^	def window_update(self):$/;"	m	class:TkinterWindow
 window_update	.\\window.py	/^	def window_update(self):$/;"	m	class:Window
 window_update	openglwindow.py	/^	def window_update(self):$/;"	m	class:OpenGLWindow
+window_update	pygamewindow.py	/^	def window_update(self):$/;"	m	class:PyGameWindow

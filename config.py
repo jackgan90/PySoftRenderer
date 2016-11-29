@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-WINDOW_SYSTEM = 'opengl'
+WINDOW_SYSTEM = 'pygame'

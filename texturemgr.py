@@ -18,7 +18,7 @@ class TextureMgr(object):
 		cellHeight = h / cells
 		for x in xrange(w):
 			for y in xrange(h):
-				tex.data.append(color0 if x / cellWidth % 2 == 0  and y / cellHeight % 2 == 0 else color1)
+				tex.data[y * w + x] = color0 if x / cellWidth % 2 == 0  and y / cellHeight % 2 == 0 else color1
 		self.textures[tex.uniqueId] = tex
 		return tex
 

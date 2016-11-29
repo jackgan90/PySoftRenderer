@@ -79,6 +79,9 @@ class OpenGLWindow(Window):
 				direction = 'right'
 			elif key.lower() == 'w':
 				direction = 'up'
+			if ord(key) == 27:
+				GLUT.glutDestroyWindow(self.window)
+				self.window = None
 		elif isinstance(key, int):
 			if key == GLUT.GLUT_KEY_LEFT:
 				direction = 'left'
