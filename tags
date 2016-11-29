@@ -12,8 +12,6 @@ CW	.\\rasterizer.py	/^	CW = 1$/;"	v	class:WindingOrder
 Camera	.\\camera.py	/^class Camera(object):$/;"	c
 Cube	.\\simplemesh.py	/^class Cube(object):$/;"	c
 DEFAULT_FRAME_RATE	.\\window.py	/^DEFAULT_FRAME_RATE = 30$/;"	v
-DEFAULT_WINDOW_HEIGHT	pipeline.py	/^DEFAULT_WINDOW_HEIGHT = 400$/;"	v
-DEFAULT_WINDOW_WIDTH	pipeline.py	/^DEFAULT_WINDOW_WIDTH = 400$/;"	v
 DrawMode	pipeline.py	/^class DrawMode(object):$/;"	c
 EPSILON	.\\srmath.py	/^EPSILON = 0.00001$/;"	v
 FILL	pipeline.py	/^	FILL = 2$/;"	v	class:DrawMode
@@ -30,6 +28,7 @@ Plane	.\\simplemesh.py	/^class Plane(object):$/;"	c
 Program	.\\program.py	/^class Program(Resource):$/;"	c
 PyGameWindow	pygamewindow.py	/^class PyGameWindow(Window):$/;"	c
 RED	.\\color.py	/^RED = (255, 0, 0)$/;"	v
+RESOLUTION	config.py	/^RESOLUTION = (400, 400)$/;"	v
 RasterizeData	.\\rasterizer.py	/^class RasterizeData(object):$/;"	c
 RasterizeInput	.\\rasterizer.py	/^class RasterizeInput(object):$/;"	c
 RasterizeInput	pipeline.py	/^class RasterizeInput(object):$/;"	c
@@ -51,7 +50,7 @@ VertexInput	pipeline.py	/^class VertexInput(object):$/;"	c
 VertexProcessor	.\\vertexprocessor.py	/^class VertexProcessor(object):$/;"	c
 VertexShader	.\\shader.py	/^class VertexShader(Shader):$/;"	c
 WHITE	.\\color.py	/^WHITE = (255, 255, 255)$/;"	v
-WINDOW_SYSTEM	config.py	/^WINDOW_SYSTEM = 'pygame'$/;"	v
+WINDOW_SYSTEM	config.py	/^WINDOW_SYSTEM = 'opengl'$/;"	v
 WIRE_FRAME	pipeline.py	/^	WIRE_FRAME = 1$/;"	v	class:DrawMode
 WORLD_SPACE	.\\space.py	/^	WORLD_SPACE = 2$/;"	v	class:SpaceType
 WindingOrder	.\\rasterizer.py	/^class WindingOrder(object):$/;"	c

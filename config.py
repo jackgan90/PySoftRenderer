@@ -1,3 +1,5 @@
 # -*- coding: utf-8 -*-
 
-WINDOW_SYSTEM = 'pygame'
+WINDOW_SYSTEM = 'opengl'
+
+RESOLUTION = (400, 400)

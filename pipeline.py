@@ -5,9 +5,7 @@ import buffer3d
 from rasterizer import Rasterizer
 from vertexprocessor import VertexProcessor
 from  fragmentprocessor import FragmentProcessor
-
-DEFAULT_WINDOW_HEIGHT = 400
-DEFAULT_WINDOW_WIDTH = 400
+import config
 
 _pipelineInstance = None
 
@@ -48,8 +46,8 @@ class Pipeline(object):
 		self.uniformCache = dict()
 
 	def init(self):
-		self.frameBuffer = buffer3d.Buffer3D(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, self.clearColor)
-		self.depthBuffer = buffer3d.Buffer3D(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, 1.0)
+		self.frameBuffer = buffer3d.Buffer3D(config.RESOLUTION[0], config.RESOLUTION[1], self.clearColor)
+		self.depthBuffer = buffer3d.Buffer3D(config.RESOLUTION[0], config.RESOLUTION[1], 1.0)
 		self.vertexProcessor = VertexProcessor(self)
 		self.fragmentProcessor = FragmentProcessor(self)
 		self.rasterizer = Rasterizer(self)
