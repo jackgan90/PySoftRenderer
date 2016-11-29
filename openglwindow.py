@@ -5,6 +5,7 @@ import OpenGL.GL as GL
 from OpenGL.GL import shaders
 import ctypes
 import numpy
+import scene
 
 class OpenGLWindow(Window):
 	def __init__(self, graphicsPipeline):
@@ -12,21 +13,25 @@ class OpenGLWindow(Window):
 		self.vao = None
 		self.program = None
 		self.displayTex = None
+		self.renderScene = scene.Scene(graphicsPipeline)
 
 
 	def getGLError(self):
 		return GL.glGetError()
 
 	def init_opengl_texture(self, pixelData):
-		textureData = numpy.array(pixelData, numpy.float)
+		textureData = numpy.array(pixelData, numpy.uint8)
 		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
-		self.displayTex = GL.glGenTextures(1)
-		GL.glBindTexture(GL.GL_TEXTURE_2D, self.displayTex)
-		GL.glTexParameterf(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR)
-		GL.glTexParameterf(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR)
+		if not self.displayTex:
+			self.displayTex = GL.glGenTextures(1)
+			GL.glBindTexture(GL.GL_TEXTURE_2D, self.displayTex)
+			GL.glTexParameterf(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR)
+			GL.glTexParameterf(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR)
 		GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_RGB, width, height, 0, GL.GL_RGB, GL.GL_UNSIGNED_BYTE, textureData)
 
 	def window_update(self):
+		self.renderScene.update()
+		self.init_opengl_texture(self.graphicsPipeline.get_frame_buffer_data())
 		GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
 		GL.glUseProgram(self.program)
 		GL.glBindVertexArray(self.vao)
@@ -50,8 +55,8 @@ class OpenGLWindow(Window):
 		self.program = shaders.compileProgram(vertexShader, fragmentShader)
 
 		#init vao and vbos
-		vertices = numpy.array([-1.0, 1.0, 0.1, 1.0, 1.0, 1.0, 0.1, 1.0, 1.0, -1.0, 0.1, 1.0, -1.0, -1.0, 0.1, 1.0], dtype=numpy.float32)
-		texcoords = numpy.array([0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0], dtype=numpy.float)
+		vertices = numpy.array([-1.0, -1.0, 0.1, 1.0, 1.0, -1.0, 0.1, 1.0, 1.0, 1.0, 0.1, 1.0, -1.0, 1.0, 0.1, 1.0], dtype=numpy.float32)
+		texcoords = numpy.array([0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0], dtype=numpy.float32)
 
 		self.vao = GL.glGenVertexArrays(1)
 		GL.glBindVertexArray(self.vao)
@@ -67,7 +72,7 @@ class OpenGLWindow(Window):
 		GL.glBindBuffer(GL.GL_ARRAY_BUFFER, vbo1)
 		texcoord = GL.glGetAttribLocation(self.program, 'texcoord')
 		GL.glEnableVertexAttribArray(texcoord)
-		GL.glVertexAttribPointer(texcoord, 4, GL.GL_FLOAT, False, 0, ctypes.c_void_p(0))
+		GL.glVertexAttribPointer(texcoord, 2, GL.GL_FLOAT, False, 0, ctypes.c_void_p(0))
 		GL.glBufferData(GL.GL_ARRAY_BUFFER, texcoords.nbytes, texcoords, GL.GL_STATIC_DRAW)
 
 
@@ -86,7 +91,5 @@ class OpenGLWindow(Window):
 		clearColor = self.graphicsPipeline.clearColor
 		GL.glClearColor(clearColor[0] / 255.0, clearColor[1] / 255.0, clearColor[2] / 255.0, 1)
 		self.init_gl()
-		self.pixelData = [(0, 0, 255)] * (width * height)
-		self.init_opengl_texture(self.pixelData)
 
 		GLUT.glutMainLoop()
