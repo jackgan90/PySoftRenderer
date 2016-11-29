@@ -8,6 +8,7 @@ from vertexprocessor import VertexProcessor
 from  fragmentprocessor import FragmentProcessor
 from Queue import Queue
 from threading import Thread
+import multiprocessing
 import config
 
 _pipelineInstance = None
@@ -39,6 +40,11 @@ class Pipeline(object):
 		self.fragmentProcessor = None
 		self.rasterizer = None
 		self.uniformCache = dict()
+		self.cpuCount = multiprocessing.cpu_count()
+		self.vertexProcessQueue = Queue()
+		self.triangleProcessQueue = Queue()
+		self.scanlineDrawQueue = Queue()
+		self.quit = False
 
 	def init(self):
 		self.frontBuffer = buffer3d.Buffer3D(config.RESOLUTION[0], config.RESOLUTION[1], self.clearColor)
@@ -47,6 +53,55 @@ class Pipeline(object):
 		self.vertexProcessor = VertexProcessor(self)
 		self.fragmentProcessor = FragmentProcessor(self)
 		self.rasterizer = Rasterizer(self)
+		t1 = Thread(target = self.processVertexThread)
+		t2 = Thread(target = self.processTriangleThread)
+		t1.start()
+		t2.start()
+		scanlineDrawThreadCnt = self.cpuCount - 3 if self.cpuCount > 3 else 1
+		for i in xrange(scanlineDrawThreadCnt):
+			t = Thread(target = self.drawScanlineThread)
+			t.start()
+
+	def processVertexThread(self):
+		while not self.quit:
+			task = self.vertexProcessQueue.get()
+			mesh = task.get('mesh', None)
+			indices = task.get('indices', [])
+			program = task.get('program', None)
+			mode = task.get('mode', 0)
+			wireframeColor = task.get('wireframeColor', color.BLACK)
+			if mesh and indices and program:
+				self.vertexProcessor.process(mesh, indices, program, mode, wireframeColor)
+				self.vertexProcessQueue.task_done()
+			else:
+				self.vertexProcessQueue.task_done()
+
+	def processTriangleThread(self):
+		while not self.quit:
+			task = self.triangleProcessQueue.get()
+			rasterInputs = task.get('rasterInputs', [])
+			mode = task.get('mode', 0)
+			wireframeColor = task.get('wireframeColor', color.BLACK)
+			program = task.get('program', None)
+			if rasterInputs and mode and program:
+				self.rasterizer.process(rasterInputs, mode, wireframeColor, program)
+				self.triangleProcessQueue.task_done()
+			else:
+				self.triangleProcessQueue.task_done()
+
+	def drawScanlineThread(self):
+		while not self.quit:
+			task = self.scanlineDrawQueue.get()
+			left = task.get('left', None)
+			right = task.get('right', None)
+			y = task.get('y', -1)
+			mode = task.get('mode', 0)
+			program = task.get('program', None)
+			if left and right and y >= 0 and mode and program:
+				self.rasterizer.draw_scanline(left, right, y, mode, program)
+				self.scanlineDrawQueue.task_done()
+			else:
+				self.scanlineDrawQueue.task_done()
 
 	def clear_screen(self):
 		self.backBuffer.set_all_value(self.clearColor)
@@ -86,7 +141,7 @@ class Pipeline(object):
 
 	def set_pixel(self, x, y, color, isBack=True):
 		pixelBuffer = self.backBuffer if isBack else self.frontBuffer
-		pixelBuffer.put_value(x, y, color)
+			pixelBuffer.put_value(x, y, color)
 
 	def get_depth(self, x, y):
 		return self.depthBuffer.get_value(x, y, 1.0)
@@ -103,6 +158,12 @@ class Pipeline(object):
 		self.uniformCache['projection_matrix'] = projMat
 		self.uniformCache['mvp'] = mvp
 		for i in xrange(0, len(mesh.indices), 3):
-			rasterInputs = self.vertexProcessor.process(mesh, mesh.indices[i : i + 3], program)
-			self.rasterizer.process(rasterInputs, mode, wireframeColor, program)
+			# rasterInputs = self.vertexProcessor.process(mesh, mesh.indices[i : i + 3], program)
+			self.vertexProcessQueue.put({'mesh' : mesh, 'indices' : mesh.indices[i : i + 3], 'program' : program,
+				'mode' : mode, 'wireframeColor' : wireframeColor})
+			# self.rasterizer.process(rasterInputs, mode, wireframeColor, program)
+
+		self.vertexProcessQueue.join()
+		self.triangleProcessQueue.join()
+		self.scanlineDrawQueue.join()
 

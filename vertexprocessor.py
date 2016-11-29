@@ -6,7 +6,7 @@ class VertexProcessor(object):
 	def __init__(self, pipeline):
 		self.pipeline = pipeline
 
-	def process(self, mesh, indices, program):
+	def process(self, mesh, indices, program, mode, wireframeColor):
 		rasterInputs = []
 		for idx in indices:
 			# variable semantics are predifined,position is always coordinate in object space
@@ -33,4 +33,4 @@ class VertexProcessor(object):
 					program.vs.vspos.z, program.vs.vspos.w)
 			rasterInput.vertexAttrs = dict(program.vs.vsattrs)
 			rasterInputs.append(rasterInput)
-		return rasterInputs
+		self.pipeline.triangleProcessQueue.put({'rasterInputs' : rasterInputs, 'mode' : mode, 'wireframeColor' : wireframeColor, 'program' : program})

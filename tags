@@ -29,13 +29,13 @@ Plane	.\\simplemesh.py	/^class Plane(object):$/;"	c
 Program	.\\program.py	/^class Program(Resource):$/;"	c
 PyGameWindow	.\\pygamewindow.py	/^class PyGameWindow(Window):$/;"	c
 RED	.\\color.py	/^RED = (255, 0, 0)$/;"	v
-RESOLUTION	.\\config.py	/^RESOLUTION = (400, 400)$/;"	v
+RESOLUTION	config.py	/^RESOLUTION = (400, 400)$/;"	v
 RasterizeData	rasterizer.py	/^class RasterizeData(object):$/;"	c
 RasterizeInput	pipeline.py	/^class RasterizeInput(object):$/;"	c
 RasterizeInput	rasterizer.py	/^class RasterizeInput(object):$/;"	c
 Rasterizer	rasterizer.py	/^class Rasterizer(object):$/;"	c
 Resource	.\\resource.py	/^class Resource(object):$/;"	c
-Scene	.\\scene.py	/^class Scene(object):$/;"	c
+Scene	scene.py	/^class Scene(object):$/;"	c
 Shader	.\\shader.py	/^class Shader(Resource):$/;"	c
 ShaderMgr	.\\shadermgr.py	/^class ShaderMgr(object):$/;"	c
 SpaceType	.\\space.py	/^class SpaceType(object):$/;"	c
@@ -47,10 +47,10 @@ TkinterWindow	.\\tkinterwindow.py	/^class TkinterWindow(Window):$/;"	c
 VIEW_SPACE	.\\space.py	/^	VIEW_SPACE = 3$/;"	v	class:SpaceType
 VertexColorFS	.\\shader.py	/^class VertexColorFS(FragmentShader):$/;"	c
 VertexColorVS	.\\shader.py	/^class VertexColorVS(VertexShader):$/;"	c
-VertexProcessor	.\\vertexprocessor.py	/^class VertexProcessor(object):$/;"	c
+VertexProcessor	vertexprocessor.py	/^class VertexProcessor(object):$/;"	c
 VertexShader	.\\shader.py	/^class VertexShader(Shader):$/;"	c
 WHITE	.\\color.py	/^WHITE = (255, 255, 255)$/;"	v
-WINDOW_SYSTEM	.\\config.py	/^WINDOW_SYSTEM = 'opengl'$/;"	v
+WINDOW_SYSTEM	config.py	/^WINDOW_SYSTEM = 'opengl'$/;"	v
 WIRE_FRAME	pipeline.py	/^	WIRE_FRAME = 1$/;"	v	class:DrawMode
 WORLD_SPACE	.\\space.py	/^	WORLD_SPACE = 2$/;"	v	class:SpaceType
 WindingOrder	rasterizer.py	/^class WindingOrder(object):$/;"	c
@@ -75,7 +75,6 @@ __init__	.\\openglwindow.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class
 __init__	.\\program.py	/^	def __init__(self):$/;"	m	class:Program
 __init__	.\\pygamewindow.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:PyGameWindow
 __init__	.\\resource.py	/^	def __init__(self):$/;"	m	class:Resource
-__init__	.\\scene.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Scene
 __init__	.\\shader.py	/^	def __init__(self):$/;"	m	class:FragmentShader
 __init__	.\\shader.py	/^	def __init__(self):$/;"	m	class:Shader
 __init__	.\\shader.py	/^	def __init__(self):$/;"	m	class:TextureFS
@@ -94,13 +93,14 @@ __init__	.\\srmath.py	/^	def __init__(self, x = 0.0, y = 0.0, z = 0.0, w = 0.0):
 __init__	.\\texture.py	/^	def __init__(self, w, h):$/;"	m	class:Texture
 __init__	.\\texturemgr.py	/^	def __init__(self):$/;"	m	class:TextureMgr
 __init__	.\\tkinterwindow.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:TkinterWindow
-__init__	.\\vertexprocessor.py	/^	def __init__(self, pipeline):$/;"	m	class:VertexProcessor
 __init__	.\\window.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Window
 __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:Pipeline
 __init__	pipeline.py	/^	def __init__(self):$/;"	m	class:RasterizeInput
 __init__	rasterizer.py	/^	def __init__(self):$/;"	m	class:RasterizeData
 __init__	rasterizer.py	/^	def __init__(self):$/;"	m	class:RasterizeInput
 __init__	rasterizer.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Rasterizer
+__init__	scene.py	/^	def __init__(self, graphicsPipeline):$/;"	m	class:Scene
+__init__	vertexprocessor.py	/^	def __init__(self, pipeline):$/;"	m	class:VertexProcessor
 __iter__	.\\srmath.py	/^	def __iter__(self):$/;"	m	class:vec2
 __mul__	.\\srmath.py	/^	def __mul__(self, multiplier):$/;"	m	class:mat3
 __mul__	.\\srmath.py	/^	def __mul__(self, scalar):$/;"	m	class:vec2
@@ -143,9 +143,10 @@ doInit	.\\srmath.py	/^	def doInit(self, matList):$/;"	m	class:mat3
 dot	.\\srmath.py	/^	def dot(self, v):$/;"	m	class:vec2
 dot	.\\srmath.py	/^	def dot(self, v):$/;"	m	class:vec3
 dot	.\\srmath.py	/^	def dot(self, v):$/;"	m	class:vec4
-draw_cube	.\\scene.py	/^	def draw_cube(self):$/;"	m	class:Scene
+drawScanlineThread	pipeline.py	/^	def drawScanlineThread(self):$/;"	m	class:Pipeline
+draw_cube	scene.py	/^	def draw_cube(self):$/;"	m	class:Scene
 draw_mesh	pipeline.py	/^	def draw_mesh(self, mesh, cam, program, worldMat = srmath.mat4.identity, wireframeColor = color/;"	m	class:Pipeline
-draw_plane	.\\scene.py	/^	def draw_plane(self):$/;"	m	class:Scene
+draw_plane	scene.py	/^	def draw_plane(self):$/;"	m	class:Scene
 draw_scanline	rasterizer.py	/^	def draw_scanline(self, left, right, y, mode, program):$/;"	m	class:Rasterizer
 fast_inverse_mat4	.\\srmath.py	/^def fast_inverse_mat4(m):$/;"	f
 fromList	.\\srmath.py	/^	def fromList(self, l):$/;"	m	class:vec2
@@ -200,8 +201,8 @@ mat4	.\\srmath.py	/^class mat4(mat3):$/;"	c
 move	.\\camera.py	/^	def move(self, offset, st = space.SpaceType.VIEW_SPACE):$/;"	m	class:Camera
 move_camera	.\\openglwindow.py	/^	def move_camera(self, direction):$/;"	m	class:OpenGLWindow
 move_camera	.\\pygamewindow.py	/^	def move_camera(self, direction):$/;"	m	class:PyGameWindow
-move_camera	.\\scene.py	/^	def move_camera(self, offset, st = space.SpaceType.VIEW_SPACE):$/;"	m	class:Scene
 move_camera	.\\tkinterwindow.py	/^	def move_camera(self, direction):$/;"	m	class:TkinterWindow
+move_camera	scene.py	/^	def move_camera(self, offset, st = space.SpaceType.VIEW_SPACE):$/;"	m	class:Scene
 multipliableVecType	.\\srmath.py	/^	def multipliableVecType(self):$/;"	m	class:mat3
 multipliableVecType	.\\srmath.py	/^	def multipliableVecType(self):$/;"	m	class:mat4
 ndc_to_screen_coord	.\\srmath.py	/^def ndc_to_screen_coord(ndcPoint, width, height):$/;"	f
@@ -225,8 +226,11 @@ on_mouse_wheel_scroll	.\\tkinterwindow.py	/^	def on_mouse_wheel_scroll(self, del
 on_mouse_wheel_scroll	.\\window.py	/^	def on_mouse_wheel_scroll(self, delta):$/;"	m	class:Window
 on_window_resize	.\\openglwindow.py	/^	def on_window_resize(self, width, height):$/;"	m	class:OpenGLWindow
 process	.\\fragmentprocessor.py	/^	def process(self, rasterData, program):$/;"	m	class:FragmentProcessor
-process	.\\vertexprocessor.py	/^	def process(self, mesh, indices, program):$/;"	m	class:VertexProcessor
 process	rasterizer.py	/^	def process(self, rasterInputs, mode, wireframeColor, program):$/;"	m	class:Rasterizer
+process	vertexprocessor.py	/^	def process(self, mesh, indices, program, mode, wireframeColor):$/;"	m	class:VertexProcessor
+processTriangleThread	pipeline.py	/^	def processTriangleThread(self):$/;"	m	class:Pipeline
+processVertexThread	pipeline.py	/^	def processVertexThread(self):$/;"	m	class:Pipeline
+push_draw_scaneline_task	rasterizer.py	/^	def push_draw_scaneline_task(self, left, right, y, mode, program):$/;"	m	class:Rasterizer
 put_value	.\\buffer3d.py	/^	def put_value(self, x, y, value):$/;"	m	class:Buffer3D
 put_value	.\\depthbuffer.py	/^	def put_value(self, x, y, value):$/;"	m	class:DepthBuffer
 rasterize_flat_triangle	rasterizer.py	/^	def rasterize_flat_triangle(self, v0, v1, v2, mode, program):$/;"	m	class:Rasterizer
@@ -264,7 +268,7 @@ toList	.\\srmath.py	/^	def toList(self):$/;"	m	class:vec3
 toList	.\\srmath.py	/^	def toList(self):$/;"	m	class:vec4
 transpose	.\\srmath.py	/^	def transpose(self):$/;"	m	class:mat3
 transpose	.\\srmath.py	/^	def transpose(self):$/;"	m	class:mat4
-update	.\\scene.py	/^	def update(self):$/;"	m	class:Scene
+update	scene.py	/^	def update(self):$/;"	m	class:Scene
 update_screen	.\\openglwindow.py	/^	def update_screen(self):$/;"	m	class:OpenGLWindow
 update_screen	.\\pygamewindow.py	/^	def update_screen(self):$/;"	m	class:PyGameWindow
 update_screen	.\\tkinterwindow.py	/^	def update_screen(self):$/;"	m	class:TkinterWindow

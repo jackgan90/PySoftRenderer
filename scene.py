@@ -26,7 +26,7 @@ class Scene(object):
 
 	def update(self):
 		self.draw_cube()
-		# self.draw_plane()
+		self.draw_plane()
 
 	def draw_cube(self):
 		c = simplemesh.Cube(2)

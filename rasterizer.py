@@ -51,7 +51,7 @@ class Rasterizer(object):
 			left = left if left.screenCoord.x < v2.screenCoord.x else v2
 			right = v0 if v0.screenCoord.x > v1.screenCoord.x else v1
 			right = right if right.screenCoord.x > v2.screenCoord.x else v2
-			self.draw_scanline(left, right, int(v0.screenCoord.y), mode, program)
+			self.push_draw_scaneline_task(left, right, int(v0.screenCoord.y), mode, program)
 			#single point
 		elif int(v0.screenCoord.y) == int(v1.screenCoord.y):
 			if v0.screenCoord.x < v1.screenCoord.x:
@@ -64,12 +64,12 @@ class Rasterizer(object):
 			yStart = int(left.screenCoord.y)
 			yEnd = int(bottom.screenCoord.y)
 			if yStart == yEnd:
-				self.draw_scanline(left, right, yStart, mode, program)
+				self.push_draw_scaneline_task(left, right, yStart, mode, program)
 				return
 			for y in xrange(yStart, yEnd + 1, 1):
 				interpolateLeft = self.interpolate_rasterize_data(left, bottom, float(y - yStart) / (yEnd - yStart))
 				interpolateRight = self.interpolate_rasterize_data(right, bottom, float(y - yStart) / (yEnd - yStart))
-				self.draw_scanline(interpolateLeft, interpolateRight, y, mode, program)
+				self.push_draw_scaneline_task(interpolateLeft, interpolateRight, y, mode, program)
 		elif int(v1.screenCoord.y) == int(v2.screenCoord.y):
 			if v1.screenCoord.x < v2.screenCoord.x:
 				left = v1
@@ -81,14 +81,17 @@ class Rasterizer(object):
 			yStart = int(v0.screenCoord.y)
 			yEnd = int(left.screenCoord.y)
 			if yStart == yEnd:
-				self.draw_scanline(left, right, yStart, mode, program)
+				self.push_draw_scaneline_task(left, right, yStart, mode, program)
 				return
 			for y in xrange(yStart, yEnd + 1, 1):
 				interpolateLeft = self.interpolate_rasterize_data(top, left, float(y - yStart) / (yEnd - yStart))
 				interpolateRight = self.interpolate_rasterize_data(top, right, float(y - yStart) / (yEnd - yStart))
-				self.draw_scanline(interpolateLeft, interpolateRight, y, mode, program)
+				self.push_draw_scaneline_task(interpolateLeft, interpolateRight, y, mode, program)
 		else:
 			raise Exception('rasterize_flat_triangle should only handle flat triangle!', v0.screenCoord, v1.screenCoord, v2.screenCoord)
+
+	def push_draw_scaneline_task(self, left, right, y, mode, program):
+		self.graphicsPipeline.scanlineDrawQueue.put({'left' : left, 'right' : right, 'y' : y, 'mode' : mode, 'program': program })
 
 	def draw_scanline(self, left, right, y, mode, program):
 		xStart = int(left.screenCoord.x)
