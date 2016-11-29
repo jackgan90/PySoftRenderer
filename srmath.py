@@ -622,8 +622,12 @@ def ndc_to_screen_coord(ndcPoint, width, height):
 	screenPoint.z = ndcPoint.z
 	return screenPoint
 
-def lerp(val0, val1, t):
-	return val0 + (val1 - val0) * t
+def lerp(v0, v1, t):
+	if isinstance(v0, vec3):
+		# return lerp_vec3(val0, val1, t)
+		return vec3(v0.x + (v1.x - v0.x) * t, v0.y + (v1.y - v0.y) * t, v0.z + (v1.z - v0.z) * t)
+	else:
+		return v0 + (v1 - v0) * t
 
 def clamp(x, minVal, maxVal):
 	return x if minVal <= x <= maxVal else minVal if x < minVal else maxVal
