@@ -201,6 +201,7 @@ move	.\\camera.py	/^	def move(self, offset, st = space.SpaceType.VIEW_SPACE):$/;
 move_camera	.\\pygamewindow.py	/^	def move_camera(self, direction):$/;"	m	class:PyGameWindow
 move_camera	.\\scene.py	/^	def move_camera(self, offset, st = space.SpaceType.VIEW_SPACE):$/;"	m	class:Scene
 move_camera	.\\tkinterwindow.py	/^	def move_camera(self, direction):$/;"	m	class:TkinterWindow
+move_camera	openglwindow.py	/^	def move_camera(self, direction):$/;"	m	class:OpenGLWindow
 multipliableVecType	.\\srmath.py	/^	def multipliableVecType(self):$/;"	m	class:mat3
 multipliableVecType	.\\srmath.py	/^	def multipliableVecType(self):$/;"	m	class:mat4
 ndc_to_screen_coord	.\\srmath.py	/^def ndc_to_screen_coord(ndcPoint, width, height):$/;"	f
@@ -215,11 +216,15 @@ on_frame_buffer_set_pixel	.\\pygamewindow.py	/^	def on_frame_buffer_set_pixel(se
 on_key_down	.\\pygamewindow.py	/^	def on_key_down(self, key):$/;"	m	class:PyGameWindow
 on_key_down	.\\tkinterwindow.py	/^	def on_key_down(self, key):$/;"	m	class:TkinterWindow
 on_key_down	.\\window.py	/^	def on_key_down(self, key):$/;"	m	class:Window
+on_key_down	openglwindow.py	/^	def on_key_down(self, key):$/;"	m	class:OpenGLWindow
 on_mouse_click	.\\tkinterwindow.py	/^	def on_mouse_click(self, x, y):$/;"	m	class:TkinterWindow
 on_mouse_click	.\\window.py	/^	def on_mouse_click(self, x, y):$/;"	m	class:Window
+on_mouse_event	openglwindow.py	/^	def on_mouse_event(self, button, state, x, y):$/;"	m	class:OpenGLWindow
 on_mouse_wheel_scroll	.\\pygamewindow.py	/^	def on_mouse_wheel_scroll(self, delta):$/;"	m	class:PyGameWindow
 on_mouse_wheel_scroll	.\\tkinterwindow.py	/^	def on_mouse_wheel_scroll(self, delta):$/;"	m	class:TkinterWindow
 on_mouse_wheel_scroll	.\\window.py	/^	def on_mouse_wheel_scroll(self, delta):$/;"	m	class:Window
+on_mouse_wheel_scroll	openglwindow.py	/^	def on_mouse_wheel_scroll(self, delta):$/;"	m	class:OpenGLWindow
+on_window_resize	openglwindow.py	/^	def on_window_resize(self, width, height):$/;"	m	class:OpenGLWindow
 process	.\\fragmentprocessor.py	/^	def process(self, rasterData, program):$/;"	m	class:FragmentProcessor
 process	.\\rasterizer.py	/^	def process(self, rasterInputs, mode, wireframeColor, shader):$/;"	m	class:Rasterizer
 process	.\\vertexprocessor.py	/^	def process(self, mesh, indices, program):$/;"	m	class:VertexProcessor
@@ -263,9 +268,11 @@ update	.\\scene.py	/^	def update(self):$/;"	m	class:Scene
 update_screen	.\\pygamewindow.py	/^	def update_screen(self):$/;"	m	class:PyGameWindow
 update_screen	.\\tkinterwindow.py	/^	def update_screen(self):$/;"	m	class:TkinterWindow
 update_screen	.\\window.py	/^	def update_screen(self):$/;"	m	class:Window
+update_screen	openglwindow.py	/^	def update_screen(self):$/;"	m	class:OpenGLWindow
 update_statistic_info	.\\pygamewindow.py	/^	def update_statistic_info(self):$/;"	m	class:PyGameWindow
 update_statistic_info	.\\tkinterwindow.py	/^	def update_statistic_info(self):$/;"	m	class:TkinterWindow
 update_statistic_info	.\\window.py	/^	def update_statistic_info(self):$/;"	m	class:Window
+update_statistic_info	openglwindow.py	/^	def update_statistic_info(self):$/;"	m	class:OpenGLWindow
 vec2	.\\srmath.py	/^class vec2(object):$/;"	c
 vec3	.\\srmath.py	/^class vec3(object):$/;"	c
 vec4	.\\srmath.py	/^class vec4(object):$/;"	c
