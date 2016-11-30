@@ -120,7 +120,7 @@ class Rasterizer(object):
 	def interpolate_rasterize_data(self, v0, v1, t):
 		rasterData = RasterizeData()
 		rasterData.interpolateParam = srmath.lerp(v0.interpolateParam, v1.interpolateParam, t)
-		rasterData.screenCoord = srmath.lerp(v0.screenCoord, v1.screenCoord, t)
+		rasterData.screenCoord = srmath.lerp_vec3(v0.screenCoord, v1.screenCoord, t)
 		for varyingName in v0.fragmentAttrs.iterkeys():
 			rasterData.fragmentAttrs[varyingName] = srmath.lerp(v0.fragmentAttrs[varyingName], v1.fragmentAttrs[varyingName], t)
 		return rasterData

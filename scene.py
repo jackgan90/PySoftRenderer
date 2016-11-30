@@ -25,20 +25,8 @@ class Scene(object):
 		self.cam.move(offset, st)
 
 	def update(self):
-		import cProfile
-		pr = cProfile.Profile()
-		pr.enable()
 		self.draw_cube()
 		# self.draw_plane()
-		pr.disable()
-		outfile = r'f:\PySoftRenderer\profresult'
-		s = open(outfile, 'wb')
-		sortby = 'cumulative'
-		import pstats
-		ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
-		ps.dump_stats(outfile + '.prof')
-		ps.print_stats()
-		s.close()
 
 	def draw_cube(self):
 		c = simplemesh.Cube(2)
