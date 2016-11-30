@@ -34,7 +34,7 @@ class VertexShader(Shader):
 class FragmentShader(Shader):
 	def __init__(self):
 		super(FragmentShader, self).__init__()
-		self.fragcolor = srmath.vec4()
+		self.fragcolor = None
 
 	def run(self):
 		pass
