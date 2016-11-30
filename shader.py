@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from resource import Resource
 import pipeline
 import srmath
 
-class Shader(Resource):
+class Shader(object):
 	def __init__(self):
 		super(Shader, self).__init__()
 		self.varyings = []
