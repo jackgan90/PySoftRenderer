@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import srmath
 import color
-import buffer3d
+import framebuffer
 import depthbuffer
 from rasterizer import Rasterizer
 from vertexprocessor import VertexProcessor
@@ -47,8 +47,8 @@ class Pipeline(object):
 		self.quit = False
 
 	def init(self):
-		self.frontBuffer = buffer3d.Buffer3D(config.RESOLUTION[0], config.RESOLUTION[1], self.clearColor)
-		self.backBuffer = buffer3d.Buffer3D(config.RESOLUTION[0], config.RESOLUTION[1], self.clearColor)
+		self.frontBuffer = framebuffer.FrameBuffer(config.RESOLUTION[0], config.RESOLUTION[1], self.clearColor)
+		self.backBuffer = framebuffer.FrameBuffer(config.RESOLUTION[0], config.RESOLUTION[1], self.clearColor)
 		self.depthBuffer = depthbuffer.DepthBuffer(config.RESOLUTION[0], config.RESOLUTION[1], 1.0)
 		self.vertexProcessor = VertexProcessor(self)
 		self.fragmentProcessor = FragmentProcessor(self)

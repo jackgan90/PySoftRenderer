@@ -24,7 +24,7 @@ class OpenGLWindow(Window):
 		return GL.glGetError()
 
 	def init_opengl_texture(self, pixelData):
-		textureData = numpy.array(pixelData, numpy.uint8)
+		textureData = pixelData
 		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
 		if not self.displayTex:
 			self.displayTex = GL.glGenTextures(1)

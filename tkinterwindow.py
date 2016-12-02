@@ -71,13 +71,11 @@ class TkinterWindow(Window):
 
 	def update_screen(self):
 		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
-		if not self.image:
-			self.image = Image.new('RGB', (width, height))
 		self.graphicsPipeline.clear_screen()
 		self.graphicsPipeline.clear_depth_buffer()
 		self.renderScene.update()
 		self.graphicsPipeline.swap_front_back_buffers()
-		self.image.putdata(self.graphicsPipeline.get_frame_buffer_data())
+		self.image = Image.fromarray(self.graphicsPipeline.get_frame_buffer_data())
 		img = ImageTk.PhotoImage(self.image)
 		self.canvas.create_image(width / 2, height / 2, image=img)
 		self.canvas.image = img

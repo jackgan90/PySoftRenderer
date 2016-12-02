@@ -78,10 +78,9 @@ class PyGameWindow(Window):
 		self.renderScene.update()
 		self.graphicsPipeline.swap_front_back_buffers()
 		width, height = self.graphicsPipeline.get_frame_buffer_dimension()
-		data = self.graphicsPipeline.get_frame_buffer_data()
 		for x in xrange(width):
 			for y in xrange(height):
-				self.pixelArray[x, y] = data[y * width + x]
+				self.pixelArray[x, y] = tuple(self.graphicsPipeline.get_pixel(x, y))
 
 	def init(self):
 		pygame.init()
